@@ -191,6 +191,7 @@ typedef struct s_data
 
 /* parse */
 void parse(t_data *data, char *filepath);
+void get_raw_content(t_data *data, char *filepath);
 
 /* parse utils*/
 int get_element_id(char *s);
@@ -205,6 +206,8 @@ int8_t is_valid_input_file(char *filepath);
 
 /* exit */
 int ft_exit(t_data *data, char *s);
+void free_rawl(t_rawlines **head);
+void free_els(t_elements *array);
 
 /* debugging */
 void print_ds_rawl(t_rawlines **head);
