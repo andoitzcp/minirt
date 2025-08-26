@@ -3,7 +3,8 @@
 int main(int argc, char **argv)
 {
     (void)argc;
-    (void)argv;
-    return (0);
+    t_data data;
 
+    printf("hola mundo\n");
+    parse(&data, argv[1]);
 }

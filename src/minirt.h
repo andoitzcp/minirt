@@ -9,12 +9,16 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <stddef.h>
 #include "../inc/libft/libft.h"
 #include "../../minilibx-linux/mlx.h"
 
 /*******************************************************************************/
 /* Data definitions                                                            */
 /*******************************************************************************/
+
+#define TRUE 1
+#define FALSE 0
 
 #define WS_CHARS " \t\n"
 
@@ -27,13 +31,17 @@
 #define EL_TRIANGLE_ID "tr"
 #define EL_BLANK_LINE_ID ""
 
-// Exit mode definitions
+/* Exit mode definitions */
 
 #define ERRORS000 "Error\n"
 #define ERRORS001 "minirt:init:append_rawline_node:"
 #define ERRORS002 "minirt:init:provided .rt file has invalid lines\n"
 #define ERRORS003 "minirt:init:init_elements"
 #define ERRORS004 "minirt:init:init_element_array:rawline linked list size and stored element quantity differ\n"
+
+/* Othe definitions */
+#define MAX_PATH_LENGTH 4096
+#define RT_FILE_EXTENSION ".rt"
 
 
 typedef enum e_elid
@@ -177,10 +185,22 @@ typedef struct s_data
 /* Function definitions                                                        */
 /*******************************************************************************/
 
-// parser
-void parse(void);
+/* parse */
+void parse(t_data *data, char *filepath);
 
-// exit
+/* parse utils*/
+int get_element_id(char *s);
+void classify_raw_content_into_elements(t_rawlines **head);
+void trim_raw_content_ws_nodes(t_rawlines **head);
+int8_t has_raw_content_invalid_lines(t_rawlines **head);
+uint get_element_qty(t_rawlines **head);
+void append_rawline_node(t_data *data, char *content);
+
+/* input validation */
+int8_t is_valid_input_file(char *filepath);
+
+/* exit */
 int ft_exit(t_data *data, char *s);
+
 
 #endif // MINIRT_H_

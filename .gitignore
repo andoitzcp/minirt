@@ -55,6 +55,6 @@ dkms.conf
 *.dwo
 
 # Custom
-/bin/*
+/test/bin/*
 minirt
 *.swp
