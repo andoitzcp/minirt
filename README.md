@@ -5,7 +5,7 @@ mini ray tracing project
 
 Some important lectures:
 
-- (https://gabrielgambetta.com/computer-graphics-from-scratch/)[Computer graphics from scractch]
+- (https://gabrielgambetta.com/computer-graphics-from-scratch)[Computer graphics from scractch]
 - (https://raytracing.github.io/)[Ray tracing series]
 	+ (https://raytracing.github.io/books/RayTracingInOneWeekend.html)[Ray tracing in one weekend]
 	+ (https://raytracing.github.io/books/RayTracingTheNextWeek.html)[Ray tracing the next week]
