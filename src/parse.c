@@ -6,6 +6,13 @@ void get_raw_content(t_data *data, char *filepath)
     char *s;
 
     fd = open(filepath, O_RDONLY);
+    if (fd == -1)
+    {
+        //perror(ERRORS000);
+        //exit(1);
+        data->emf = data->emf | EMF_PERROR;
+        ft_exit(data, ERRORS006);
+    }
     while(1)
     {
         s = ft_gnl(fd);
@@ -13,6 +20,7 @@ void get_raw_content(t_data *data, char *filepath)
             break;
         append_rawline_node(data, s);
     }
+    close(fd);
     return ;
 }
 

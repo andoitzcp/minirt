@@ -39,6 +39,7 @@
 #define ERRORS003 "minirt:init:init_elements"
 #define ERRORS004 "minirt:init:init_element_array:rawline linked list size and stored element quantity differ\n"
 #define ERRORS005 "minirt:parse:is_valid_input_file:not a valid path"
+#define ERRORS006 "minirt:parse:get_raw_content:unable to open the file"
 
 /* Othe definitions */
 #define MAX_PATH_LENGTH 4096
@@ -75,6 +76,7 @@ typedef enum e_exitmodeflags{
   EMF_NOFREE = 1 << 0,
   EMF_RAWL = 1 << 1,
   EMF_ELS = 1 << 2,
+  EMF_PERROR = 1 << 3,
 } t_exitmodeflags;
 
 typedef struct s_amblight

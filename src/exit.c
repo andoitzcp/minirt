@@ -30,12 +30,12 @@ int ft_exit(t_data *data, char *s)
     emf = data->emf;
     if ((emf & EMF_RAWL) == EMF_RAWL)
         free_rawl(data->rawl);
-    if ((emf & EMF_RAWL) == EMF_RAWL)
+    if ((emf & EMF_ELS) == EMF_ELS)
         free_els(data->els);
     ft_putstr_fd(ERRORS000, STDERR_FILENO);
-    if (errno == 0)
-        ft_putstr_fd(s, STDERR_FILENO);
-    else
+    if ((emf & EMF_PERROR) == EMF_PERROR)
         perror(s);
+    else
+        ft_putstr_fd(s, STDERR_FILENO);
     exit(errno);
 }
