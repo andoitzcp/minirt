@@ -72,10 +72,10 @@ test/bin/%: test/obj/%.o $(RELEASE_OBJ) $(LIBFT_A)
 $(TESTS_BIN): $(RELEASE_OBJ) $(TESTS_OBJ)
 
 run-tests: $(TESTS_BIN)
-	./$^ || true
+	@./$^ || true
 
 clean:
-	rm -f $(RELEASE_OBJ) $(TESTS_OBJ)
+	rm -f $(RELEASE_OBJ) $(TESTS_OBJ) obj/minirt.o
 
 	@$(RM) -f $(LIBFT)/$(LIBFT_A)
 	@echo "$(CYAN)$(LIBFT) executable files succesfully cleaned!$(DEF_COLOR)"
@@ -83,7 +83,7 @@ clean:
 	@echo "$(BLUE)$(NAME) release object files succesfully cleaned!$(DEF_COLOR)"
 	@$(RM) -rf $(TESTS_OBJ)
 	@echo "$(BLUE)$(NAME) test object files succesfully cleaned!$(DEF_COLOR)"
-	@$(RM) -f $(SRC_DIR)/minirt.h.gch
+	@$(RM) -f src/minirt.h.gch
 
 fclean: clean
 	@$(RM) -f $(NAME)
