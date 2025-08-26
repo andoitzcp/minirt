@@ -97,15 +97,16 @@ void append_rawline_node(t_data *data, char *content)
         ft_exit(data, ERRORS001);
     data->emf |= EMF_RAWL;
     node->line = content;
+    node->elid = ELID_NULL;
     node->next = NULL;
     current = *head;
     if (current == NULL)
     {
-        current = node;
+        *head = node;
         return ;
     }
     while (current->next != NULL)
         current = current->next;
-    current = node;
+    current->next = node;
     return ;
 }

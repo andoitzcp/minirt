@@ -38,6 +38,7 @@
 #define ERRORS002 "minirt:init:provided .rt file has invalid lines\n"
 #define ERRORS003 "minirt:init:init_elements"
 #define ERRORS004 "minirt:init:init_element_array:rawline linked list size and stored element quantity differ\n"
+#define ERRORS005 "minirt:parse:is_valid_input_file:not a valid path"
 
 /* Othe definitions */
 #define MAX_PATH_LENGTH 4096
@@ -46,6 +47,7 @@
 
 typedef enum e_elid
 {
+    ELID_NULL,
     ELID_C,
     ELID_L,
     ELID_SP,
@@ -201,6 +203,9 @@ int8_t is_valid_input_file(char *filepath);
 
 /* exit */
 int ft_exit(t_data *data, char *s);
+
+/* debugging */
+void print_ds_rawl(t_rawlines **head);
 
 
 #endif // MINIRT_H_

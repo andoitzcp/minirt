@@ -18,11 +18,14 @@ void get_raw_content(t_data *data, char *filepath)
 
 void parse(t_data *data, char *filepath)
 {
-    int8_t i;
+    t_rawlines *rawl;
 
-    i = is_valid_input_file(filepath);
-    ft_putnbr_fd(i, 1);
+    rawl = NULL;
+    data->rawl = &rawl;
+    if (!is_valid_input_file(filepath))
+        ft_exit(data, ERRORS005);
     get_raw_content(data, filepath);
+    print_ds_rawl(data->rawl);
     //is_valid_data()
 
 }
