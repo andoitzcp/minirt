@@ -22,13 +22,14 @@
 
 #define WS_CHARS " \t\n"
 
-#define EL_CAMERA_ID "c"
-#define EL_LIGHT_ID "l"
-#define EL_SPHERE_ID "sp"
-#define EL_PLANE_ID "pl"
-#define EL_SQUARE_ID "sq"
-#define EL_CYLINDER_ID "cy"
-#define EL_TRIANGLE_ID "tr"
+#define EL_AMBLIGHT_ID "A "
+#define EL_CAMERA_ID "C "
+#define EL_LIGHT_ID "L "
+#define EL_SPHERE_ID "sp "
+#define EL_PLANE_ID "pl "
+#define EL_SQUARE_ID "sq "
+#define EL_CYLINDER_ID "cy "
+#define EL_TRIANGLE_ID "tr "
 #define EL_BLANK_LINE_ID ""
 
 /* Exit mode definitions */
@@ -40,15 +41,20 @@
 #define ERRORS004 "minirt:init:init_element_array:rawline linked list size and stored element quantity differ\n"
 #define ERRORS005 "minirt:parse:is_valid_input_file:not a valid path"
 #define ERRORS006 "minirt:parse:get_raw_content:unable to open the file"
+#define ERRORS007 "minirt:parse:has_raw_content_invalid_lines:the file contains invalid lines"
 
 /* Othe definitions */
 #define MAX_PATH_LENGTH 4096
 #define RT_FILE_EXTENSION ".rt"
+#define MAX_RGB_STR_LEN 11
+#define RGB_STR_ELEMENTS 3
+#define RGB_STR_VALID_CHARSET "0123456789,"
 
 
 typedef enum e_elid
 {
     ELID_NULL,
+    ELID_A,
     ELID_C,
     ELID_L,
     ELID_SP,
@@ -60,10 +66,18 @@ typedef enum e_elid
     ELID_INVALID
 } t_elid;
 
+typedef struct s_intarray
+{
+    int *array;
+    size_t len;
+} t_intarray;
+
 typedef struct s_rawlines
 {
     enum e_elid elid;
     char *line;
+    char **arr;
+    size_t arrlen;
     struct s_rawlines *next;
 } t_rawlines;
 
@@ -200,9 +214,11 @@ void trim_raw_content_ws_nodes(t_rawlines **head);
 int8_t has_raw_content_invalid_lines(t_rawlines **head);
 uint get_element_qty(t_rawlines **head);
 void append_rawline_node(t_data *data, char *content);
+void breakdown_rawlines(t_rawlines **head);
 
 /* input validation */
 int8_t is_valid_input_file(char *filepath);
+int8_t is_valid_data(t_data *data);
 
 /* exit */
 int ft_exit(t_data *data, char *s);

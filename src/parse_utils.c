@@ -2,8 +2,10 @@
 
 int get_element_id(char *s)
 {
-    if (ft_strncmp(s, EL_BLANK_LINE_ID, ft_strlen(EL_BLANK_LINE_ID)) == 0)
+    if (ft_strncmp(s, EL_BLANK_LINE_ID, 1 + ft_strlen(EL_BLANK_LINE_ID)) == 0)
         return (ELID_BLANK_LINE);
+    else if (ft_strncmp(s, EL_AMBLIGHT_ID, ft_strlen(EL_AMBLIGHT_ID)) == 0)
+        return (ELID_A);
     else if (ft_strncmp(s, EL_CAMERA_ID, ft_strlen(EL_CAMERA_ID)) == 0)
         return (ELID_C);
     else if (ft_strncmp(s, EL_LIGHT_ID, ft_strlen(EL_LIGHT_ID)) == 0)
@@ -63,7 +65,7 @@ int8_t has_raw_content_invalid_lines(t_rawlines **head)
     current = *(head);
     while (current != NULL)
     {
-        if (current->next->elid != ELID_INVALID)
+        if (current->elid == ELID_INVALID)
             return (1);
         current = current->next;
     }
@@ -98,6 +100,8 @@ void append_rawline_node(t_data *data, char *content)
     data->emf |= EMF_RAWL;
     node->line = content;
     node->elid = ELID_NULL;
+    node->arr = NULL;
+    node->arrlen = 0;
     node->next = NULL;
     current = *head;
     if (current == NULL)
@@ -108,5 +112,27 @@ void append_rawline_node(t_data *data, char *content)
     while (current->next != NULL)
         current = current->next;
     current->next = node;
+    return ;
+}
+
+void breakdown_rawlines(t_rawlines **head)
+{
+    t_rawlines *current;
+    char **array;
+    size_t i;
+
+    current = *(head);
+    while (current != NULL)
+    {
+        array = ft_split(current->line, ' ');
+        i = 0;
+        while (array[i] != NULL)
+            i++;
+        current->arr = array;
+        current->arrlen = i;
+        current = current->next;
+    }
+
+    current->arrlen = i;
     return ;
 }

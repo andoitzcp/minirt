@@ -75,7 +75,7 @@ run-tests: $(TESTS_BIN)
 	@./$^ || true
 
 clean:
-	rm -f $(RELEASE_OBJ) $(TESTS_OBJ) obj/minirt.o
+	@rm -f $(RELEASE_OBJ) $(TESTS_OBJ) obj/minirt.o
 
 	@$(RM) -f $(LIBFT)/$(LIBFT_A)
 	@echo "$(CYAN)$(LIBFT) executable files succesfully cleaned!$(DEF_COLOR)"
@@ -88,7 +88,7 @@ clean:
 fclean: clean
 	@$(RM) -f $(NAME)
 	@echo "$(CYAN)$(NAME) main executable file succesfully cleaned!$(DEF_COLOR)"
-	rm -f $(TESTS_BIN)
+	@rm -f $(TESTS_BIN)
 	@echo "$(CYAN)$(NAME) test executable files succesfully cleaned!$(DEF_COLOR)"
 
 re: fclean all

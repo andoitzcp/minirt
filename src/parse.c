@@ -34,6 +34,12 @@ void parse(t_data *data, char *filepath)
         ft_exit(data, ERRORS005);
     get_raw_content(data, filepath);
     print_ds_rawl(data->rawl);
+    classify_raw_content_into_elements(data->rawl);
+    print_ds_rawl(data->rawl);
+    if (has_raw_content_invalid_lines(data->rawl))
+        ft_exit(data, ERRORS006);
+    trim_raw_content_ws_nodes(data->rawl);
+    print_ds_rawl(data->rawl);
+    breakdown_rawlines(data->rawl);
     //is_valid_data()
-
 }
