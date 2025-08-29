@@ -1,6 +1,6 @@
 # Algebra programming
 
-# Tuples: points and vectors
+# 1.Tuples: points and vectors
 
 * Tuple = {x,y,z,w} = float[4] or {float[3], int}
     * Point = {x, y, z, w = 1}
