@@ -11,6 +11,7 @@
 #include <errno.h>
 #include <stddef.h>
 #include "../inc/libft/libft.h"
+#include "../inc/linmath/src/linmath.h"
 #include "../../minilibx-linux/mlx.h"
 
 /*******************************************************************************/
@@ -118,6 +119,21 @@ typedef struct s_normvector
     float s;
     float t;
 } t_normvector;
+
+typedef struct s_color
+{
+    float r;
+    float g;
+    float b;
+} t_color;
+
+typedef struct s_canvas
+{
+	int		width;
+	int		height;
+	t_color	*pixel_block;
+	t_color	**image;
+} t_canvas;
 
 typedef struct s_camera
 {
@@ -228,5 +244,22 @@ void free_els(t_elements *array);
 /* debugging */
 void print_ds_rawl(t_rawlines **head);
 
+
+/* color */
+t_color		color_set(float r, float g, float b);
+t_color		color_limit(t_color c);
+t_color		color_clamp(t_color c);
+t_color		color_add(t_color a, t_color b);
+t_color		color_sub(t_color a, t_color b);
+t_color		color_scale_up(t_color a, float n);
+t_color		color_scale_down(t_color a, float n);
+t_color		color_blend(t_color a, t_color b);
+
+/* canvas */
+t_canvas	*canvas_init(int width, int height);
+void		canvas_set_color(t_canvas *can, t_color c);
+int			canvas_set_pixel(t_canvas *can, int x, int y, t_color c);
+t_color		canvas_get_pixel(t_canvas can, int x, int y);
+int			canvas_to_ppm(t_canvas can, char *name);
 
 #endif // MINIRT_H_

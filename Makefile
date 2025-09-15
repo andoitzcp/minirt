@@ -11,7 +11,7 @@ CC=gcc
 CFLAGS=-Wall -Werror -Wextra -g -I$(INC_DIR)
 TESTS_LDFLAGS=-lcriterion
 
-RELEASE_SRC= src/parse.c src/parse_utils.c src/input_validation.c src/exit.c src/debugging.c
+RELEASE_SRC= src/color.c src/color_ops.c src/parse.c src/parse_utils.c src/input_validation.c src/exit.c src/debugging.c
 RELEASE_OBJ=$(subst src/,obj/,$(RELEASE_SRC:.c=.o))
 
 TESTS_SRC=$(shell find test/src/ -type f -name '*.c')
