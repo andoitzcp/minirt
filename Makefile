@@ -23,8 +23,10 @@ INC_DIR = inc/
 HEADERS = src/minirt.h
 LIBFT	= $(addprefix $(INC_DIR), libft/)
 LIBFT_A	= $(addprefix $(LIBFT), libft.a)
+LINMATH	= $(addprefix $(INC_DIR), linmath/)
+LINMATH_A = $(addprefix $(LIBFT), linmath.a)
 
-MLX		= ./../minilibx-linux/
+MLX	= ./../minilibx-linux/
 MLX_A	= $(addprefix $(MLX), minilibx-Linux.a)
 
 # Colors
@@ -41,13 +43,17 @@ WHITE = \033[0;97m
 
 all: $(NAME)
 
-$(NAME): obj/minirt.o $(RELEASE_OBJ) $(LIBFT_A) $(MLX_A) $(HEADERS)
-	@$(CC) $(CFLAGS) obj/$(NAME).o $(RELEASE_OBJ) -L$(LIBFT) -lft -L$(MLX) -lmlx -lm -lXext -lX11 -o $(NAME)
+$(NAME): obj/minirt.o $(RELEASE_OBJ) $(LIBFT_A) $(LINMATH_A) $(MLX_A) $(HEADERS)
+	@$(CC) $(CFLAGS) obj/$(NAME).o $(RELEASE_OBJ) -L$(LIBFT) -lft -L$(LINMATH) -llinmath -L$(MLX) -lmlx -lm -lXext -lX11 -o $(NAME)
 	@echo "$(GREEN)$(NAME) compiled!$(DEF_COLOR)"
 
 $(LIBFT_A):
 	@$(MAKE) -s -C $(LIBFT)
 	@echo "Compiled $(LIBFT_A)"
+
+$(LINMATH_A):
+	@$(MAKE) -s -C $(LINMATH)
+	@echo "Compiled $(LINMATH_A)"
 
 $(MLX_A):
 	#@$(MAKE) -s -C $(MLX) do not uncomment this line, it does not compile
@@ -73,6 +79,9 @@ $(TESTS_BIN): $(RELEASE_OBJ) $(TESTS_OBJ)
 
 run-tests: $(TESTS_BIN)
 	@./$^ || true
+
+test-linmath: $(LINMATH_A)
+	@$(MAKE) run-tests -s -C $(LINMATH)
 
 clean:
 	@rm -f $(RELEASE_OBJ) $(TESTS_OBJ) obj/minirt.o

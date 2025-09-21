@@ -12,7 +12,7 @@
 #include <stddef.h>
 #include "../inc/libft/libft.h"
 #include "../inc/linmath/src/linmath.h"
-#include "../../minilibx-linux/mlx.h"
+#include "../../mlx/mlx.h"
 
 /*******************************************************************************/
 /* Data definitions                                                            */
