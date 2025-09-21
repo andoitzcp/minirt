@@ -1,8 +1,6 @@
 # include "../../src/linmath.h"
 # include <criterion/criterion.h>
 #include <criterion/internal/assert.h>
-#include <math.h>
-#include <stdio.h>
 
 Test(Matrix, size2) {
 	t_matrix matrix;
@@ -150,48 +148,118 @@ Test(Matrix, identity) {
 	cr_expect(matrix_eq(a, b) == 1);
 }
 
-Test(Matrix, translation) {
+Test(Matrix, mult_mxm) {
 	t_matrix a;
 	t_matrix b;
+
+	float ar_a[16] = 
+	{1, 2, 3, 4,
+	 5, 6, 7, 8,
+	 9, 8, 7, 6,
+	 5, 4, 3, 2};
+	float ar_b[16] = 
+	{-2 , 1 , 2 , 3 ,
+	 3 , 2 , 1 , -1 ,
+	 4 , 3 , 6 , 5 ,
+	 1 , 2 , 7 , 8};
+	float ar_c[16] =
+	{20, 22 , 50 , 48 ,
+	 44, 54 , 114 , 108 ,
+	 40, 58 , 110 , 102 ,
+	 16, 26 , 46 , 42};
+	a = matrix_from_array(4, ar_a);
+	b = matrix_from_array(4, ar_b);
+	a = matrix_matrix_mult(a, b);
+	b = matrix_from_array(4, ar_c);
+	cr_expect(matrix_eq(a,b));
+}
+
+Test(Matrix, mult_mxt) {
+	t_matrix m;
+	float ar_a[16] = 
+	{1 , 2 , 3 , 4 ,
+	 2 , 4 , 4 , 2 ,
+	 8 , 6 , 4 , 1 ,
+	 0 , 0 , 0 , 1};
+
+	t_tuple a;
+	t_tuple b;
+	t_tuple c;
+
+	m = matrix_from_array(4, ar_a);
+	a = tuple_set(1, 2, 3, 1);
+	b = tuple_set(18, 24, 33, 1);
+	c = matrix_tuple_mult(m, a);
+	cr_expect(tuple_eq(b, c));
+}
+
+Test(Matrix, translation) {
+	t_matrix m;
+	t_tuple t;
+	t_tuple	e;
+	t_tuple r;
+
+	m = matrix_translation(1, 2, 3);
+	t = tuple_point(0, 0, 0);
+	e = tuple_point(1, 2, 3);
+	r = matrix_tuple_mult(m, t);
+	cr_expect(tuple_eq(e, r) == 1);
 	
-	float values4[16] = 
-	{1, 0, 0, 1,
-	 0, 1, 0, 2,
-	 0, 0, 1, 3,
-	 0, 0, 0, 1};
-	a = matrix_from_array(4, values4);
-	b = matrix_translation(1, 2, 3);
-	cr_expect(matrix_eq(a, b) == 1);
-	
-	float values5[16] = 
-	{1, 0, 0, -1,
-	 0, 1, 0, -2,
-	 0, 0, 1, -3,
-	 0, 0, 0, 1};
-	a = matrix_from_array(4, values5);
-	b = matrix_translation(-1, -2, -3);
-	cr_expect(matrix_eq(a, b) == 1);
+	m = matrix_translation(-1, -2, -3);
+	t = tuple_point(0, 0, 0);
+	e = tuple_point(-1, -2, -3);
+	r = matrix_tuple_mult(m, t);
+	cr_expect(tuple_eq(e, r) == 1);
 }
 
 Test(Matrix, scalation) {
+	t_matrix m;
+	t_tuple t;
+	t_tuple	e;
+	t_tuple r;
+
+	m = matrix_scalation(1, 2, 3);
+	t = tuple_point(2, 2, 2);
+	e = tuple_point(2, 4, 6);
+	r = matrix_tuple_mult(m, t);
+	cr_expect(tuple_eq(e, r) == 1);
+	
+	m = matrix_scalation(-1, -2, -3);
+	t = tuple_point(2, 2, 2);
+	e = tuple_point(-2, -4, -6);
+	r = matrix_tuple_mult(m, t);
+	cr_expect(tuple_eq(e, r) == 1);
+}
+
+Test(matrix, rotation) {
+
 	t_matrix a;
 	t_matrix b;
 	
-	float values4[16] = 
+	float values_x[16] = 
 	{1, 0, 0, 0,
-	 0, 2, 0, 0,
-	 0, 0, 3, 0,
+	 0, 0, -1, 0,
+	 0, 1, 0, 0,
 	 0, 0, 0, 1};
-	a = matrix_from_array(4, values4);
-	b = matrix_scalation(1, 2, 3);
-	cr_expect(matrix_eq(a, b) == 1);
+	a = matrix_from_array(4, values_x);
+	b = matrix_rot_x(90);
+	cr_expect(matrix_eq(a,b));
 	
-	float values5[16] = 
-	{-1, 0, 0, 0,
-	 0, -2, 0, 0,
-	 0, 0, -3, 0,
+	float values_x2[16] = 
+	{1, 0, 0, 0,
+	 0, -1, 0, 0,
+	 0, 0, -1, 0,
 	 0, 0, 0, 1};
-	a = matrix_from_array(4, values5);
-	b = matrix_scalation(-1, -2, -3);
-	cr_expect(matrix_eq(a, b) == 1);
+	a = matrix_from_array(4, values_x2);
+	b = matrix_rot_x(180);
+	cr_expect(matrix_eq(a,b));
+	
+	float values_x3[16] = 
+	{1, 0, 0, 0,
+	 0, 0.939692, -0.342020, 0,
+	 0, 0.342020, 0.939692, 0,
+	 0, 0, 0, 1};
+	a = matrix_from_array(4, values_x3);
+	b = matrix_rot_x(20);
+	cr_expect(matrix_eq(a,b));
 }

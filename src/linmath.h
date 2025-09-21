@@ -6,7 +6,7 @@
 /*   By: iubieta- <iubieta@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 12:45:05 by iubieta-          #+#    #+#             */
-/*   Updated: 2025/09/17 23:40:24 by iubieta-         ###   ########.fr       */
+/*   Updated: 2025/09/21 20:01:22 by iubieta-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 // Float utils
 int		float_eq(float a, float b);
 float	float_limit(float n, float min, float max);
+
+// Angle utils
+float	degrees_to_radians(float deg);
 
 // Tuples: points and vectors
 typedef struct s_tuple
@@ -56,11 +59,17 @@ typedef struct s_matrix {
 	float value[4][4];
 } t_matrix;
 
-t_matrix	matrix_zero();
-t_matrix	matrix_from_array(int size, float array[16]);
+t_matrix	matrix_zero(void);
 t_matrix	matrix_identity(int size);
+t_matrix	matrix_from_array(int size, float array[16]);
+
 t_matrix	matrix_translation(float x, float y, float z);
 t_matrix	matrix_scalation(float x, float y, float z);
+t_matrix	matrix_shearing(float props[6]);
+
+t_matrix	matrix_rot_x(float angle);
+t_matrix	matrix_rot_y(float angle);
+t_matrix	matrix_rot_z(float angle);
 
 t_matrix	matrix_matrix_mult(t_matrix a, t_matrix b);
 t_tuple		matrix_tuple_mult(t_matrix m, t_tuple t);
