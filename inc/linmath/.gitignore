@@ -1,0 +1,31 @@
+# Archivos objeto y dependencias
+*.o
+*.d
+
+# Ejecutables y binarios (por ejemplo, el a.out que genera gcc por defecto)
+a.out
+*.exe
+*.out
+
+# Bibliotecas compiladas
+*.a
+*.so
+*.dylib
+
+# Directorios de build o binarios si los usas
+/build/
+/bin/
+
+# Archivos de log y configuración generados por herramientas (como autoconf)
+config.log
+config.status
+*.log
+
+# Archivos temporales y de respaldo de editores
+*~
+*.swp
+*.swo
+
+# Dumps de core
+core
+
