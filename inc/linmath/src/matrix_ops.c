@@ -6,7 +6,7 @@
 /*   By: iubieta- <iubieta@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 22:41:00 by iubieta-          #+#    #+#             */
-/*   Updated: 2025/09/17 23:19:00 by iubieta-         ###   ########.fr       */
+/*   Updated: 2025/09/21 20:28:26 by iubieta-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ float	matrix_row_col_mult(int row, int col, t_matrix a, t_matrix b)
 {
 	float	ret;
 	int		i;
-	int		j;
 
 	if (row >= a.size || col >= b.size)
 		return (NAN);
@@ -24,7 +23,7 @@ float	matrix_row_col_mult(int row, int col, t_matrix a, t_matrix b)
 	i = 0;
 	while (i < a.size)
 	{
-		ret += a.val[row][i] * b.val[i][col];
+		ret += a.value[row][i] * b.value[i][col];
 		i++;
 	}
 	return (ret);
@@ -44,9 +43,10 @@ t_matrix	matrix_matrix_mult(t_matrix a, t_matrix b)
 		j = 0;
 		while (j < b.size)
 		{
-			c.val[i][j] = matrix_row_col_mult(i, j, a, b);
+			c.value[i][j] = matrix_row_col_mult(i, j, a, b);
 			j++;
 		}
+		i++;
 	}
 	return c;
 }
@@ -55,12 +55,13 @@ t_tuple	matrix_tuple_mult(t_matrix m, t_tuple t)
 {
 	t_tuple	ret;
 
-	ret.x = m.val[0][0] * t.x + m.val[0][1] * t.y + m.val[0][2] * t.z + m.val[0][3] * t.w;
-	ret.y = m.val[1][0] * t.x + m.val[1][1] * t.y +
-		m.val[1][2] * t.z + m.val[1][3] * t.w;
-	ret.z = m.val[2][0] * t.x + m.val[2][1] * t.y +
-		m.val[2][2] * t.z + m.val[2][3] * t.w;
-	ret.w = m.val[3][0] * t.x + m.val[3][1] * t.y +
-		m.val[3][2] * t.z + m.val[3][3] * t.w;
+	ret.x = m.value[0][0] * t.x + m.value[0][1] * t.y +
+		m.value[0][2] * t.z + m.value[0][3] * t.w;
+	ret.y = m.value[1][0] * t.x + m.value[1][1] * t.y +
+		m.value[1][2] * t.z + m.value[1][3] * t.w;
+	ret.z = m.value[2][0] * t.x + m.value[2][1] * t.y +
+		m.value[2][2] * t.z + m.value[2][3] * t.w;
+	ret.w = m.value[3][0] * t.x + m.value[3][1] * t.y +
+		m.value[3][2] * t.z + m.value[3][3] * t.w;
 	return (ret);
 }
