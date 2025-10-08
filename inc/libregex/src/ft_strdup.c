@@ -1,39 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                       :+:    :+: :+:    :+:    */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acampo-p <acampo-p@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/01 09:44:25 by acampo-p          #+#    #+#             */
-/*   Updated: 2025/10/04 04:21:23 by andoitzcp   ########  ###                */
+/*   Created: 2022/12/03 21:02:06 by acampo-p          #+#    #+#             */
+/*   Updated: 2022/12/10 10:28:23 by acampo-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libregex_priv.h"
 
-int	ft_atoi(const char *nptr)
+char	*ft_strdup(const char *s)
 {
-	int			sign;
-	long int	nbr;
+	char	*scpy;
+	size_t	len;
 
-	sign = 1;
-	nbr = 0;
-	while (*nptr == 32 || (*nptr > 8 && *nptr < 14))
-		nptr++;
-	if (*nptr == '-')
-	{
-		sign = -1;
-		nptr++;
-	}
-	else if (*nptr == '+')
-		nptr++;
-	while (ft_isdigit(*nptr) == 1)
-	{
-		nbr += *nptr - '0';
-		nbr *= 10;
-		nptr++;
-	}
-	nbr = nbr * sign / 10;
-	return ((int)nbr);
+	len = ft_strlen(s) + 1;
+	scpy = (char *)malloc(len);
+	if (!scpy)
+		return (NULL);
+	scpy = ft_memcpy(scpy, s, len);
+	return (scpy);
 }

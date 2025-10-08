@@ -1,39 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                       :+:    :+: :+:    :+:    */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acampo-p <acampo-p@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/01 09:44:25 by acampo-p          #+#    #+#             */
-/*   Updated: 2025/10/04 04:21:23 by andoitzcp   ########  ###                */
+/*   Created: 2022/11/29 14:35:02 by acampo-p          #+#    #+#             */
+/*   Updated: 2022/12/09 16:08:42 by acampo-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stddef.h>
 
-int	ft_atoi(const char *nptr)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	int			sign;
-	long int	nbr;
+	char	*cdst;
+	char	*csrc;
+	size_t	index;
 
-	sign = 1;
-	nbr = 0;
-	while (*nptr == 32 || (*nptr > 8 && *nptr < 14))
-		nptr++;
-	if (*nptr == '-')
+	if (!dst && !src)
+		return (dst);
+	cdst = (char *)dst;
+	csrc = (char *)src;
+	index = 0;
+	while (index < n)
 	{
-		sign = -1;
-		nptr++;
+		cdst[index] = csrc[index];
+		index++;
 	}
-	else if (*nptr == '+')
-		nptr++;
-	while (ft_isdigit(*nptr) == 1)
-	{
-		nbr += *nptr - '0';
-		nbr *= 10;
-		nptr++;
-	}
-	nbr = nbr * sign / 10;
-	return ((int)nbr);
+	return (dst);
 }

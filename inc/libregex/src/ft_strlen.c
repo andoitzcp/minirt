@@ -1,39 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                       :+:    :+: :+:    :+:    */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acampo-p <acampo-p@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/01 09:44:25 by acampo-p          #+#    #+#             */
-/*   Updated: 2025/10/04 04:21:23 by andoitzcp   ########  ###                */
+/*   Created: 2022/11/28 21:38:11 by acampo-p          #+#    #+#             */
+/*   Updated: 2024/10/07 13:22:24 by acampo-p@        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libregex_priv.h"
 
-int	ft_atoi(const char *nptr)
+size_t	ft_strlen(const char *str)
 {
-	int			sign;
-	long int	nbr;
+	size_t	index;
 
-	sign = 1;
-	nbr = 0;
-	while (*nptr == 32 || (*nptr > 8 && *nptr < 14))
-		nptr++;
-	if (*nptr == '-')
-	{
-		sign = -1;
-		nptr++;
-	}
-	else if (*nptr == '+')
-		nptr++;
-	while (ft_isdigit(*nptr) == 1)
-	{
-		nbr += *nptr - '0';
-		nbr *= 10;
-		nptr++;
-	}
-	nbr = nbr * sign / 10;
-	return ((int)nbr);
+	index = 0;
+	while (str[index] != '\0')
+		index += 1;
+	return (index);
 }

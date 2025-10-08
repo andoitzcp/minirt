@@ -1,40 +1,53 @@
 #include "minirt.h"
 
 
-void init_element_node(t_elements *el)
+static void init_re_element_types(t_data *data)
 {
-}
+    size_t i;
+    t_re ***re_array;
 
-void init_element_array(t_data *data)
-{
-    uint i;
-    t_elements *els;
-    t_rawlines *rawl;
-
+    re_array = data->re_el_types;
+    data->emf = data->emf | EMF_REET;
+    re_array[ELID_A] = re_new(RE_EL_A);
+    re_array[ELID_C] = re_new(RE_EL_C);
+    re_array[ELID_L] = re_new(RE_EL_L);
+    re_array[ELID_SP] = re_new(RE_EL_SP);
+    re_array[ELID_PL] = re_new(RE_EL_PL);
+    re_array[ELID_CY] = re_new(RE_EL_CY);
+    re_array[ELID_BLANK_LINE] = re_new(RE_EL_BLANK);
+    re_array[RE_TYPE_QTY] = NULL;
     i = 0;
-    els = data->els;
-    rawl = *(data->rawl);
-    if (data->nels != get_element_qty(data->rawl))
-        ft_exit(data, ERRORS004);
-    data->els = ft_calloc(data->nels, sizeof(t_elements));
-    if (data->els == NULL)
-        ft_exit(data, ERRORS003);
-    while (i < data->nels)
-        init_element_node(&(data->els[i++]));
-
-
+    while (i < RE_TYPE_QTY)
+    {
+        if (re_array[i++] == NULL)
+            ft_exit(data, ERRORS006);
+    }
 }
 
-void init(t_data *data, char *filepath)
-{
-    t_rawlines *rawl;
+/* void init_element_array(t_data *data) */
+/* { */
+/*     uint i; */
+/*     t_elements *els; */
+/*     t_rawlines *rawl; */
 
-    rawl = NULL;
-    data->rawl = &rawl;
-    get_raw_content(data, filepath);
-    classify_raw_content_into_elements(data->rawl);
-    trim_raw_content_ws_nodes(data->rawl);
-    if (has_raw_content_invalid_lines(data->rawl) != 0)
-        ft_exit(data, ERRORS002);
-    data->nels = get_element_qty(data->rawl);
+/*     i = 0; */
+/*     els = data->els; */
+/*     rawl = *(data->rawl); */
+/*     if (data->nels != get_element_qty(data->rawl)) */
+/*         ft_exit(data, ERRORS004); */
+/*     data->els = ft_calloc(data->nels, sizeof(t_elements)); */
+/*     if (data->els == NULL) */
+/*         ft_exit(data, ERRORS003); */
+/*     //while (i < data->nels) */
+/*         //init_element_node(&(data->els[i++])); */
+
+
+/* } */
+
+void init(t_data *data)
+{
+    init_re_element_types(data);
+    data->lines = NULL;
+    data->re_float = re_new(RE_FLOAT);
+    data->re_int = re_new(RE_INT);
 }

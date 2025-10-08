@@ -1,22 +1,22 @@
 #include "minirt.h"
 
-void free_rawl(t_rawlines **head)
+void free_lines(t_line **head)
 {
-    t_rawlines *current;
-    t_rawlines *tmp;
+    t_line *current;
+    t_line *tmp;
 
     current = *head;
     while (current != NULL)
     {
         tmp = current;
         current = current->next;
-        free(tmp->line);
+        free(tmp->content);
         free(tmp);
     }
     return ;
 }
 
-void free_els(t_elements *array)
+void free_els(t_elements **array)
 {
     free(array);
     return ;
@@ -29,7 +29,7 @@ int ft_exit(t_data *data, char *s)
 
     emf = data->emf;
     if ((emf & EMF_RAWL) == EMF_RAWL)
-        free_rawl(data->rawl);
+        free_lines(&(data->lines));
     if ((emf & EMF_ELS) == EMF_ELS)
         free_els(data->els);
     ft_putstr_fd(ERRORS000, STDERR_FILENO);

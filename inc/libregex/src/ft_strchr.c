@@ -1,39 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                       :+:    :+: :+:    :+:    */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acampo-p <acampo-p@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/01 09:44:25 by acampo-p          #+#    #+#             */
-/*   Updated: 2025/10/04 04:21:23 by andoitzcp   ########  ###                */
+/*   Created: 2022/11/29 16:31:53 by acampo-p          #+#    #+#             */
+/*   Updated: 2022/12/12 10:06:04 by acampo-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libregex_priv.h"
 
-int	ft_atoi(const char *nptr)
+char	*ft_strchr(const char *s, int c)
 {
-	int			sign;
-	long int	nbr;
-
-	sign = 1;
-	nbr = 0;
-	while (*nptr == 32 || (*nptr > 8 && *nptr < 14))
-		nptr++;
-	if (*nptr == '-')
+	if (s == NULL)
+		return (NULL);
+	while (*s != '\0')
 	{
-		sign = -1;
-		nptr++;
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
 	}
-	else if (*nptr == '+')
-		nptr++;
-	while (ft_isdigit(*nptr) == 1)
-	{
-		nbr += *nptr - '0';
-		nbr *= 10;
-		nptr++;
-	}
-	nbr = nbr * sign / 10;
-	return ((int)nbr);
+	if ((char)c == 0)
+		return ((char *)s);
+	return (NULL);
 }
