@@ -11,3 +11,15 @@ Some important lectures:
 	+ (https://raytracing.github.io/books/RayTracingTheNextWeek.html)[Ray tracing the next week]
 	+ (https://raytracing.github.io/books/RayTracingTheRestOfYourLife.html)[Ray tracing the rest of your life]
 - (./res/The\ Ray\ Tracer\ Challenge-Pragmatic\ Bookshelf\ \(2019\)\ -\ Jamis\ Buck.pdf)[Ray tracer Challenge]
+
+## Tasks
+
+- [ ] Parser
+  - [ ] Build a regex engine (libregex)
+    - [x] has **new_re()** function
+    - [x] has **match()** function
+    - [ ] has **free_re()** function
+    - [ ] has **NO memory leaks**
+
+- [ ] Math
+- [ ] Graphics
