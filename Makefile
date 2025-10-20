@@ -74,15 +74,15 @@ $(MLX_A):
 obj/minirt.o: src/minirt.c
 	@$(CC) $(CFLAGS) -c $^ -o $@
 
-obj/%.o: src/%.c
+obj/%.o: src/%.c | obj
 	@$(CC) $(CFLAGS) -c $^ -o $@
 	@echo "release objects created"
 
-test/obj/%.o: test/src/%.c
+test/obj/%.o: test/src/%.c | test/obj
 	@$(CC) $(CFLAGS) -c $^ -o $@
 	@echo "test objects created"
 
-test/bin/%: test/obj/%.o $(RELEASE_OBJ) $(LIBFT_A) $(LIBRE_A)
+test/bin/%: test/obj/%.o $(RELEASE_OBJ) $(LIBFT_A) $(LIBRE_A) | test/bin
 	@$(CC) $(TESTS_LDFLAGS) $^ -o $@
 
 # prevent deleting object in rules chain
@@ -90,6 +90,17 @@ $(TESTS_BIN): $(RELEASE_OBJ) $(TESTS_OBJ)
 
 run-tests: $(TESTS_BIN)
 	@./$^ || true
+
+test/bin:
+	mkdir $@
+
+test/obj:
+	mkdir $@
+
+obj:
+	mkdir $@
+
+
 
 clean:
 	@$(MAKE) -s -C $(LIBFT) clean
