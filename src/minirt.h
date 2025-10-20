@@ -13,6 +13,7 @@
 #include "../inc/libft/libft.h"
 #include "../inc/libregex/src/libregex.h"
 #include "../../minilibx-linux/mlx.h"
+#include "../inc/liblinmath/src/linmath.h"
 
 /*******************************************************************************/
 /* Data definitions                                                            */

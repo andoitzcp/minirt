@@ -34,7 +34,10 @@ HEADERS = src/minirt.h
 LIBFT	= $(addprefix $(INC_DIR), libft/)
 LIBFT_A	= $(addprefix $(LIBFT), libft.a)
 
-MLX		= ./../minilibx-linux/
+LINMATH	= $(addprefix $(INC_DIR), liblinmath/)
+LINMATH_A = $(addprefix $(LINMATH), liblinmath.a)
+
+MLX	= ./../minilibx-linux/
 MLX_A	= $(addprefix $(MLX), minilibx-Linux.a)
 
 LIBRE = $(addprefix $(INC_DIR), libregex/)
@@ -54,8 +57,8 @@ WHITE = \033[0;97m
 
 all: $(NAME)
 
-$(NAME): obj/minirt.o $(RELEASE_OBJ) $(LIBFT_A) $(LIBRE_A) $(MLX_A) $(HEADERS)
-	@$(CC) $(CFLAGS) obj/$(NAME).o $(RELEASE_OBJ) -L$(LIBFT) -lft -L$(LIBRE) -lregex -L$(MLX) -lmlx -lm -lXext -lX11 -o $(NAME)
+$(NAME): obj/minirt.o $(RELEASE_OBJ) $(LIBFT_A) $(LINMATH_A) $(LIBRE_A) $(MLX_A) $(HEADERS)
+	@$(CC) $(CFLAGS) obj/$(NAME).o $(RELEASE_OBJ) -L$(LIBFT) -lft -L$(LINMATH) -llinmath -L$(LIBRE) -lregex -L$(MLX) -lmlx -lm -lXext -lX11 -o $(NAME)
 	@echo "$(GREEN)$(NAME) compiled!$(DEF_COLOR)"
 
 $(LIBFT_A):
@@ -65,6 +68,10 @@ $(LIBFT_A):
 $(LIBRE_A):
 	@$(MAKE) -s -C $(LIBRE)
 	@echo "Compiled $(LIBRE_A)"
+
+$(LINMATH_A):
+	@$(MAKE) -s -C $(LINMATH)
+	@echo "Compiled $(LINMATH_A)"
 
 $(MLX_A):
 	#@$(MAKE) -s -C $(MLX) do not uncomment this line, it does not compile
@@ -91,6 +98,13 @@ $(TESTS_BIN): $(RELEASE_OBJ) $(TESTS_OBJ)
 run-tests: $(TESTS_BIN)
 	@./$^ || true
 
+test-linmath: $(LINMATH_A)
+	@$(MAKE) run-tests -s -C $(LINMATH)
+
+test-libregex: $(LIBRE_A)
+	@$(MAKE) run-tests -s -C $(LIBRE)
+
+
 test/bin:
 	mkdir $@
 
@@ -100,11 +114,10 @@ test/obj:
 obj:
 	mkdir $@
 
-
-
 clean:
 	@$(MAKE) -s -C $(LIBFT) clean
 	@$(MAKE) -s -C $(LIBRE) clean
+	@$(MAKE) -s -C $(LINMATH) clean
 	@rm -f $(RELEASE_OBJ) $(TESTS_OBJ) obj/minirt.o
 	@rm -rf $(RELEASE_OBJ)
 	@echo "$(BLUE)$(NAME) release object files succesfully cleaned!$(DEF_COLOR)"
@@ -115,6 +128,7 @@ clean:
 fclean: clean
 	@$(MAKE) -s -C $(LIBFT) fclean
 	@$(MAKE) -s -C $(LIBRE) fclean
+	@$(MAKE) -s -C $(LINMATH) fclean
 	@rm -f $(LIBFT)/$(LIBFT_A)
 	@echo "$(CYAN)$(LIBFT) executable files succesfully cleaned!$(DEF_COLOR)"
 	@rm -f $(LIBRE)/$(LIBRE_A)
