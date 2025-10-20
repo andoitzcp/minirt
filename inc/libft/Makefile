@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
+#    Makefile                                        :+:    :+: :+:    :+:     #
 #                                                     +:+ +:+         +:+      #
 #    By: acampo-p <acampo-p@student.42urduli>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/15 10:22:25 by acampo-p          #+#    #+#              #
-#    Updated: 2022/12/19 09:59:13 by acampo-p         ###   ########.fr        #
+#    Updated: 2025/10/04 04:23:46 by andoitzcp   ########  ###                 #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ ft_isalnum.c	ft_memcmp.c	ft_putstr_fd.c	ft_strlcpy.c	ft_substr.c \
 ft_isalpha.c	ft_memcpy.c	ft_split.c	ft_strlen.c	ft_tolower.c \
 ft_isascii.c	ft_memmove.c	ft_strchr.c	ft_strmapi.c	ft_toupper.c \
 ft_atoh.c       ft_gnl.c        ft_abs.c        ft_free2parray.c \
-ft_xtoi.c		ft_min.c		ft_max.c
+ft_xtoi.c		ft_min.c		ft_max.c ft_atof.c
 
 OBJ		= $(SRCS:.c=.o)
 

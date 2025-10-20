@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acampo-p <acampo-p@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/08 22:46:14 by acampo-p          #+#    #+#             */
-/*   Updated: 2022/12/13 18:57:24 by acampo-p         ###   ########.fr       */
+/*   Created: 2022/11/28 21:38:11 by acampo-p          #+#    #+#             */
+/*   Updated: 2024/10/07 13:22:24 by acampo-p@        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libregex_priv.h"
 
-int	ft_putendl_fd(char *s, int fd)
+size_t	ft_strlen(const char *str)
 {
-	int	len;
+	size_t	index;
 
-	len = 0;
-	if (s)
-	{
-		len += ft_putstr_fd(s, fd);
-		len += ft_putchar_fd('\n', fd);
-	}
-	return (len);
+	index = 0;
+	while (str[index] != '\0')
+		index += 1;
+	return (index);
 }

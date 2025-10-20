@@ -1,26 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acampo-p <acampo-p@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/08 22:46:14 by acampo-p          #+#    #+#             */
-/*   Updated: 2022/12/13 18:57:24 by acampo-p         ###   ########.fr       */
+/*   Created: 2022/12/01 09:44:25 by acampo-p          #+#    #+#             */
+/*   Updated: 2024/10/07 13:33:48 by acampo-p@        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libregex_priv.h"
 
-int	ft_putendl_fd(char *s, int fd)
+int	ft_atoi(const char *nptr)
 {
-	int	len;
+	int			sign;
+	long int	nbr;
 
-	len = 0;
-	if (s)
+	sign = 1;
+	nbr = 0;
+	while (*nptr == 32 || (*nptr > 8 && *nptr < 14))
+		nptr++;
+	if (*nptr == '-')
 	{
-		len += ft_putstr_fd(s, fd);
-		len += ft_putchar_fd('\n', fd);
+		sign = -1;
+		nptr++;
 	}
-	return (len);
+	else if (*nptr == '+')
+		nptr++;
+	while (ft_isdigit(*nptr) == 1)
+	{
+		nbr += *nptr - '0';
+		nbr *= 10;
+		nptr++;
+	}
+	nbr = nbr * sign / 10;
+	return ((int)nbr);
 }

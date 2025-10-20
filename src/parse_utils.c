@@ -136,3 +136,10 @@ void breakdown_rawlines(t_rawlines **head)
     current->arrlen = i;
     return ;
 }
+
+int8_t is_valid_rawline(t_rawlines *rl)
+{
+    if (rl->elid == ELID_A)
+        return (match())
+
+}

@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acampo-p <acampo-p@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/08 22:46:14 by acampo-p          #+#    #+#             */
-/*   Updated: 2022/12/13 18:57:24 by acampo-p         ###   ########.fr       */
+/*   Created: 2022/11/29 14:35:02 by acampo-p          #+#    #+#             */
+/*   Updated: 2022/12/09 16:08:42 by acampo-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stddef.h>
 
-int	ft_putendl_fd(char *s, int fd)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	int	len;
+	char	*cdst;
+	char	*csrc;
+	size_t	index;
 
-	len = 0;
-	if (s)
+	if (!dst && !src)
+		return (dst);
+	cdst = (char *)dst;
+	csrc = (char *)src;
+	index = 0;
+	while (index < n)
 	{
-		len += ft_putstr_fd(s, fd);
-		len += ft_putchar_fd('\n', fd);
+		cdst[index] = csrc[index];
+		index++;
 	}
-	return (len);
+	return (dst);
 }

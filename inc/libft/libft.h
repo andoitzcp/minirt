@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   libft.h                                         :+:    :+: :+:    :+:    */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acampo-p <acampo-p@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 13:33:35 by acampo-p          #+#    #+#             */
-/*   Updated: 2024/10/07 13:37:46 by acampo-p@        ###   ########.fr       */
+/*   Updated: 2025/10/04 04:22:25 by andoitzcp   ########  ###                */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,17 @@ int		ft_toupper(int c);
 char	**ft_split(char const *s, char c);
 
 // Write
-void	ft_putchar_fd(char c, int fd);
-void	ft_putendl_fd(char *s, int fd);
-void	ft_putnbr_fd(int n, int fd);
-void	ft_putstr_fd(char *s, int fd);
+int		ft_putchar_fd(char c, int fd);
+int		ft_putendl_fd(char *s, int fd);
+int		ft_putnbr_fd(int n, int fd);
+int		ft_putstr_fd(char *s, int fd);
 
 // Read
 char	*ft_gnl(int fd);
 
 // Conversions
 int		ft_atoi(const char *str);
+float ft_atof(const char *nptr);
 int		ft_xtoi(char *str);
 char	*ft_itoa(int n);
 char	*ft_itoh(unsigned long n);

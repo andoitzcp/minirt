@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acampo-p <acampo-p@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/08 22:46:14 by acampo-p          #+#    #+#             */
-/*   Updated: 2022/12/13 18:57:24 by acampo-p         ###   ########.fr       */
+/*   Created: 2022/11/28 15:34:24 by acampo-p          #+#    #+#             */
+/*   Updated: 2022/12/09 13:40:54 by acampo-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-int	ft_putendl_fd(char *s, int fd)
+int	ft_isdigit(int c)
 {
-	int	len;
-
-	len = 0;
-	if (s)
-	{
-		len += ft_putstr_fd(s, fd);
-		len += ft_putchar_fd('\n', fd);
-	}
-	return (len);
+	if (c < 48 || c > 57)
+		return (0);
+	else
+		return (1);
 }

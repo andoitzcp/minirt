@@ -11,7 +11,17 @@ CC=gcc
 CFLAGS=-Wall -Werror -Wextra -g -I$(INC_DIR)
 TESTS_LDFLAGS=-lcriterion
 
-RELEASE_SRC= src/parse.c src/parse_utils.c src/input_validation.c src/exit.c src/debugging.c
+#RELEASE_SRC= src/color.c src/color_ops.c src/parse.c src/parse_utils.c src/input_validation.c src/exit.c src/debugging.c
+RELEASE_SRC= src/init.c \
+             src/parse.c \
+             src/lines.c \
+             src/get_data_basic.c \
+             src/get_data_common.c \
+             src/get_data_geo_els.c \
+             src/check_boundaries.c \
+             src/input_validation.c \
+             src/exit.c \
+             src/debugging.c
 RELEASE_OBJ=$(subst src/,obj/,$(RELEASE_SRC:.c=.o))
 
 TESTS_SRC=$(shell find test/src/ -type f -name '*.c')
@@ -27,6 +37,9 @@ LIBFT_A	= $(addprefix $(LIBFT), libft.a)
 MLX		= ./../minilibx-linux/
 MLX_A	= $(addprefix $(MLX), minilibx-Linux.a)
 
+LIBRE = $(addprefix $(INC_DIR), libregex/)
+LIBRE_A	= $(addprefix $(LIBRE), libregex.a)
+
 # Colors
 
 DEF_COLOR = \033[0;39m
@@ -41,13 +54,17 @@ WHITE = \033[0;97m
 
 all: $(NAME)
 
-$(NAME): obj/minirt.o $(RELEASE_OBJ) $(LIBFT_A) $(MLX_A) $(HEADERS)
-	@$(CC) $(CFLAGS) obj/$(NAME).o $(RELEASE_OBJ) -L$(LIBFT) -lft -L$(MLX) -lmlx -lm -lXext -lX11 -o $(NAME)
+$(NAME): obj/minirt.o $(RELEASE_OBJ) $(LIBFT_A) $(LIBRE_A) $(MLX_A) $(HEADERS)
+	@$(CC) $(CFLAGS) obj/$(NAME).o $(RELEASE_OBJ) -L$(LIBFT) -lft -L$(LIBRE) -lregex -L$(MLX) -lmlx -lm -lXext -lX11 -o $(NAME)
 	@echo "$(GREEN)$(NAME) compiled!$(DEF_COLOR)"
 
 $(LIBFT_A):
 	@$(MAKE) -s -C $(LIBFT)
 	@echo "Compiled $(LIBFT_A)"
+
+$(LIBRE_A):
+	@$(MAKE) -s -C $(LIBRE)
+	@echo "Compiled $(LIBRE_A)"
 
 $(MLX_A):
 	#@$(MAKE) -s -C $(MLX) do not uncomment this line, it does not compile
@@ -65,7 +82,7 @@ test/obj/%.o: test/src/%.c
 	@$(CC) $(CFLAGS) -c $^ -o $@
 	@echo "test objects created"
 
-test/bin/%: test/obj/%.o $(RELEASE_OBJ) $(LIBFT_A)
+test/bin/%: test/obj/%.o $(RELEASE_OBJ) $(LIBFT_A) $(LIBRE_A)
 	@$(CC) $(TESTS_LDFLAGS) $^ -o $@
 
 # prevent deleting object in rules chain
@@ -75,18 +92,23 @@ run-tests: $(TESTS_BIN)
 	@./$^ || true
 
 clean:
+	@$(MAKE) -s -C $(LIBFT) clean
+	@$(MAKE) -s -C $(LIBRE) clean
 	@rm -f $(RELEASE_OBJ) $(TESTS_OBJ) obj/minirt.o
-
-	@$(RM) -f $(LIBFT)/$(LIBFT_A)
-	@echo "$(CYAN)$(LIBFT) executable files succesfully cleaned!$(DEF_COLOR)"
-	@$(RM) -rf $(RELEASE_OBJ)
+	@rm -rf $(RELEASE_OBJ)
 	@echo "$(BLUE)$(NAME) release object files succesfully cleaned!$(DEF_COLOR)"
-	@$(RM) -rf $(TESTS_OBJ)
+	@rm -rf $(TESTS_OBJ)
 	@echo "$(BLUE)$(NAME) test object files succesfully cleaned!$(DEF_COLOR)"
-	@$(RM) -f src/minirt.h.gch
+	@rm -f src/minirt.h.gch
 
 fclean: clean
-	@$(RM) -f $(NAME)
+	@$(MAKE) -s -C $(LIBFT) fclean
+	@$(MAKE) -s -C $(LIBRE) fclean
+	@rm -f $(LIBFT)/$(LIBFT_A)
+	@echo "$(CYAN)$(LIBFT) executable files succesfully cleaned!$(DEF_COLOR)"
+	@rm -f $(LIBRE)/$(LIBRE_A)
+	@echo "$(CYAN)$(LIBRE) executable files succesfully cleaned!$(DEF_COLOR)"
+	@rm -f $(NAME)
 	@echo "$(CYAN)$(NAME) main executable file succesfully cleaned!$(DEF_COLOR)"
 	@rm -f $(TESTS_BIN)
 	@echo "$(CYAN)$(NAME) test executable files succesfully cleaned!$(DEF_COLOR)"

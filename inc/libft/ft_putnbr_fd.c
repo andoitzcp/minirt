@@ -12,17 +12,19 @@
 
 #include "libft.h"
 
-void	ft_putnbr_fd(int n, int fd)
+int	ft_putnbr_fd(int n, int fd)
 {
 	unsigned int	nbr;
 	unsigned int	dbase;
 	char			c;
+	int				len;
 
 	dbase = 1;
+	len = 0;
 	if (n < 0)
 	{
 		nbr = -1 * n;
-		write (fd, "-", 1);
+		len += write (fd, "-", 1);
 	}
 	else
 		nbr = n;
@@ -33,6 +35,7 @@ void	ft_putnbr_fd(int n, int fd)
 		c = nbr / dbase + '0';
 		nbr -= (c - '0') * dbase;
 		dbase /= 10;
-		write (fd, &c, 1);
+		len += write (fd, &c, 1);
 	}
+	return (len);
 }

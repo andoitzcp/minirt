@@ -11,6 +11,7 @@
 #include <errno.h>
 #include <stddef.h>
 #include "../inc/libft/libft.h"
+#include "../inc/libregex/src/libregex.h"
 #include "../../minilibx-linux/mlx.h"
 
 /*******************************************************************************/
@@ -32,16 +33,31 @@
 #define EL_TRIANGLE_ID "tr "
 #define EL_BLANK_LINE_ID ""
 
+#define RE_TYPE_QTY 9
+#define RE_AMBLIGHT "^A "
+#define RE_CAMERA "^C "
+#define RE_LIGHT "^L "
+#define RE_SPHERE "^sp "
+#define RE_PLANE "^pl "
+#define RE_SQUARE "^sq "
+#define RE_CYLINDER "^cy "
+#define RE_TRIANGLE "^tr "
+#define RE_BLANK_LINE "^\n$"
+
 /* Exit mode definitions */
 
 #define ERRORS000 "Error\n"
-#define ERRORS001 "minirt:init:append_rawline_node:"
+#define ERRORS001 "minirt:init:init_re_element_types:Invalid regex input"
 #define ERRORS002 "minirt:init:provided .rt file has invalid lines\n"
 #define ERRORS003 "minirt:init:init_elements"
 #define ERRORS004 "minirt:init:init_element_array:rawline linked list size and stored element quantity differ\n"
 #define ERRORS005 "minirt:parse:is_valid_input_file:not a valid path"
 #define ERRORS006 "minirt:parse:get_raw_content:unable to open the file"
-#define ERRORS007 "minirt:parse:has_raw_content_invalid_lines:the file contains invalid lines"
+#define ERRORS007 "minirt:parse:process_line:Invalid lines detected"
+#define ERRORS008 "minirt:init:init_re_element_types:Malloc error"
+#define ERRORS009 "minirt:parse:build_line_node:Malloc error"
+#define ERRORS010 "minirt:parse:check_unique_elements:More than 1 unique element detected"
+#define ERRORS011 "minirt:parse:build_element_node:Malloc error"
 
 /* Othe definitions */
 #define MAX_PATH_LENGTH 4096
@@ -50,21 +66,37 @@
 #define RGB_STR_ELEMENTS 3
 #define RGB_STR_VALID_CHARSET "0123456789,"
 
+#define ELQTY 8
+#define RE_FLOAT  "^-{0}{1}[0-9]*\\.{0}{1}[0-9]{1}$"
+#define RE_INT  "^-{0}{1}[0-9]{1}$"
+#define RE_EL_A "^ *A {1}[^, ]{1} {1}[^, ]{1},[^, ]{1},[^, ]{1} *$"
+#define RE_EL_C "^ *C {1}[^, ]{1},[^, ]{1},[^, ]{1} {1}[^, ]{1},[^, ]{1},[^, ]{1} {1}[^, ]{1} *$"
+#define RE_EL_L "^ *L {1}[^, ]{1},[^, ]{1},[^, ]{1} {1}[^, ]{1} {1}[^, ]{1},[^, ]{1},[^, ]{1} *$"
+#define RE_EL_SP "^ *sp {1}[^, ]{1},[^, ]{1},[^, ]{1} {1}[^, ]{1} {1}[^, ]{1},[^, ]{1},[^, ]{1} *$"
+#define RE_EL_PL "^ *pl {1}[^, ]{1},[^, ]{1},[^, ]{1} {1}[^, ]{1},[^, ]{1},[^, ]{1} {1}[^, ]{1},[^, ]{1},[^, ]{1} *$"
+#define RE_EL_CY "^ *cy {1}[^, ]{1},[^, ]{1},[^, ]{1} {1}[^, ]{1},[^, ]{1},[^, ]{1} {1}[^, ]{1} {1}[^, ]{1} {1}[^, ]{1},[^, ]{1},[^, ]{1} *$"
+#define RE_EL_BLANK "^\n$"
+
 
 typedef enum e_elid
 {
     ELID_NULL,
-    ELID_A,
-    ELID_C,
-    ELID_L,
-    ELID_SP,
-    ELID_PL,
-    ELID_SQ,
-    ELID_CY,
-    ELID_TR,
-    ELID_BLANK_LINE,
+    ELID_A = 0,
+    ELID_C = 1,
+    ELID_L = 2,
+    ELID_SP = 3,
+    ELID_PL = 4,
+    ELID_CY = 5,
+    ELID_BLANK_LINE = 6,
     ELID_INVALID
 } t_elid;
+
+typedef struct s_line
+{
+    int8_t type;
+    char ***content;
+    struct s_line *next;
+} t_line;
 
 typedef struct s_intarray
 {
@@ -75,9 +107,8 @@ typedef struct s_intarray
 typedef struct s_rawlines
 {
     enum e_elid elid;
-    char *line;
-    char **arr;
-    size_t arrlen;
+    char ***line;
+    int element_qty;
     struct s_rawlines *next;
 } t_rawlines;
 
@@ -90,14 +121,9 @@ typedef enum e_exitmodeflags{
   EMF_NOFREE = 1 << 0,
   EMF_RAWL = 1 << 1,
   EMF_ELS = 1 << 2,
-  EMF_PERROR = 1 << 3,
+  EMF_REET = 1 << 3, // RegEx Element types
+  EMF_PERROR = 1 << 4,
 } t_exitmodeflags;
-
-typedef struct s_amblight
-{
-    float ratio;
-    uint col;
-} t_amblight;
 
 typedef struct s_resolution
 {
@@ -105,82 +131,77 @@ typedef struct s_resolution
     uint y_sz;
 } t_resolution;
 
-typedef struct s_point
+typedef struct s_tuple
 {
     float x;
     float y;
     float z;
-} t_point;
+    float w;
+} t_tuple;
 
-typedef struct s_normvector
+typedef struct s_color
 {
     float r;
-    float s;
-    float t;
-} t_normvector;
+    float g;
+    float b;
+} t_color;
+
+typedef struct s_canvas
+{
+	int		width;
+	int		height;
+	t_color	*pixel_block;
+	t_color	**image;
+} t_canvas;
+
+typedef struct s_amblight
+{
+    float ratio;
+    struct s_color col;
+} t_amblight;
 
 typedef struct s_camera
 {
-    struct s_point p;
-    struct s_normvector nv;
+    struct s_tuple p;
+    struct s_tuple v;
     uint8_t fov; // Fiel Of View in degrees
 } t_camera;
 
 typedef struct s_light
 {
-    struct s_point p;
+    struct s_tuple p;
     float abr; // Ambient Brightness Ratio
-    uint col;
+    struct s_color col;
 } t_light;
 
 typedef struct s_sphere
 {
-    struct s_point p;
+    struct s_tuple p;
     float dia; // Diameter
-    uint col;
+    struct s_color col;
 } t_sphere;
-
-typedef struct s_plane
-{
-    struct s_point p;
-    struct s_normvector nv;
-    uint col;
-} t_plane;
-
-typedef struct s_square
-{
-    struct s_point p;
-    struct s_normvector nv;
-    float ssz; // square Size SiZe
-    uint col;
-} t_square;
 
 typedef struct s_cylinder
 {
-    struct s_point p;
-    struct s_normvector nv;
+    struct s_tuple p;
+    struct s_tuple v;
     float dia; // Diameter
     float hei; // Height
-    uint col;
+    struct s_color col;
 } t_cylinder;
 
-typedef struct s_triangle
+typedef struct s_plane
 {
-    struct s_point p1;
-    struct s_point p2;
-    struct s_point p3;
-    uint col;
-} t_triangle;
+    struct s_tuple p;
+    struct s_tuple v;
+    struct s_color col;
+} t_plane;
 
 typedef union u_eldata
 {
-    struct s_camera c;
-    struct s_light l;
     struct s_sphere sp;
-    struct s_plane pl;
-    struct s_square sq;
     struct s_cylinder cy;
-    struct s_triangle tr;
+    struct s_plane pl;
 } t_eldata;
 
 typedef struct s_elements
@@ -192,9 +213,14 @@ typedef struct s_elements
 typedef struct s_data
 {
     struct s_amblight ali;
+    struct s_camera c;
+    struct s_light l;
     struct s_resolution res;
-    struct s_elements *els;
-    struct s_rawlines **rawl;
+    struct s_elements **els;
+    struct s_line *lines;
+    struct s_re **re_el_types[RE_TYPE_QTY + 1];
+    struct s_re **re_float;
+    struct s_re **re_int;
     uint nels;
     uint8_t emf;
 } t_data;
@@ -206,6 +232,31 @@ typedef struct s_data
 /* parse */
 void parse(t_data *data, char *filepath);
 void get_raw_content(t_data *data, char *filepath);
+
+/* lines */
+char ***split_line(char *s);
+t_line *build_line_node(t_data *data, char ***line, int type);
+void append_line_node(t_line **head, t_line *node);
+void process_line(t_data *data, char *s);
+
+/* get data basic */
+uint8_t get_point_data(t_data *data, t_tuple *tuple, char **s);
+uint8_t get_vector_data(t_data *data, t_tuple *tuple, char **s);
+uint8_t get_color_data(t_data *data, t_color *color, char **s);
+
+/* get data common elements */
+uint8_t get_amblight_data(t_data *data, t_amblight *node, char ***line);
+uint8_t get_camera_data(t_data *data, t_camera *node, char ***line);
+uint8_t get_light_data(t_data *data, t_light *node, char ***line);
+
+/* get data geometric elements*/
+uint8_t get_sphere_data(t_data *data, t_sphere *node, char ***line);
+uint8_t get_plane_data(t_data *data, t_plane *node, char ***line);
+uint8_t get_cylinder_data(t_data *data, t_cylinder *node, char ***line);
+
+/* check boundaries */
+uint8_t check_color_bounds(t_color *color);
+uint8_t check_nvector_bounds(t_tuple *vector);
 
 /* parse utils*/
 int get_element_id(char *s);
@@ -220,13 +271,34 @@ void breakdown_rawlines(t_rawlines **head);
 int8_t is_valid_input_file(char *filepath);
 int8_t is_valid_data(t_data *data);
 
+void init(t_data *data);
+
 /* exit */
 int ft_exit(t_data *data, char *s);
-void free_rawl(t_rawlines **head);
-void free_els(t_elements *array);
+void free_lines(t_line **head);
+void free_els(t_elements **array);
 
 /* debugging */
 void print_ds_rawl(t_rawlines **head);
+void print_line_els(char ***line);
+void print_element_list(t_elements **el);
 
+
+/* color */
+t_color		color_set(float r, float g, float b);
+t_color		color_limit(t_color c);
+t_color		color_clamp(t_color c);
+t_color		color_add(t_color a, t_color b);
+t_color		color_sub(t_color a, t_color b);
+t_color		color_scale_up(t_color a, float n);
+t_color		color_scale_down(t_color a, float n);
+t_color		color_blend(t_color a, t_color b);
+
+/* canvas */
+t_canvas	*canvas_init(int width, int height);
+void		canvas_set_color(t_canvas *can, t_color c);
+int			canvas_set_pixel(t_canvas *can, int x, int y, t_color c);
+t_color		canvas_get_pixel(t_canvas can, int x, int y);
+int			canvas_to_ppm(t_canvas can, char *name);
 
 #endif // MINIRT_H_

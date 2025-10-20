@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acampo-p <acampo-p@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/08 22:46:14 by acampo-p          #+#    #+#             */
-/*   Updated: 2022/12/13 18:57:24 by acampo-p         ###   ########.fr       */
+/*   Created: 2022/12/03 21:02:06 by acampo-p          #+#    #+#             */
+/*   Updated: 2022/12/10 10:28:23 by acampo-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libregex_priv.h"
 
-int	ft_putendl_fd(char *s, int fd)
+char	*ft_strdup(const char *s)
 {
-	int	len;
+	char	*scpy;
+	size_t	len;
 
-	len = 0;
-	if (s)
-	{
-		len += ft_putstr_fd(s, fd);
-		len += ft_putchar_fd('\n', fd);
-	}
-	return (len);
+	len = ft_strlen(s) + 1;
+	scpy = (char *)malloc(len);
+	if (!scpy)
+		return (NULL);
+	scpy = ft_memcpy(scpy, s, len);
+	return (scpy);
 }

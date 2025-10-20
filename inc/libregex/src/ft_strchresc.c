@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acampo-p <acampo-p@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/08 22:46:14 by acampo-p          #+#    #+#             */
-/*   Updated: 2022/12/13 18:57:24 by acampo-p         ###   ########.fr       */
+/*   Created: 2022/11/29 16:31:53 by acampo-p          #+#    #+#             */
+/*   Updated: 2022/12/12 10:06:04 by acampo-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stddef.h>
 
-int	ft_putendl_fd(char *s, int fd)
+/*
+** Like strchr but escapes cs character
+*/
+char	*ft_strchresc(const char *s, int c, int sc)
 {
-	int	len;
-
-	len = 0;
-	if (s)
+	if (s == NULL)
+		return (NULL);
+	while (*s != '\0')
 	{
-		len += ft_putstr_fd(s, fd);
-		len += ft_putchar_fd('\n', fd);
+		if (*s == (char)sc && (char)*(s + 1) != '\0')
+			s += 2;
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
 	}
-	return (len);
+	if ((char)c == 0)
+		return ((char *)s);
+	return (NULL);
 }
