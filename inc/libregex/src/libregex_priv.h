@@ -14,7 +14,7 @@ void append_re_node(t_re **head, t_re *node);
 void convert_delimiters(t_re **head);
 int8_t is_valid_range(const char *s);
 int8_t get_charset(uint8_t *cs, const char *s);
-int8_t get_reps(size_t *n, const char *s);
+int8_t get_reps(ssize_t *n, const char *s);
 void reverse_charset(uint8_t *cs);
 int8_t get_charset(uint8_t *cs, const char *s);
 

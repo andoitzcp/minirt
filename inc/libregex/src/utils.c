@@ -36,7 +36,7 @@ int8_t get_charset(uint8_t *cs, const char *s)
     return (0);
 }
 
-int8_t get_reps(size_t *n, const char *s)
+int8_t get_reps(ssize_t *n, const char *s)
 {
     size_t i;
 
