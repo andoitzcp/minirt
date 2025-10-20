@@ -13,7 +13,7 @@ TESTS_LDFLAGS=-lcriterion
 
 #RELEASE_SRC= src/color.c src/color_ops.c src/parse.c src/parse_utils.c src/input_validation.c src/exit.c src/debugging.c
 RELEASE_SRC= src/init.c \
-             src/parse2.c \
+             src/parse.c \
              src/lines.c \
              src/get_data_basic.c \
              src/get_data_common.c \
