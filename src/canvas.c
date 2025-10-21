@@ -18,7 +18,7 @@ t_canvas	*canvas_init(int width, int height)
 
 	if (width < 1 || height < 1)
 		return (NULL);
-	can = (t_canvas *)malloc(sizeof(t_canvas *));
+	can = (t_canvas *)malloc(sizeof(t_canvas));
 	if (!can)
 		return (NULL);
 	can->width = width;

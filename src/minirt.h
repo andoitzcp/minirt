@@ -132,14 +132,6 @@ typedef struct s_resolution
     uint y_sz;
 } t_resolution;
 
-typedef struct s_tuple
-{
-    float x;
-    float y;
-    float z;
-    float w;
-} t_tuple;
-
 typedef struct s_color
 {
     float r;
@@ -154,6 +146,19 @@ typedef struct s_canvas
 	t_color	*pixel_block;
 	t_color	**image;
 } t_canvas;
+
+typedef struct s_intersect_old
+{
+    int q; //qty of intersections
+    float i[2]; //intersections
+} t_intersect_old;
+
+typedef struct s_ray
+{
+    struct s_tuple o; // origin (point)
+    struct s_tuple d; // direction (vector)
+} t_ray;
+
 
 typedef struct s_amblight
 {
@@ -301,5 +306,13 @@ void		canvas_set_color(t_canvas *can, t_color c);
 int			canvas_set_pixel(t_canvas *can, int x, int y, t_color c);
 t_color		canvas_get_pixel(t_canvas can, int x, int y);
 int			canvas_to_ppm(t_canvas can, char *name);
+
+/* ray */
+t_ray ray_new(t_tuple origin, t_tuple direction);
+t_tuple position(t_ray ray, float t);
+
+/* intersect */
+t_intersect_old intersect_sp_old(t_ray *ray, t_sphere *sp);
+t_intersect_old intersect_sp(t_ray *ray, t_sphere *sp);
 
 #endif // MINIRT_H_

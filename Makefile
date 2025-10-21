@@ -21,7 +21,14 @@ RELEASE_SRC= src/init.c \
              src/check_boundaries.c \
              src/input_validation.c \
              src/exit.c \
+             src/ppm.c \
+             src/ray.c \
+             src/color.c \
+             src/canvas.c \
+             src/color_ops.c \
+             src/intersect_sp.c \
              src/debugging.c
+
 RELEASE_OBJ=$(subst src/,obj/,$(RELEASE_SRC:.c=.o))
 
 TESTS_SRC=$(shell find test/src/ -type f -name '*.c')
@@ -89,8 +96,8 @@ test/obj/%.o: test/src/%.c | test/obj
 	@$(CC) $(CFLAGS) -c $^ -o $@
 	@echo "test objects created"
 
-test/bin/%: test/obj/%.o $(RELEASE_OBJ) $(LIBFT_A) $(LIBRE_A) | test/bin
-	@$(CC) $(TESTS_LDFLAGS) $^ -o $@
+test/bin/%: $(TESTS_OBJ) $(RELEASE_OBJ) $(LIBFT_A) $(LINMATH_A) $(LIBRE_A) $(HEADERS)| test/bin
+	@$(CC) $(TESTS_LDFLAGS) $^ -lm -lXext -lX11 -o $@
 
 # prevent deleting object in rules chain
 $(TESTS_BIN): $(RELEASE_OBJ) $(TESTS_OBJ)
