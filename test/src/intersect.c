@@ -3,88 +3,144 @@
 #include <criterion/criterion.h>
 #include <criterion/internal/assert.h>
 
-Test(intersect_sp_old, twopoints)
+Test(calc_ray_sp_intersects, twopoints)
 {
     t_ray r;
     t_sphere sp;
-    t_intersect_old xs;
+    float array[3];
 
     r = ray_new(tuple_point(0, 0, -5), tuple_vector(0, 0, 1));
     sp.p = tuple_point(0, 0, 0);
     sp.dia = 1;
     sp.col = color_set(1, 0, 0);
-    xs = intersect_sp_old(&r, &sp);
+    calc_ray_sp_intersects(array, &r, &sp);
 
-    cr_expect_eq(xs.q, 2);
-    cr_expect(float_eq(xs.i[0], 4), "%f, %f\n", xs.i[0], (float)4);
-    cr_expect(float_eq(xs.i[1], 6), "%f, %f\n", xs.i[1], (float)6);
+    cr_expect_eq(array[0], 2);
+    cr_expect(float_eq(array[1], 4), "%f, %f\n", array[1], (float)4);
+    cr_expect(float_eq(array[2], 6), "%f, %f\n", array[2], (float)6);
 }
 
 
-Test(intersect_sp_old, tangent)
+Test(calc_ray_sp_intersects, tangent)
 {
     t_ray r;
     t_sphere sp;
-    t_intersect_old xs;
+    float array[3];
 
     r = ray_new(tuple_point(0, 1, -5), tuple_vector(0, 0, 1));
     sp.p = tuple_point(0, 0, 0);
     sp.dia = 1;
     sp.col = color_set(1, 0, 0);
-    xs = intersect_sp_old(&r, &sp);
+    calc_ray_sp_intersects(array, &r, &sp);
 
-    cr_expect_eq(xs.q, 2, "q=%d\n", xs.q);
-    cr_expect(float_eq(xs.i[0], 5), "%f, %f\n", xs.i[0], (float)0);
-    cr_expect(float_eq(xs.i[1], 5), "%f, %f\n", xs.i[1], (float)0);
+    cr_expect_eq(array[0], 2);
+    cr_expect(float_eq(array[1], 5), "%f, %f\n", array[1], (float)0);
+    cr_expect(float_eq(array[2], 5), "%f, %f\n", array[2], (float)0);
 }
 
-Test(intersect_sp_old, miss)
+Test(calc_ray_sp_intersects, miss)
 {
     t_ray r;
     t_sphere sp;
-    t_intersect_old xs;
+    float array[3];
 
     r = ray_new(tuple_point(0, 2, -5), tuple_vector(0, 0, 1));
     sp.p = tuple_point(0, 0, 0);
     sp.dia = 1;
     sp.col = color_set(1, 0, 0);
-    xs = intersect_sp_old(&r, &sp);
+    calc_ray_sp_intersects(array, &r, &sp);
 
-    cr_expect_eq(xs.q, 0, "q=%d\n", xs.q);
-    cr_expect(float_eq(xs.i[0], 0), "%f, %f\n", xs.i[0], (float)0);
-    cr_expect(float_eq(xs.i[1], 0), "%f, %f\n", xs.i[1], (float)0);
+    cr_expect_eq(array[0], 0);
+    cr_expect(float_eq(array[1], 0), "%f, %f\n", array[1], (float)0);
+    cr_expect(float_eq(array[2], 0), "%f, %f\n", array[2], (float)0);
 }
 
-Test(intersect_sp_old, inside)
+Test(calc_ray_sp_intersects, inside)
 {
     t_ray r;
     t_sphere sp;
-    t_intersect_old xs;
+    float array[3];
 
     r = ray_new(tuple_point(0, 0, 0), tuple_vector(0, 0, 1));
     sp.p = tuple_point(0, 0, 0);
     sp.dia = 1;
     sp.col = color_set(1, 0, 0);
-    xs = intersect_sp_old(&r, &sp);
+    calc_ray_sp_intersects(array, &r, &sp);
 
-    cr_expect_eq(xs.q, 2);
-    cr_expect(float_eq(xs.i[0], -1), "%f, %f\n", xs.i[0],(float) -1);
-    cr_expect(float_eq(xs.i[1], 1 ), "%f, %f\n", xs.i[1], (float) 1);
+    cr_expect_eq(array[0], 2);
+    cr_expect(float_eq(array[1], -1), "%f, %f\n", array[1],(float) -1);
+    cr_expect(float_eq(array[2], 1 ), "%f, %f\n", array[2], (float) 1);
 }
 
-Test(intersect_sp_old, behind)
+Test(calc_ray_sp_intersects, behind)
 {
     t_ray r;
     t_sphere sp;
-    t_intersect_old xs;
+    float array[3];
 
     r = ray_new(tuple_point(0, 0, 5), tuple_vector(0, 0, 1));
     sp.p = tuple_point(0, 0, 0);
     sp.dia = 1;
     sp.col = color_set(1, 0, 0);
-    xs = intersect_sp_old(&r, &sp);
+    calc_ray_sp_intersects(array, &r, &sp);
 
-    cr_expect_eq(xs.q, 2);
-    cr_expect(float_eq(xs.i[0], -6), "%f, %f\n", xs.i[0], (float)-6);
-    cr_expect(float_eq(xs.i[1], -4), "%f, %f\n", xs.i[1], (float)-4);
+    cr_expect_eq(array[0], 2);
+    cr_expect(float_eq(array[1], -6), "%f, %f\n", array[1], (float)-6);
+    cr_expect(float_eq(array[2], -4), "%f, %f\n", array[2], (float)-4);
 }
+
+// TODO add calc_ray_pl_intersects Tests
+// TODO add calc_ray_cy_intersects Tests
+
+Test(get_ray_el_intersects, order)
+{
+    t_ray r;
+    t_elements el;
+    t_intersects *inters;
+    int i;
+
+    r = ray_new(tuple_point(0, 0, -5), tuple_vector(0, 0, 1));
+
+    el.type = ELID_SP;
+    el.elda.sp.p = tuple_point(0, 0, 5);
+    el.elda.sp.dia = 1;
+    el.elda.sp.col = color_set(1, 0, 0);
+    get_ray_el_intersects(&r, &el);
+
+    el.type = ELID_SP;
+    el.elda.sp.p = tuple_point(0, 0, 1);
+    el.elda.sp.dia = 1;
+    el.elda.sp.col = color_set(1, 0, 0);
+    get_ray_el_intersects(&r, &el);
+
+    el.type = ELID_SP;
+    el.elda.sp.p = tuple_point(0, 0, 3);
+    el.elda.sp.dia = 1;
+    el.elda.sp.col = color_set(1, 0, 0);
+    get_ray_el_intersects(&r, &el);
+
+    el.type = ELID_SP;
+    el.elda.sp.p = tuple_point(0, 0, 0);
+    el.elda.sp.dia = 1;
+    el.elda.sp.col = color_set(1, 0, 0);
+    get_ray_el_intersects(&r, &el);
+
+    float array[8] = {4, 5, 6, 7, 7, 9, 9, 11};
+    inters = r.i;
+    i = 0;
+    while (inters != NULL)
+    {
+        //print_intersections(&(r.i));
+        cr_expect(float_eq(inters->i, array[i]), "iter: %d, ex: %f, ac: %f", i, array[i], inters->i);
+        cr_expect(i < 8);
+        inters = inters->next;
+        i++;
+    }
+    cr_expect_eq(i, 8, "%d vs 8", i);
+}
+
+/*
+** -5 -4 -3 -2 -1  0  1  2  3  4  5
+**  .--.--.--.--.--.--.--.--.--.--.
+**  0--1--2--3--4--5--6--7--8--9--10
+*/

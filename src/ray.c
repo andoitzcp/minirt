@@ -6,6 +6,7 @@ t_ray ray_new(t_tuple origin, t_tuple direction)
 
     r.o = origin;
     r.d = direction;
+    r.i = NULL;
     return (r);
 }
 

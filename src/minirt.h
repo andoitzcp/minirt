@@ -153,10 +153,19 @@ typedef struct s_intersect_old
     float i[2]; //intersections
 } t_intersect_old;
 
+typedef struct s_intersects
+{
+    float i; //intersections
+    struct s_elements *el;
+    struct s_intersects *next;
+} t_intersects;
+
+// TODO initialize intersects structure somewhere
 typedef struct s_ray
 {
     struct s_tuple o; // origin (point)
     struct s_tuple d; // direction (vector)
+    struct s_intersects *i;
 } t_ray;
 
 
@@ -288,6 +297,7 @@ void free_els(t_elements **array);
 void print_ds_rawl(t_rawlines **head);
 void print_line_els(char ***line);
 void print_element_list(t_elements **el);
+void print_intersections(t_intersects **head);
 
 
 /* color */
@@ -313,6 +323,11 @@ t_tuple position(t_ray ray, float t);
 
 /* intersect */
 t_intersect_old intersect_sp_old(t_ray *ray, t_sphere *sp);
-t_intersect_old intersect_sp(t_ray *ray, t_sphere *sp);
+void calc_ray_sp_intersects(float *array, t_ray *ray, t_sphere *sp);
+void calc_ray_pl_intersects(float *array, t_ray *ray, t_plane *pl);
+void calc_ray_cy_intersects(float *array, t_ray *ray, t_cylinder *cy);
+t_intersects *new_intersect(t_elements *el, float i);
+void insert_ray_intersect(t_intersects **head, t_intersects *node);
+void get_ray_el_intersects(t_ray *ray, t_elements *el);
 
 #endif // MINIRT_H_

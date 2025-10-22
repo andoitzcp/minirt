@@ -89,3 +89,21 @@ void print_element_list(t_elements **el)
         i++;
     }
 }
+
+void print_intersections(t_intersects **head)
+{
+    t_intersects *current;
+    int i;
+
+    current = *head;
+    i = 0;
+    printf("Printing intersections: *head %p\n", *head);
+    while (current)
+    {
+        printf("# %d, v: %f\n", i, current->i);
+        current = current->next;
+        i++;
+    }
+    printf("End\n");
+
+}
