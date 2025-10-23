@@ -76,7 +76,6 @@ void calc_ray_pl_intersects(float *array, t_ray *ray, t_plane *pl)
 
 // TODO implement plane intersects
 void calc_ray_cy_intersects(float *array, t_ray *ray, t_cylinder *cy)
-
 {
     (void)array;
     (void)ray;
@@ -147,4 +146,20 @@ void get_ray_el_intersects(t_ray *ray, t_elements *el)
     }
     return ;
 
+}
+
+float hit(t_intersects **head)
+{
+    t_intersects *current;
+
+    current = *head;
+    while (current != NULL)
+    {
+        if (current->i > 0)
+            break ;
+        current = current->next;
+    }
+    if (current != NULL)
+        return (current->i);
+    return (-1);
 }
