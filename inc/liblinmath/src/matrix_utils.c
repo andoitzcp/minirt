@@ -61,3 +61,22 @@ int		matrix_is_invertible(t_matrix m)
 		return (0);
 	return (1);
 }
+
+void	matrix_print(t_matrix m)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while(i < m.size)
+	{
+		j = 0;
+		while(j < m.size)
+		{
+			printf("%f ", m.value[i][j]);
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
+}

@@ -97,6 +97,7 @@ float	matrix_determinant(t_matrix m)
 		det = m.value[0][0] * m.value[1][1] - m.value[0][1] * m.value[1][0];
 		return (det);
 	}
+	det = 0;
 	j = 0;
 	while (j < m.size)
 	{

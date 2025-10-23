@@ -263,3 +263,276 @@ Test(matrix, rotation) {
 	b = matrix_rot_x(20);
 	cr_expect(matrix_eq(a,b));
 }
+
+Test(matrix, transpose) {
+
+	t_matrix a;
+	t_matrix b;
+	
+	float values_a[16] = 
+	{0, 9, 3, 0,
+	 9, 8, 0, 8,
+	 1, 8, 5, 3,
+	 0, 0, 5, 8};
+	float values_b[16] = 
+	{0, 9, 1, 0,
+	 9, 8, 8, 0,
+	 3, 0, 5, 5,
+	 0, 8, 3, 8};
+
+	a = matrix_from_array(4, values_a);
+	b = matrix_from_array(4, values_b);
+	a = matrix_transpose(a);
+	cr_expect(matrix_eq(a, b));
+}
+
+Test(matrix, determinant_2x2) {
+	
+	t_matrix a;
+	float	ret;
+	float	expec;
+	
+	float values_a[16] = 
+	{1, 5, -3, 2};
+	a = matrix_from_array(2, values_a);
+	ret = matrix_determinant(a);
+	expec = 17;
+	cr_expect(float_eq(ret, expec) == true, "Expected: %f, Returned: %f", expec, ret);
+}
+
+Test (matrix, submatrix_1) {
+	
+	t_matrix a;
+	t_matrix b;
+
+	float values_a[16] = 
+	{0, 9, 3,
+	 0, 9, 8,
+	 0, 5, 8};
+	float values_b[16] = 
+	{9, 3,
+	 5, 8};
+
+	a = matrix_from_array(3, values_a);
+	b = matrix_from_array(2, values_b);
+	a = matrix_submatrix(a, 1, 0);
+	cr_expect(matrix_eq(a, b));
+}
+
+
+Test (matrix, submatrix_2) {
+	
+	t_matrix a;
+	t_matrix b;
+
+	float values_a[16] = 
+	{-6, 1, 3, 5,
+	  0, 9, 8, 2,
+	  3, 0, 5, 5,
+	  1, 5, 8, 7};
+	float values_b[16] = 
+	{-6, 1, 5,
+	  3, 0, 5,
+	  1, 5, 7};
+
+	a = matrix_from_array(4, values_a);
+	b = matrix_from_array(3, values_b);
+	a = matrix_submatrix(a, 1, 2);
+	cr_expect(matrix_eq(a, b));
+}
+
+Test(matrix, minor) {
+
+	t_matrix a;
+	t_matrix b;
+	float	ret; 
+	float	expec;
+
+	float values_a[16] = 
+	{ 3, 5, 0,
+	  2, -1, -7,
+	  6, -1, 5 };
+	float values_b[16] = 
+	{ 5, 0,
+	  -1, 5 };
+	a = matrix_from_array(3, values_a);
+	b = matrix_from_array(2, values_b);
+	ret = matrix_minor(a, 1, 0);
+	expec = 25;
+	cr_expect(float_eq(ret, expec) == true, "Expected: %f, Returned: %f", expec, ret);
+	a = matrix_submatrix(a, 1, 0);
+	cr_expect(matrix_eq(a, b));
+}
+
+Test(matrix, cofactors) {
+	
+	t_matrix a;
+	float	ret; 
+	float	expec;
+
+	float values_a[16] = 
+	{ 3, 5, 0,
+	  2, -1, -7,
+	  6, -1, 5 };
+
+	a = matrix_from_array(3, values_a);
+	
+	ret = matrix_minor(a, 0, 0);
+	expec = -12;
+	cr_expect(float_eq(ret, expec) == true, "Expected: %f, Returned: %f", expec, ret);
+
+	ret = matrix_cofactor(a, 0, 0);
+	expec = -12;
+	cr_expect(float_eq(ret, expec) == true, "Expected: %f, Returned: %f", expec, ret);
+
+	ret = matrix_minor(a, 1, 0);
+	expec = 25;
+	cr_expect(float_eq(ret, expec) == true, "Expected: %f, Returned: %f", expec, ret);
+
+	ret = matrix_cofactor(a, 1, 0);
+	expec = -25;
+	cr_expect(float_eq(ret, expec) == true, "Expected: %f, Returned: %f", expec, ret);
+}
+
+Test(matrix, determinant_3x3) {
+
+	t_matrix a;
+	float	ret; 
+	float	expec;
+
+	float values_a[16] = 
+	{ 1, 2, 6,
+	 -5, 8,-4,
+	  2, 6, 4 };
+
+	a = matrix_from_array(3, values_a);
+	
+	ret = matrix_cofactor(a, 0, 0);
+	expec = 56;
+	cr_expect(float_eq(ret, expec) == true, "Expected: %f, Returned: %f", expec, ret);
+
+	ret = matrix_cofactor(a, 0, 1);
+	expec = 12;
+	cr_expect(float_eq(ret, expec) == true, "Expected: %f, Returned: %f", expec, ret);
+
+	ret = matrix_cofactor(a, 0, 2);
+	expec = -46;
+	cr_expect(float_eq(ret, expec) == true, "Expected: %f, Returned: %f", expec, ret);
+
+	ret = matrix_determinant(a);
+	expec = -196;
+	cr_expect(float_eq(ret, expec) == true, "Expected: %f, Returned: %f", expec, ret);
+}
+
+Test(matrix, determinant_4x4) {
+
+	t_matrix a;
+	float	ret; 
+	float	expec;
+
+	float values_a[16] = 
+	{ -2,-8, 3, 5,
+	  -3, 1, 7, 3,
+	   1, 2,-9, 6,
+	  -6, 7, 7,-9 };
+
+	a = matrix_from_array(4, values_a);
+	
+	ret = matrix_cofactor(a, 0, 0);
+	expec = 690;
+	cr_expect(float_eq(ret, expec) == true, "Expected: %f, Returned: %f", expec, ret);
+
+	ret = matrix_cofactor(a, 0, 1);
+	expec = 447;
+	cr_expect(float_eq(ret, expec) == true, "Expected: %f, Returned: %f", expec, ret);
+
+	ret = matrix_cofactor(a, 0, 2);
+	expec = 210;
+	cr_expect(float_eq(ret, expec) == true, "Expected: %f, Returned: %f", expec, ret);
+
+	ret = matrix_cofactor(a, 0, 3);
+	expec = 51;
+	cr_expect(float_eq(ret, expec) == true, "Expected: %f, Returned: %f", expec, ret);
+	
+	ret = matrix_determinant(a);
+	expec = -4071;
+	cr_expect(float_eq(ret, expec) == true, "Expected: %f, Returned: %f", expec, ret);
+}
+
+Test(matrix, is_invertible) {
+	
+	t_matrix a;
+	float	ret; 
+	float	expec;
+
+	float values_a[16] = 
+	{  6, 4, 4, 4,
+	   5, 5, 7, 6,
+	   4,-9, 3,-7,
+	   9, 1, 7,-6 };
+
+	a = matrix_from_array(4, values_a);
+
+	ret = matrix_determinant(a);
+	expec = -2120;
+	cr_expect(float_eq(ret, expec) == true, "Expected: %f, Returned: %f", expec, ret);
+	
+	ret = matrix_is_invertible(a);
+	expec = 1;
+	cr_expect(float_eq(ret, expec) == true, "Expected: %f, Returned: %f", expec, ret);
+}
+
+Test(matrix, non_invertible) {
+	
+	t_matrix a;
+	float	ret; 
+	float	expec;
+
+	float values_a[16] = 
+	{ -4, 2,-2,-3,
+	   9, 6, 2, 6,
+	   0,-5, 1,-5,
+	   0, 0, 0, 0 };
+
+	a = matrix_from_array(4, values_a);
+
+	ret = matrix_determinant(a);
+	expec = 0;
+	cr_expect(float_eq(ret, expec) == true, "Expected: %f, Returned: %f", expec, ret);
+	
+	ret = matrix_is_invertible(a);
+	expec = 0;
+	cr_expect(float_eq(ret, expec) == true, "Expected: %f, Returned: %f", expec, ret);
+}
+
+Test(matrix, inverse) {
+	
+	t_matrix a;
+	t_matrix b;
+	t_matrix inverse;
+	float	ret; 
+	float	expec;
+
+	float values_a[16] = 
+	{ -5, 2, 6,-8,
+	   1,-5, 1, 8,
+	   7, 7,-6,-7,
+	   1,-3, 7, 4 };
+	float values_b[16] = 
+	{ 0.21805, 0.45113, 0.24060,-0.04511,
+	 -0.80827,-1.45677,-0.44361, 0.52068,
+	 -0.07895,-0.22368,-0.05263, 0.19737,
+	 -0.52256,-0.81391,-0.30075, 0.30639 };
+
+	a = matrix_from_array(4, values_a);
+	b = matrix_from_array(4, values_b);
+
+	ret = matrix_determinant(a);
+	expec = 532;
+	cr_expect(float_eq(ret, expec) == true, "Expected: %f, Returned: %f", expec, ret);
+	
+	inverse = matrix_inverse(a);
+	b = matrix_identity(4);
+	a = matrix_matrix_mult(a, inverse);
+	cr_expect(matrix_eq(a, b));
+}

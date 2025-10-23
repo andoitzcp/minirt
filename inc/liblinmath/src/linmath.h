@@ -13,6 +13,7 @@
 #ifndef LINMATH_H
 # define LINMATH_H
 # include <math.h>
+# include <stdio.h>
 
 // Constants
 # define EPS 1e-6f
@@ -84,5 +85,6 @@ t_matrix	matrix_rot_z(float angle);
 int			matrix_eq(t_matrix a, t_matrix b);
 void		matrix_fill_limits(t_matrix *m, float value);
 int			matrix_is_invertible(t_matrix m);
+void		matrix_print(t_matrix m);
 
 #endif 

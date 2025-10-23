@@ -79,11 +79,12 @@ t_matrix matrix_inverse(t_matrix m)
 	if (det == 0)
 	{
 		inverse = matrix_zero();
-		inverse.size = 0;
+		inverse.size = 1;
 		return (inverse);
 	}
 	i = 0;
 	j = 0;
+	inverse.size = m.size;
 	while (i < m.size)
 	{
 		j = 0;
