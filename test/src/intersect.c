@@ -140,7 +140,93 @@ Test(get_ray_el_intersects, order)
 }
 
 /*
+** Regla para medir cuanta distancia hay entre 2 puntos.
 ** -5 -4 -3 -2 -1  0  1  2  3  4  5
 **  .--.--.--.--.--.--.--.--.--.--.
 **  0--1--2--3--4--5--6--7--8--9--10
 */
+
+Test(hit, general)
+{
+    t_ray r;
+    t_elements el;
+    float h;
+
+    r = ray_new(tuple_point(0, 0, -5), tuple_vector(0, 0, 1));
+
+    el.type = ELID_SP;
+    el.elda.sp.p = tuple_point(0, 0, -50);
+    el.elda.sp.dia = 1;
+    el.elda.sp.col = color_set(1, 0, 0);
+    get_ray_el_intersects(&r, &el);
+
+    h = hit(&(&r)->i);
+    cr_expect_eq(h, -1, "hit: %f vs expect %f\n", h, -1.0);
+
+    el.type = ELID_SP;
+    el.elda.sp.p = tuple_point(0, 0, -30);
+    el.elda.sp.dia = 1;
+    el.elda.sp.col = color_set(1, 0, 0);
+    get_ray_el_intersects(&r, &el);
+
+    h = hit(&(&r)->i);
+    cr_expect_eq(h, -1, "hit: %f vs expect %f\n", h, -1.0);
+
+    el.type = ELID_SP;
+    el.elda.sp.p = tuple_point(0, 0, 5);
+    el.elda.sp.dia = 1;
+    el.elda.sp.col = color_set(1, 0, 0);
+    get_ray_el_intersects(&r, &el);
+
+    el.type = ELID_SP;
+    el.elda.sp.p = tuple_point(0, 0, 1);
+    el.elda.sp.dia = 1;
+    el.elda.sp.col = color_set(1, 0, 0);
+    get_ray_el_intersects(&r, &el);
+
+    el.type = ELID_SP;
+    el.elda.sp.p = tuple_point(0, 0, 3);
+    el.elda.sp.dia = 1;
+    el.elda.sp.col = color_set(1, 0, 0);
+    get_ray_el_intersects(&r, &el);
+
+    el.type = ELID_SP;
+    el.elda.sp.p = tuple_point(0, 0, 0);
+    el.elda.sp.dia = 1;
+    el.elda.sp.col = color_set(1, 0, 0);
+    get_ray_el_intersects(&r, &el);
+
+    h = hit(&(&r)->i);
+    cr_expect_eq(h, 4, "hit: %f vs expect %f\n", h, 4.0);
+
+    el.type = ELID_SP;
+    el.elda.sp.p = tuple_point(0, 0, -3);
+    el.elda.sp.dia = 1;
+    el.elda.sp.col = color_set(1, 0, 0);
+    get_ray_el_intersects(&r, &el);
+
+    el.type = ELID_SP;
+    el.elda.sp.p = tuple_point(0, 0, -4);
+    el.elda.sp.dia = 1;
+    el.elda.sp.col = color_set(1, 0, 0);
+    get_ray_el_intersects(&r, &el);
+
+    el.type = ELID_SP;
+    el.elda.sp.p = tuple_point(0, 0, -8);
+    el.elda.sp.dia = 1;
+    el.elda.sp.col = color_set(1, 0, 0);
+    get_ray_el_intersects(&r, &el);
+
+    h = hit(&(&r)->i);
+    cr_expect_eq(h, 1, "hit: %f vs expect %f\n", h, 1.0);
+
+    el.type = ELID_SP;
+    el.elda.sp.p = tuple_point(0, 0, -3.5);
+    el.elda.sp.dia = 1;
+    el.elda.sp.col = color_set(1, 0, 0);
+    get_ray_el_intersects(&r, &el);
+
+    h = hit(&(&r)->i);
+    cr_expect_eq(h, 0.5, "hit: %f vs expect %f\n", h, 0.5);
+}
+

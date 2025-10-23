@@ -329,5 +329,6 @@ void calc_ray_cy_intersects(float *array, t_ray *ray, t_cylinder *cy);
 t_intersects *new_intersect(t_elements *el, float i);
 void insert_ray_intersect(t_intersects **head, t_intersects *node);
 void get_ray_el_intersects(t_ray *ray, t_elements *el);
+float hit(t_intersects **head);
 
 #endif // MINIRT_H_
