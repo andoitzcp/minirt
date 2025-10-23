@@ -6,13 +6,14 @@
 /*   By: iubieta- <iubieta@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 12:45:05 by iubieta-          #+#    #+#             */
-/*   Updated: 2025/09/21 20:01:22 by iubieta-         ###   ########.fr       */
+/*   Updated: 2025/10/22 20:30:32 by iubieta-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LINMATH_H
 # define LINMATH_H
 # include <math.h>
+# include <stdio.h>
 
 // Constants
 # define EPS 1e-6f
@@ -62,6 +63,16 @@ typedef struct s_matrix {
 t_matrix	matrix_zero(void);
 t_matrix	matrix_identity(int size);
 t_matrix	matrix_from_array(int size, float array[16]);
+t_matrix	matrix_inverse(t_matrix m);
+
+t_matrix	matrix_matrix_mult(t_matrix a, t_matrix b);
+t_tuple		matrix_tuple_mult(t_matrix m, t_tuple t);
+t_matrix	matrix_transpose(t_matrix m);
+float		matrix_determinant(t_matrix m);
+
+t_matrix	matrix_submatrix(t_matrix m, int row, int col);
+float		matrix_minor(t_matrix m, int row, int col);
+float		matrix_cofactor(t_matrix m, int row, int col);
 
 t_matrix	matrix_translation(float x, float y, float z);
 t_matrix	matrix_scalation(float x, float y, float z);
@@ -71,9 +82,9 @@ t_matrix	matrix_rot_x(float angle);
 t_matrix	matrix_rot_y(float angle);
 t_matrix	matrix_rot_z(float angle);
 
-t_matrix	matrix_matrix_mult(t_matrix a, t_matrix b);
-t_tuple		matrix_tuple_mult(t_matrix m, t_tuple t);
-
 int			matrix_eq(t_matrix a, t_matrix b);
+void		matrix_fill_limits(t_matrix *m, float value);
+int			matrix_is_invertible(t_matrix m);
+void		matrix_print(t_matrix m);
 
 #endif 

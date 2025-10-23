@@ -6,7 +6,7 @@
 /*   By: iubieta- <iubieta@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 19:16:44 by iubieta-          #+#    #+#             */
-/*   Updated: 2025/09/17 19:46:20 by iubieta-         ###   ########.fr       */
+/*   Updated: 2025/10/22 20:30:48 by iubieta-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,32 @@ void	matrix_fill_limits(t_matrix *m, float value)
 				m->value[i][j] = value;
 			j++;
 		}
+		i++;
+	}
+}
+
+int		matrix_is_invertible(t_matrix m)
+{
+	if (matrix_determinant(m) == 0)
+		return (0);
+	return (1);
+}
+
+void	matrix_print(t_matrix m)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while(i < m.size)
+	{
+		j = 0;
+		while(j < m.size)
+		{
+			printf("%f ", m.value[i][j]);
+			j++;
+		}
+		printf("\n");
 		i++;
 	}
 }

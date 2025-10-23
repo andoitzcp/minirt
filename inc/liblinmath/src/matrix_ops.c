@@ -6,7 +6,7 @@
 /*   By: iubieta- <iubieta@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 22:41:00 by iubieta-          #+#    #+#             */
-/*   Updated: 2025/09/21 20:28:26 by iubieta-         ###   ########.fr       */
+/*   Updated: 2025/10/22 20:08:04 by iubieta-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,45 @@ t_tuple	matrix_tuple_mult(t_matrix m, t_tuple t)
 	ret.w = m.value[3][0] * t.x + m.value[3][1] * t.y +
 		m.value[3][2] * t.z + m.value[3][3] * t.w;
 	return (ret);
+}
+
+t_matrix matrix_transpose(t_matrix m)
+{
+	t_matrix	new;
+	int			i;
+	int			j;
+
+	new.size = m.size;
+	i = 0;
+	while (i < m.size)
+	{
+		j = 0;
+		while(j < m.size)
+		{
+			new.value[i][j] = m.value[j][i];
+			j++;
+		}
+		i++;
+	}
+	return new;
+}
+
+float	matrix_determinant(t_matrix m)
+{
+	float	det;
+	int		j;
+
+	if (m.size == 2)
+	{
+		det = m.value[0][0] * m.value[1][1] - m.value[0][1] * m.value[1][0];
+		return (det);
+	}
+	det = 0;
+	j = 0;
+	while (j < m.size)
+	{
+		det = det + m.value[0][j] * matrix_cofactor(m, 0, j);
+		j++;
+	}
+	return det;
 }
