@@ -59,4 +59,4 @@ dkms.conf
 minirt
 *.swp
 /*.rt
-
+/inc/*/test/bin

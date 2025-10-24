@@ -27,6 +27,8 @@ RELEASE_SRC= src/init.c \
              src/canvas.c \
              src/color_ops.c \
              src/intersect_sp.c \
+             src/transform.c \
+             src/elements.c \
              src/debugging.c
 
 RELEASE_OBJ=$(subst src/,obj/,$(RELEASE_SRC:.c=.o))

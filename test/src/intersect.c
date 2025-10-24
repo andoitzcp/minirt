@@ -10,9 +10,7 @@ Test(calc_ray_sp_intersects, twopoints)
     float array[3];
 
     r = ray_new(tuple_point(0, 0, -5), tuple_vector(0, 0, 1));
-    sp.p = tuple_point(0, 0, 0);
-    sp.dia = 1;
-    sp.col = color_set(1, 0, 0);
+    sp = new_sphere();
     calc_ray_sp_intersects(array, &r, &sp);
 
     cr_expect_eq(array[0], 2);
@@ -28,9 +26,7 @@ Test(calc_ray_sp_intersects, tangent)
     float array[3];
 
     r = ray_new(tuple_point(0, 1, -5), tuple_vector(0, 0, 1));
-    sp.p = tuple_point(0, 0, 0);
-    sp.dia = 1;
-    sp.col = color_set(1, 0, 0);
+    sp = new_sphere();
     calc_ray_sp_intersects(array, &r, &sp);
 
     cr_expect_eq(array[0], 2);
@@ -45,9 +41,7 @@ Test(calc_ray_sp_intersects, miss)
     float array[3];
 
     r = ray_new(tuple_point(0, 2, -5), tuple_vector(0, 0, 1));
-    sp.p = tuple_point(0, 0, 0);
-    sp.dia = 1;
-    sp.col = color_set(1, 0, 0);
+    sp = new_sphere();
     calc_ray_sp_intersects(array, &r, &sp);
 
     cr_expect_eq(array[0], 0);
@@ -62,9 +56,7 @@ Test(calc_ray_sp_intersects, inside)
     float array[3];
 
     r = ray_new(tuple_point(0, 0, 0), tuple_vector(0, 0, 1));
-    sp.p = tuple_point(0, 0, 0);
-    sp.dia = 1;
-    sp.col = color_set(1, 0, 0);
+    sp = new_sphere();
     calc_ray_sp_intersects(array, &r, &sp);
 
     cr_expect_eq(array[0], 2);
@@ -79,9 +71,7 @@ Test(calc_ray_sp_intersects, behind)
     float array[3];
 
     r = ray_new(tuple_point(0, 0, 5), tuple_vector(0, 0, 1));
-    sp.p = tuple_point(0, 0, 0);
-    sp.dia = 1;
-    sp.col = color_set(1, 0, 0);
+    sp = new_sphere();
     calc_ray_sp_intersects(array, &r, &sp);
 
     cr_expect_eq(array[0], 2);
@@ -102,27 +92,23 @@ Test(get_ray_el_intersects, order)
     r = ray_new(tuple_point(0, 0, -5), tuple_vector(0, 0, 1));
 
     el.type = ELID_SP;
+    el.elda.sp = new_sphere();
     el.elda.sp.p = tuple_point(0, 0, 5);
-    el.elda.sp.dia = 1;
-    el.elda.sp.col = color_set(1, 0, 0);
     get_ray_el_intersects(&r, &el);
 
     el.type = ELID_SP;
+    el.elda.sp = new_sphere();
     el.elda.sp.p = tuple_point(0, 0, 1);
-    el.elda.sp.dia = 1;
-    el.elda.sp.col = color_set(1, 0, 0);
     get_ray_el_intersects(&r, &el);
 
     el.type = ELID_SP;
+    el.elda.sp = new_sphere();
     el.elda.sp.p = tuple_point(0, 0, 3);
-    el.elda.sp.dia = 1;
-    el.elda.sp.col = color_set(1, 0, 0);
     get_ray_el_intersects(&r, &el);
 
     el.type = ELID_SP;
+    el.elda.sp = new_sphere();
     el.elda.sp.p = tuple_point(0, 0, 0);
-    el.elda.sp.dia = 1;
-    el.elda.sp.col = color_set(1, 0, 0);
     get_ray_el_intersects(&r, &el);
 
     float array[8] = {4, 5, 6, 7, 7, 9, 9, 11};
@@ -155,75 +141,65 @@ Test(hit, general)
     r = ray_new(tuple_point(0, 0, -5), tuple_vector(0, 0, 1));
 
     el.type = ELID_SP;
+    el.elda.sp = new_sphere();
     el.elda.sp.p = tuple_point(0, 0, -50);
-    el.elda.sp.dia = 1;
-    el.elda.sp.col = color_set(1, 0, 0);
     get_ray_el_intersects(&r, &el);
 
     h = hit(&(&r)->i);
     cr_expect_eq(h, -1, "hit: %f vs expect %f\n", h, -1.0);
 
     el.type = ELID_SP;
+    el.elda.sp = new_sphere();
     el.elda.sp.p = tuple_point(0, 0, -30);
-    el.elda.sp.dia = 1;
-    el.elda.sp.col = color_set(1, 0, 0);
     get_ray_el_intersects(&r, &el);
 
     h = hit(&(&r)->i);
     cr_expect_eq(h, -1, "hit: %f vs expect %f\n", h, -1.0);
 
     el.type = ELID_SP;
+    el.elda.sp = new_sphere();
     el.elda.sp.p = tuple_point(0, 0, 5);
-    el.elda.sp.dia = 1;
-    el.elda.sp.col = color_set(1, 0, 0);
     get_ray_el_intersects(&r, &el);
 
     el.type = ELID_SP;
+    el.elda.sp = new_sphere();
     el.elda.sp.p = tuple_point(0, 0, 1);
-    el.elda.sp.dia = 1;
-    el.elda.sp.col = color_set(1, 0, 0);
     get_ray_el_intersects(&r, &el);
 
     el.type = ELID_SP;
+    el.elda.sp = new_sphere();
     el.elda.sp.p = tuple_point(0, 0, 3);
-    el.elda.sp.dia = 1;
-    el.elda.sp.col = color_set(1, 0, 0);
     get_ray_el_intersects(&r, &el);
 
     el.type = ELID_SP;
+    el.elda.sp = new_sphere();
     el.elda.sp.p = tuple_point(0, 0, 0);
-    el.elda.sp.dia = 1;
-    el.elda.sp.col = color_set(1, 0, 0);
     get_ray_el_intersects(&r, &el);
 
     h = hit(&(&r)->i);
     cr_expect_eq(h, 4, "hit: %f vs expect %f\n", h, 4.0);
 
     el.type = ELID_SP;
+    el.elda.sp = new_sphere();
     el.elda.sp.p = tuple_point(0, 0, -3);
-    el.elda.sp.dia = 1;
-    el.elda.sp.col = color_set(1, 0, 0);
     get_ray_el_intersects(&r, &el);
 
     el.type = ELID_SP;
+    el.elda.sp = new_sphere();
     el.elda.sp.p = tuple_point(0, 0, -4);
-    el.elda.sp.dia = 1;
-    el.elda.sp.col = color_set(1, 0, 0);
     get_ray_el_intersects(&r, &el);
 
     el.type = ELID_SP;
+    el.elda.sp = new_sphere();
     el.elda.sp.p = tuple_point(0, 0, -8);
-    el.elda.sp.dia = 1;
-    el.elda.sp.col = color_set(1, 0, 0);
     get_ray_el_intersects(&r, &el);
 
     h = hit(&(&r)->i);
     cr_expect_eq(h, 1, "hit: %f vs expect %f\n", h, 1.0);
 
     el.type = ELID_SP;
+    el.elda.sp = new_sphere();
     el.elda.sp.p = tuple_point(0, 0, -3.5);
-    el.elda.sp.dia = 1;
-    el.elda.sp.col = color_set(1, 0, 0);
     get_ray_el_intersects(&r, &el);
 
     h = hit(&(&r)->i);
