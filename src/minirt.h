@@ -194,6 +194,7 @@ typedef struct s_sphere
     struct s_tuple p;
     float dia; // Diameter
     struct s_color col;
+    t_matrix t;
 } t_sphere;
 
 typedef struct s_cylinder
@@ -203,6 +204,7 @@ typedef struct s_cylinder
     float dia; // Diameter
     float hei; // Height
     struct s_color col;
+    t_matrix t;
 } t_cylinder;
 
 typedef struct s_plane
@@ -210,6 +212,7 @@ typedef struct s_plane
     struct s_tuple p;
     struct s_tuple v;
     struct s_color col;
+    t_matrix t;
 } t_plane;
 
 typedef union u_eldata
@@ -330,5 +333,14 @@ t_intersects *new_intersect(t_elements *el, float i);
 void insert_ray_intersect(t_intersects **head, t_intersects *node);
 void get_ray_el_intersects(t_ray *ray, t_elements *el);
 float hit(t_intersects **head);
+
+/* transform */
+t_ray transform(t_ray r, t_matrix m);
+void set_transform(t_elements *el, t_matrix m);
+
+/* elements */
+t_sphere new_sphere(void);
+t_plane new_plane(void);
+t_cylinder new_cylinder(void);
 
 #endif // MINIRT_H_
