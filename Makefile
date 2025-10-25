@@ -28,11 +28,14 @@ RELEASE_SRC= src/init.c \
              src/color_ops.c \
              src/intersect_sp.c \
              src/transform.c \
-             src/elements.c \
+             src/sphere.c \
+             src/plane.c \
+             src/cylinder.c \
              src/camera.c \
-             src/amblight.c \
+             src/ambient_light.c \
              src/light.c \
              src/world.c \
+             src/material.c \
              src/debugging.c
 
 RELEASE_OBJ=$(subst src/,obj/,$(RELEASE_SRC:.c=.o))
