@@ -29,6 +29,10 @@ RELEASE_SRC= src/init.c \
              src/intersect_sp.c \
              src/transform.c \
              src/elements.c \
+             src/camera.c \
+             src/amblight.c \
+             src/light.c \
+             src/world.c \
              src/debugging.c
 
 RELEASE_OBJ=$(subst src/,obj/,$(RELEASE_SRC:.c=.o))
