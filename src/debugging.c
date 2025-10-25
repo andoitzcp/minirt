@@ -44,7 +44,7 @@ void print_raw_sphere(t_sphere *s)
 {
     printf("\tSphere: %p\n", s);
     print_tuple(&(s->p));
-    print_color(&(s->col));
+    print_color(&(s->mat.color));
     printf("\t\tDiameter: %f\n", s->dia);
 }
 
@@ -53,7 +53,7 @@ void print_raw_plane(t_plane *p)
     printf("\tPlane: %p\n", p);
     print_tuple(&(p->p));
     print_tuple(&(p->v));
-    print_color(&(p->col));
+    print_color(&(p->mat.color));
 }
 
 void print_raw_cylinder(t_cylinder *c)
@@ -61,7 +61,7 @@ void print_raw_cylinder(t_cylinder *c)
     printf("\tCylinder: %p\n", c);
     print_tuple(&(c->p));
     print_tuple(&(c->v));
-    print_color(&(c->col));
+    print_color(&(c->mat.color));
     printf("\t\tDiameter: %f\n", c->dia);
     printf("\t\tHeigh: %f\n", c->hei);
 }

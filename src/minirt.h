@@ -138,6 +138,15 @@ typedef struct s_color
     float b;
 } t_color;
 
+typedef struct s_material
+{
+    struct s_color color;
+    float ambient;
+    float diffuse;
+    float specular;
+    float shininess;
+} t_material;
+
 //------
 typedef struct s_raw_amblight
 {
@@ -238,8 +247,9 @@ typedef struct s_sphere
 {
     struct s_tuple p;
     float dia; // Diameter
-    struct s_color col;
     t_matrix t;
+    t_material mat;
+
 } t_sphere;
 
 typedef struct s_cylinder
@@ -248,16 +258,16 @@ typedef struct s_cylinder
     struct s_tuple v;
     float dia; // Diameter
     float hei; // Height
-    struct s_color col;
     t_matrix t;
+    t_material mat;
 } t_cylinder;
 
 typedef struct s_plane
 {
     struct s_tuple p;
     struct s_tuple v;
-    struct s_color col;
     t_matrix t;
+    t_material mat;
 } t_plane;
 
 typedef union u_eldata
@@ -270,7 +280,7 @@ typedef union u_eldata
 typedef struct s_elements
 {
     enum e_elid type; // element data type (sp, pl, cy)
-    union u_eldata elda; // raw data
+    union u_eldata elda; // data
     union u_eldata relda; // raw elements data
 } t_elements;
 
@@ -288,13 +298,20 @@ typedef struct s_raw_data
     uint nels;
 } t_raw_data;
 
+typedef struct s_object
+{
+    enum e_elid type; // element data type (sp, pl, cy)
+    union u_eldata data; // raw data
+    struct s_object *next;
+} t_object;
+
 typedef struct s_world
 {
     struct s_resolution res;
     struct s_camera c;
     struct s_amblight ali;
     struct s_light l;
-    struct s_elements **els;
+    struct s_object *objs;
 } t_world;
 
 typedef struct s_data
@@ -391,12 +408,20 @@ float hit(t_intersects **head);
 
 /* transform */
 t_ray transform(t_ray r, t_matrix m);
-void set_transform(t_elements *el, t_matrix m);
+void set_transform_old(t_elements *el, t_matrix m);
+void set_transform(t_object *object, t_matrix m);
 
-/* elements */
+/* sphere*/
 t_sphere new_sphere(void);
+void set_sphere_from_raw_data(t_sphere *sp, t_raw_sphere *rsp);
+
+/* plane */
 t_plane new_plane(void);
+void set_plane_from_raw_data(t_plane *pl, t_raw_plane *rpl);
+
+/* cylinder */
 t_cylinder new_cylinder(void);
+void set_cylinder_from_raw_data(t_cylinder *cy, t_raw_cylinder *rcy);
 
 /* light */
 t_light new_light(t_tuple point, t_color color, float ratio);
@@ -413,8 +438,15 @@ t_camera new_camera(t_tuple point, t_tuple vector, float fov);
 t_camera convert_camera_from_raw(t_raw_camera raw_camera);
 t_camera default_camera(void);
 
+/* material */
+t_material default_material(void); // temporal cuando se mergee borrar
+void set_material(t_object *object, t_material material);
+
+/* object */
+t_object *new_object(int type, t_matrix transform, t_material material);
+void object_append(t_object **head, t_object *node);
+
 /* world */
-t_world new_world(void);
 t_world default_world(void);
 
 #endif // MINIRT_H_

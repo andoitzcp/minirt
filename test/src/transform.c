@@ -31,31 +31,31 @@ Test(transform, scaling)
 
 Test(transform, sphere)
 {
-    t_elements el;
+    t_object obj;
     t_matrix m;
     t_ray r;
     float is[3];
 
 
-    el.type = ELID_SP;
-    el.elda.sp = new_sphere();
-    cr_expect(matrix_eq(el.elda.sp.t, matrix_identity(4)));
+    obj.type = ELID_SP;
+    obj.data.sp = new_sphere();
+    cr_expect(matrix_eq(obj.data.sp.t, matrix_identity(4)));
 
     m = matrix_translation(2, 3, 4);
-    set_transform(&el, m);
-    cr_expect(matrix_eq(el.elda.sp.t, matrix_translation(2, 3, 4)));
+    set_transform(&obj, m);
+    cr_expect(matrix_eq(obj.data.sp.t, matrix_translation(2, 3, 4)));
 
     r = ray_new(tuple_point(0, 0, -5), tuple_vector(0, 0, 1));
-    el.elda.sp = new_sphere();
-    set_transform(&el, matrix_scalation(2, 2, 2));
-    calc_ray_sp_intersects(is, &r, &(el.elda.sp));
+    obj.data.sp = new_sphere();
+    set_transform(&obj, matrix_scalation(2, 2, 2));
+    calc_ray_sp_intersects(is, &r, &(obj.data.sp));
     cr_expect_eq(is[0], 2.0, "%f vs %f\n", is[0], 2.0);
     cr_expect_eq(is[1], 3.0, "%f vs %f\n", is[1], 3.0);
     cr_expect_eq(is[2], 7.0, "%f vs %f\n", is[2], 7.0);
 
-    el.elda.sp = new_sphere();
-    set_transform(&el, matrix_translation(5, 0, 0));
-    calc_ray_sp_intersects(is, &r, &(el.elda.sp));
+    obj.data.sp = new_sphere();
+    set_transform(&obj, matrix_translation(5, 0, 0));
+    calc_ray_sp_intersects(is, &r, &(obj.data.sp));
     cr_expect_eq(is[0], 0.0, "%f vs %f\n", is[0], 0.0);
     cr_expect_eq(is[1], 0.0, "%f vs %f\n", is[1], 0.0);
     cr_expect_eq(is[2], 0.0, "%f vs %f\n", is[2], 0.0);
