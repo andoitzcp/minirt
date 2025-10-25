@@ -33,10 +33,13 @@ RELEASE_SRC= src/init.c \
              src/cylinder.c \
              src/camera.c \
              src/ambient_light.c \
-             src/light.c \
              src/world.c \
              src/material.c \
+			 src/lighting.c \
+			 src/light.c	\
              src/debugging.c
+			
+			# 
 
 RELEASE_OBJ=$(subst src/,obj/,$(RELEASE_SRC:.c=.o))
 
@@ -106,7 +109,8 @@ test/obj/%.o: test/src/%.c | test/obj
 	@echo "test objects created"
 
 test/bin/%: $(TESTS_OBJ) $(RELEASE_OBJ) $(LIBFT_A) $(LINMATH_A) $(LIBRE_A) $(HEADERS)| test/bin
-	@$(CC) $(TESTS_LDFLAGS) $^ -lm -lXext -lX11 -o $@
+	# @$(CC) $(TESTS_LDFLAGS) $^ -lm -lXext -lX11 -o $@
+	@$(CC) $(TESTS_LDFLAGS) $^ -lm -o $@
 
 # prevent deleting object in rules chain
 $(TESTS_BIN): $(RELEASE_OBJ) $(TESTS_OBJ)

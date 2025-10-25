@@ -6,7 +6,7 @@
 /*   By: iubieta- <iubieta@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 19:51:30 by iubieta-          #+#    #+#             */
-/*   Updated: 2025/09/21 20:09:00 by iubieta-         ###   ########.fr       */
+/*   Updated: 2025/10/25 17:01:23 by iubieta-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,14 @@ float	degrees_to_radians(float deg)
 
 	rad = deg * M_PI / 180;
 	return (rad);
+}
+
+float	radians_to_degrees(float rad)
+{
+	float	deg;
+	
+	deg = rad * 180 / M_PI;
+	return (deg);
 }
 
 t_matrix	matrix_rot_x(float angle)
