@@ -6,7 +6,7 @@
 /*   By: iubieta- <iubieta@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 12:45:05 by iubieta-          #+#    #+#             */
-/*   Updated: 2025/10/22 20:30:32 by iubieta-         ###   ########.fr       */
+/*   Updated: 2025/10/25 17:01:48 by iubieta-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ float	float_limit(float n, float min, float max);
 
 // Angle utils
 float	degrees_to_radians(float deg);
+float	radians_to_degrees(float rad);
 
 // Tuples: points and vectors
 typedef struct s_tuple

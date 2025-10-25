@@ -27,7 +27,13 @@ RELEASE_SRC= src/init.c \
              src/canvas.c \
              src/color_ops.c \
              src/intersect_sp.c \
-             src/debugging.c
+             src/debugging.c \
+			 src/lighting.c \
+			 src/light.c	\
+			 src/sphere.c \
+			 src/material.c \
+			 src/transform.c
+
 
 RELEASE_OBJ=$(subst src/,obj/,$(RELEASE_SRC:.c=.o))
 
@@ -97,7 +103,8 @@ test/obj/%.o: test/src/%.c | test/obj
 	@echo "test objects created"
 
 test/bin/%: $(TESTS_OBJ) $(RELEASE_OBJ) $(LIBFT_A) $(LINMATH_A) $(LIBRE_A) $(HEADERS)| test/bin
-	@$(CC) $(TESTS_LDFLAGS) $^ -lm -lXext -lX11 -o $@
+	# @$(CC) $(TESTS_LDFLAGS) $^ -lm -lXext -lX11 -o $@
+	@$(CC) $(TESTS_LDFLAGS) $^ -lm -o $@
 
 # prevent deleting object in rules chain
 $(TESTS_BIN): $(RELEASE_OBJ) $(TESTS_OBJ)
