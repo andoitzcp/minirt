@@ -6,7 +6,7 @@
 /*   By: iubieta- <iubieta@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 11:24:57 by iubieta-          #+#    #+#             */
-/*   Updated: 2025/09/07 11:31:28 by iubieta-         ###   ########.fr       */
+/*   Updated: 2025/10/25 14:23:59 by iubieta-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ t_tuple	tuple_normalize(t_tuple v)
 		t.x = v.x / mag;
 		t.y = v.y / mag;
 		t.z = v.z / mag;
+		t.w = v.w;
 	}
 	return (t);
 }

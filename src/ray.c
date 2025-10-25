@@ -18,3 +18,15 @@ t_tuple position(t_ray ray, float t)
     pret = tuple_add(pret, ray.o);
     return (pret);
 }
+
+t_tuple reflect(t_tuple in, t_tuple normal)
+{
+	float	dot;
+	t_tuple	aux;
+	t_tuple	reflex;
+
+	dot = tuple_dot(in, normal);
+	aux = tuple_scale_up(normal, 2 * dot);
+	reflex = tuple_sub(in, aux);
+	return (reflex);
+}
