@@ -45,7 +45,6 @@ Test(transform, sphere)
     set_transform(&el, m);
     cr_expect(matrix_eq(el.elda.sp.t, matrix_translation(2, 3, 4)));
 
-    printf("flag100\n");
     r = ray_new(tuple_point(0, 0, -5), tuple_vector(0, 0, 1));
     el.elda.sp = new_sphere();
     set_transform(&el, matrix_scalation(2, 2, 2));

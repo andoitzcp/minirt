@@ -139,6 +139,51 @@ typedef struct s_color
     float b;
 } t_color;
 
+//------
+typedef struct s_raw_amblight
+{
+    float ratio;
+    struct s_color col;
+} t_raw_amblight;
+
+typedef struct s_raw_camera
+{
+    struct s_tuple p;
+    struct s_tuple v;
+    uint8_t fov; // Fiel Of View in degrees
+} t_raw_camera;
+
+typedef struct s_raw_light
+{
+    struct s_tuple p;
+    float abr; // Ambient Brightness Ratio
+    struct s_color col;
+} t_raw_light;
+
+typedef struct s_raw_sphere
+{
+    struct s_tuple p;
+    float dia; // Diameter
+    struct s_color col;
+} t_raw_sphere;
+
+typedef struct s_raw_cylinder
+{
+    struct s_tuple p;
+    struct s_tuple v;
+    float dia; // Diameter
+    float hei; // Height
+    struct s_color col;
+} t_raw_cylinder;
+
+typedef struct s_raw_plane
+{
+    struct s_tuple p;
+    struct s_tuple v;
+    struct s_color col;
+} t_raw_plane;
+//------
+
 typedef struct s_canvas
 {
 	int		width;
@@ -189,6 +234,7 @@ typedef struct s_light
     struct s_color col;
 } t_light;
 
+
 typedef struct s_sphere
 {
     struct s_tuple p;
@@ -224,15 +270,16 @@ typedef union u_eldata
 
 typedef struct s_elements
 {
-    enum e_elid type;
-    union u_eldata elda;
+    enum e_elid type; // element data type (sp, pl, cy)
+    union u_eldata elda; // raw data
+    union u_eldata relda; // raw elements data
 } t_elements;
 
-typedef struct s_data
+typedef struct s_raw_data
 {
-    struct s_amblight ali;
-    struct s_camera c;
-    struct s_light l;
+    struct s_raw_amblight ali;
+    struct s_raw_camera c;
+    struct s_raw_light l;
     struct s_resolution res;
     struct s_elements **els;
     struct s_line *lines;
@@ -240,7 +287,23 @@ typedef struct s_data
     struct s_re **re_float;
     struct s_re **re_int;
     uint nels;
+} t_raw_data;
+
+typedef struct s_world
+{
+    struct s_resolution res;
+    struct s_elements **els;
+    struct s_camera c;
+    struct s_amblight ali;
+    struct s_light l;
+} t_world;
+
+typedef struct s_data
+{
+    struct s_raw_data raw;
     uint8_t emf;
+
+
 } t_data;
 
 /*******************************************************************************/
@@ -263,27 +326,18 @@ uint8_t get_vector_data(t_data *data, t_tuple *tuple, char **s);
 uint8_t get_color_data(t_data *data, t_color *color, char **s);
 
 /* get data common elements */
-uint8_t get_amblight_data(t_data *data, t_amblight *node, char ***line);
-uint8_t get_camera_data(t_data *data, t_camera *node, char ***line);
-uint8_t get_light_data(t_data *data, t_light *node, char ***line);
+uint8_t get_amblight_data(t_data *data, t_raw_amblight *node, char ***line);
+uint8_t get_camera_data(t_data *data, t_raw_camera *node, char ***line);
+uint8_t get_light_data(t_data *data, t_raw_light *node, char ***line);
 
 /* get data geometric elements*/
-uint8_t get_sphere_data(t_data *data, t_sphere *node, char ***line);
-uint8_t get_plane_data(t_data *data, t_plane *node, char ***line);
-uint8_t get_cylinder_data(t_data *data, t_cylinder *node, char ***line);
+uint8_t get_sphere_data(t_data *data, t_raw_sphere *node, char ***line);
+uint8_t get_plane_data(t_data *data, t_raw_plane *node, char ***line);
+uint8_t get_cylinder_data(t_data *data, t_raw_cylinder *node, char ***line);
 
 /* check boundaries */
 uint8_t check_color_bounds(t_color *color);
 uint8_t check_nvector_bounds(t_tuple *vector);
-
-/* parse utils*/
-int get_element_id(char *s);
-void classify_raw_content_into_elements(t_rawlines **head);
-void trim_raw_content_ws_nodes(t_rawlines **head);
-int8_t has_raw_content_invalid_lines(t_rawlines **head);
-uint get_element_qty(t_rawlines **head);
-void append_rawline_node(t_data *data, char *content);
-void breakdown_rawlines(t_rawlines **head);
 
 /* input validation */
 int8_t is_valid_input_file(char *filepath);
@@ -299,7 +353,7 @@ void free_els(t_elements **array);
 /* debugging */
 void print_ds_rawl(t_rawlines **head);
 void print_line_els(char ***line);
-void print_element_list(t_elements **el);
+void print_raw_element_list(t_elements **el);
 void print_intersections(t_intersects **head);
 
 

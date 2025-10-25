@@ -55,14 +55,14 @@ void process_line(t_data *data, char *s)
     t_line *node;
 
     i = 0;
-    while (data->re_el_types[i] != NULL)
+    while (data->raw.re_el_types[i] != NULL)
     {
-        if (match(data->re_el_types[i++], s) == 0)
+        if (match(data->raw.re_el_types[i++], s) == 0)
             continue ;
         line = split_line(s);
         node = build_line_node(data, line, i - 1);
         if (i - 1 != ELID_BLANK_LINE)
-            append_line_node(&(data->lines), node);
+            append_line_node(&(data->raw.lines), node);
         return ;
     }
     ft_exit(data, ERRORS007);

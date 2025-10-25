@@ -7,7 +7,7 @@ uint8_t get_point_data(t_data *data, t_tuple *tuple, char **s)
     i = 0;
     while (s[i] != NULL)
     {
-        if (match(data->re_float, s[i]) != 1)
+        if (match(data->raw.re_float, s[i]) != 1)
             return (0);
         i++;
     }
@@ -25,7 +25,7 @@ uint8_t get_vector_data(t_data *data, t_tuple *tuple, char **s)
     i = 0;
     while (s[i] != NULL)
     {
-        if (match(data->re_float, s[i]) != 1)
+        if (match(data->raw.re_float, s[i]) != 1)
             return (0);
         i++;
     }
@@ -43,7 +43,7 @@ uint8_t get_color_data(t_data *data, t_color *color, char **s)
     i = 0;
     while (s[i] != NULL)
     {
-        if (match(data->re_int, s[i]) != 1)
+        if (match(data->raw.re_int, s[i]) != 1)
             return (0);
         i++;
     }

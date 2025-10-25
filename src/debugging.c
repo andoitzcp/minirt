@@ -40,7 +40,7 @@ void print_color(t_color *c)
     printf("\t\t\tb: %f\n", c->b);
 }
 
-void print_sphere(t_sphere *s)
+void print_raw_sphere(t_sphere *s)
 {
     printf("\tSphere: %p\n", s);
     print_tuple(&(s->p));
@@ -48,7 +48,7 @@ void print_sphere(t_sphere *s)
     printf("\t\tDiameter: %f\n", s->dia);
 }
 
-void print_plane(t_plane *p)
+void print_raw_plane(t_plane *p)
 {
     printf("\tPlane: %p\n", p);
     print_tuple(&(p->p));
@@ -56,7 +56,7 @@ void print_plane(t_plane *p)
     print_color(&(p->col));
 }
 
-void print_cylinder(t_cylinder *c)
+void print_raw_cylinder(t_cylinder *c)
 {
     printf("\tCylinder: %p\n", c);
     print_tuple(&(c->p));
@@ -66,26 +66,26 @@ void print_cylinder(t_cylinder *c)
     printf("\t\tHeigh: %f\n", c->hei);
 }
 
-void print_element(t_elements *el)
+void print_raw_element(t_elements *el)
 {
     printf("Printing element:%p\n", el);
     printf("\tType: %d\n", el->type);
     if (el->type == ELID_SP)
-        print_sphere(&el->elda.sp);
+        print_raw_sphere(&el->elda.sp);
     if (el->type == ELID_PL)
-        print_plane(&el->elda.pl);
+        print_raw_plane(&el->elda.pl);
     if (el->type == ELID_CY)
-        print_cylinder(&el->elda.cy);
+        print_raw_cylinder(&el->elda.cy);
 }
 
-void print_element_list(t_elements **el)
+void print_raw_element_list(t_elements **el)
 {
     int i;
 
     i = 0;
     while ((el[i]) != NULL)
     {
-        print_element(el[i]);
+        print_raw_element(el[i]);
         i++;
     }
 }

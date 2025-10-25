@@ -6,7 +6,7 @@ static void init_re_element_types(t_data *data)
     size_t i;
     t_re ***re_array;
 
-    re_array = data->re_el_types;
+    re_array = data->raw.re_el_types;
     data->emf = data->emf | EMF_REET;
     re_array[ELID_A] = re_new(RE_EL_A);
     re_array[ELID_C] = re_new(RE_EL_C);
@@ -47,7 +47,7 @@ static void init_re_element_types(t_data *data)
 void init(t_data *data)
 {
     init_re_element_types(data);
-    data->lines = NULL;
-    data->re_float = re_new(RE_FLOAT);
-    data->re_int = re_new(RE_INT);
+    data->raw.lines = NULL;
+    data->raw.re_float = re_new(RE_FLOAT);
+    data->raw.re_int = re_new(RE_INT);
 }

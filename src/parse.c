@@ -5,15 +5,15 @@ static void alloc_els(t_data *data)
     t_line *node;
     size_t i;
 
-    node = data->lines;
+    node = data->raw.lines;
     i = 0;
     while (node != NULL)
     {
         i++;
         node = node->next;
     }
-    data->els = ft_calloc(i, sizeof(t_elements *) + 1);
-    data->nels = (uint)i;
+    data->raw.els = ft_calloc(i, sizeof(t_elements *) + 1);
+    data->raw.nels = (uint)i;
 }
 
 static t_elements *build_element_node(t_data *data, char ***line, int type)
@@ -24,11 +24,11 @@ static t_elements *build_element_node(t_data *data, char ***line, int type)
     if (node == NULL)
         ft_exit(data, ERRORS011);
     if (type == ELID_SP)
-        get_sphere_data(data, (t_sphere *)&(node->elda.sp), line);
+        get_sphere_data(data, (t_raw_sphere *)&(node->relda.sp), line);
     if (type == ELID_PL)
-        get_plane_data(data, (t_plane *)&(node->elda.pl), line);
+        get_plane_data(data, (t_raw_plane *)&(node->relda.pl), line);
     if (type == ELID_CY)
-        get_cylinder_data(data, (t_cylinder *)&(node->elda.cy), line);
+        get_cylinder_data(data, (t_raw_cylinder *)&(node->relda.cy), line);
     return (node);
 }
 
@@ -38,17 +38,17 @@ static void store_file_data(t_data *data)
     t_elements **els;
     size_t i;
 
-    els = data->els;
-    node = data->lines;
+    els = data->raw.els;
+    node = data->raw.lines;
     i = 0;
     while (node != NULL)
     {
         if (node->type == ELID_A)
-            get_amblight_data(data, &(data->ali), node->content);
+            get_amblight_data(data, &(data->raw.ali), node->content);
         else if (node->type == ELID_C)
-            get_camera_data(data, &(data->c), node->content);
+            get_camera_data(data, &(data->raw.c), node->content);
         else if (node->type == ELID_L)
-            get_light_data(data, &(data->l), node->content);
+            get_light_data(data, &(data->raw.l), node->content);
         else
         {
             els[i] = build_element_node(data, node->content, node->type);
@@ -103,10 +103,10 @@ void parse(t_data *data, char *filepath)
             break;
         process_line(data, s);
     }
-    check_unique_elements(data, &(data->lines));
+    check_unique_elements(data, &(data->raw.lines));
     alloc_els(data);
     store_file_data(data);
-    print_element_list(data->els);
+    print_raw_element_list(data->raw.els);
     close(fd);
     return ;
 }

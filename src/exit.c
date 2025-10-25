@@ -29,9 +29,9 @@ int ft_exit(t_data *data, char *s)
 
     emf = data->emf;
     if ((emf & EMF_RAWL) == EMF_RAWL)
-        free_lines(&(data->lines));
+        free_lines(&(data->raw.lines));
     if ((emf & EMF_ELS) == EMF_ELS)
-        free_els(data->els);
+        free_els(data->raw.els);
     ft_putstr_fd(ERRORS000, STDERR_FILENO);
     if ((emf & EMF_PERROR) == EMF_PERROR)
         perror(s);
