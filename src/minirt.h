@@ -78,7 +78,6 @@
 #define RE_EL_CY "^ *cy {1}[^, ]{1},[^, ]{1},[^, ]{1} {1}[^, ]{1},[^, ]{1},[^, ]{1} {1}[^, ]{1} {1}[^, ]{1} {1}[^, ]{1},[^, ]{1},[^, ]{1} *$"
 #define RE_EL_BLANK "^\n$"
 
-
 typedef enum e_elid
 {
     ELID_NULL,
@@ -292,15 +291,16 @@ typedef struct s_raw_data
 typedef struct s_world
 {
     struct s_resolution res;
-    struct s_elements **els;
     struct s_camera c;
     struct s_amblight ali;
     struct s_light l;
+    struct s_elements **els;
 } t_world;
 
 typedef struct s_data
 {
     struct s_raw_data raw;
+    struct s_world world;
     uint8_t emf;
 
 
@@ -366,6 +366,7 @@ t_color		color_sub(t_color a, t_color b);
 t_color		color_scale_up(t_color a, float n);
 t_color		color_scale_down(t_color a, float n);
 t_color		color_blend(t_color a, t_color b);
+t_color color_convert_from_raw(t_color color);
 
 /* canvas */
 t_canvas	*canvas_init(int width, int height);
@@ -396,5 +397,24 @@ void set_transform(t_elements *el, t_matrix m);
 t_sphere new_sphere(void);
 t_plane new_plane(void);
 t_cylinder new_cylinder(void);
+
+/* light */
+t_light new_light(t_tuple point, t_color color, float ratio);
+t_light convert_light_from_raw(t_raw_light raw_light);
+t_light default_light(void);
+
+/* amblight */
+t_amblight new_amblight(t_color color, float ratio);
+t_amblight convert_amblight_from_raw(t_raw_amblight raw_amblight);
+t_amblight default_amblight(void);
+
+/* camera */
+t_camera new_camera(t_tuple point, t_tuple vector, float fov);
+t_camera convert_camera_from_raw(t_raw_camera raw_camera);
+t_camera default_camera(void);
+
+/* world */
+t_world new_world(void);
+t_world default_world(void);
 
 #endif // MINIRT_H_

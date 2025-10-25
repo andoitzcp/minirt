@@ -42,3 +42,13 @@ t_color	color_clamp(t_color c)
 	c.b = roundf(c.b);
 	return (c);
 }
+
+t_color color_convert_from_raw(t_color color)
+{
+	t_color c;
+
+	c.r = color.r;
+	c.g = color.g;
+	c.b = color.b;
+	return (c);
+}
