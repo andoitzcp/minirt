@@ -24,18 +24,6 @@ t_light convert_light_from_raw(t_raw_light raw_light)
     return (light);
 }
 
-// TODO elegir entre light, new_light, default_light
-t_light	light(t_tuple p, t_color c)
-{
-	t_light light;
-
-	light.p = p;
-	light.col = c;
-	light.abr = 1;
-	return (light);
-}
-
-// TODO elegir entre light, new_light, default_light
 t_light new_light(t_tuple point, t_color color, float ratio)
 {
     t_light light;
@@ -46,8 +34,7 @@ t_light new_light(t_tuple point, t_color color, float ratio)
     return (light);
 }
 
-// TODO elegir entre light, new_light, default_light
-t_light default_light(void)
+t_light def_light(void)
 {
     t_light light;
 

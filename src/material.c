@@ -21,7 +21,6 @@ t_material	def_material(void)
 	mat.diffuse = 0.9;
 	mat.specular = 0.9;
 	mat.shininess = 200;
-
 	return (mat);
 }
 
