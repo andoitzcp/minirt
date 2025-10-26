@@ -78,6 +78,9 @@
 #define RE_EL_CY "^ *cy {1}[^, ]{1},[^, ]{1},[^, ]{1} {1}[^, ]{1},[^, ]{1},[^, ]{1} {1}[^, ]{1} {1}[^, ]{1} {1}[^, ]{1},[^, ]{1},[^, ]{1} *$"
 #define RE_EL_BLANK "^\n$"
 
+#define DEF_RESOLUTION_X 1920
+#define DEF_RESOLUTION_Y 1080
+
 typedef enum e_elid
 {
     ELID_NULL,
@@ -242,15 +245,12 @@ typedef struct s_light
 
 } t_light;
 
-
 typedef struct s_sphere
 {
 	// TODO eliminar p y dia ??
     struct s_tuple		p;
-    float				dia; // Diameter
 	struct s_matrix		trans; //MERGE
 	struct s_material	mat;
-    struct s_color		col;
 } t_sphere;
 
 typedef struct s_cylinder
@@ -403,6 +403,45 @@ t_ray	transform(t_ray r, t_matrix m);
 void	set_transform_old(t_elements *el, t_matrix m);
 void	set_transform(t_object *object, t_matrix m);
 
+/* sphere*/
+t_sphere new_sphere(void);
+void set_sphere_from_raw_data(t_sphere *sp, t_raw_sphere *rsp);
+
+/* plane */
+t_plane new_plane(void);
+void set_plane_from_raw_data(t_plane *pl, t_raw_plane *rpl);
+
+/* cylinder */
+t_cylinder new_cylinder(void);
+void set_cylinder_from_raw_data(t_cylinder *cy, t_raw_cylinder *rcy);
+
+/* light */
+t_light new_light(t_tuple point, t_color color, float ratio);
+t_light convert_light_from_raw(t_raw_light raw_light);
+t_light default_light(void);
+
+/* amblight */
+t_amblight new_amblight(t_color color, float ratio);
+t_amblight convert_amblight_from_raw(t_raw_amblight raw_amblight);
+t_amblight default_amblight(void);
+
+/* camera */
+t_camera new_camera(t_tuple point, t_tuple vector, float fov);
+t_camera convert_camera_from_raw(t_raw_camera raw_camera);
+t_camera default_camera(void);
+
+/* material */
+t_material default_material(void); // temporal cuando se mergee borrar
+void set_material(t_object *object, t_material material);
+
+/* object */
+t_object *new_object(int type, t_matrix *transform, t_material *material);
+void object_append(t_object **head, t_object *node);
+
+/* world */
+t_world default_world(void);
+
+// TODO elegir entre sphere() y new_sphere()
 /* sphere */
 t_sphere	new_sphere(void);
 void		set_sphere_from_raw_data(t_sphere *sp, t_raw_sphere *rsp);
@@ -437,10 +476,6 @@ t_camera 	def_camera(void);
 t_material	def_material(void);
 void		set_material(t_object *object, t_material material);
 
-/* object */
-t_object	*new_object(int type, t_matrix transform, t_material material);
-void		object_append(t_object **head, t_object *node);
-
 /* world */
 t_world	def_world(void);
 
@@ -457,6 +492,11 @@ float			hit(t_intersects **head);
 /* transform */
 t_matrix	sphere_transform(t_sphere sphere);
 t_tuple		transform_back(t_matrix transform, t_tuple point);
+
+/* material */
+t_material	material();
+t_material default_material(void);
+t_material new_material(t_color color, float *specs);
 
 /* lighting */
 t_color	lighting(t_material material, t_tuple point, t_light light,

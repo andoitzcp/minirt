@@ -1,6 +1,6 @@
 #include "minirt.h"
 
-t_object *new_object(int type, t_matrix transform, t_material material)
+t_object *new_object(int type, t_matrix *transform, t_material *material)
 {
     t_object *obj;
 
@@ -14,8 +14,10 @@ t_object *new_object(int type, t_matrix transform, t_material material)
         obj->data.pl = new_plane();
     if (type == ELID_CY)
         obj->data.cy = new_cylinder();
-    set_transform(obj, transform);
-    set_material(obj, material);
+    if (transform != NULL)
+        set_transform(obj, *transform);
+    if (material != NULL)
+        set_material(obj, *material);
     obj->next = NULL;
     return (obj);
 }
