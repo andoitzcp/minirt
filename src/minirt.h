@@ -213,7 +213,6 @@ typedef struct s_ray
     struct s_intersects *i;
 } t_ray;
 
-// TODO initialize material structure
 typedef struct s_material
 {
 	struct s_color	color;
