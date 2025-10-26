@@ -247,10 +247,9 @@ typedef struct s_light
 
 typedef struct s_sphere
 {
+	// TODO eliminar p y dia ??
     struct s_tuple		p;
     float				dia; // Diameter
-	// TODO elegir entre t y trans
-    t_matrix t;
 	struct s_matrix		trans; //MERGE
 	struct s_material	mat;
     struct s_color		col;
@@ -401,18 +400,18 @@ t_ray	ray_new(t_tuple origin, t_tuple direction);
 t_tuple	position(t_ray ray, float t);
 t_tuple reflect(t_tuple in, t_tuple normal);
 
-/* light */
-t_light	light(t_tuple p, t_color c);
-
 // TODO eliminar funciones transform ??
 /* transform */
 t_ray transform(t_ray r, t_matrix m);
 void set_transform_old(t_elements *el, t_matrix m);
 void set_transform(t_object *object, t_matrix m);
 
-/* sphere*/
-t_sphere new_sphere(void);
-void set_sphere_from_raw_data(t_sphere *sp, t_raw_sphere *rsp);
+/* sphere */
+t_sphere	new_sphere(void);
+void		set_sphere_from_raw_data(t_sphere *sp, t_raw_sphere *rsp);
+t_sphere	*set_sphere_transform(t_sphere *s, t_matrix trans);
+t_matrix	get_sphere_transform(t_sphere s);
+t_tuple		sphere_normal_at(t_sphere s, t_tuple p);
 
 /* plane */
 t_plane new_plane(void);
@@ -423,9 +422,9 @@ t_cylinder new_cylinder(void);
 void set_cylinder_from_raw_data(t_cylinder *cy, t_raw_cylinder *rcy);
 
 /* light */
-t_light new_light(t_tuple point, t_color color, float ratio);
 t_light convert_light_from_raw(t_raw_light raw_light);
-t_light default_light(void);
+t_light new_light(t_tuple point, t_color color, float ratio);
+t_light def_light(void);
 
 /* amblight */
 t_amblight new_amblight(t_color color, float ratio);
@@ -447,13 +446,6 @@ void object_append(t_object **head, t_object *node);
 
 /* world */
 t_world default_world(void);
-
-// TODO elegir entre sphere() y new_sphere()
-/* sphere */
-t_sphere	sphere();
-t_sphere	*set_sphere_transform(t_sphere *s, t_matrix trans);
-t_matrix	get_sphere_transform(t_sphere s);
-t_tuple		sphere_normal_at(t_sphere s, t_tuple p);
 
 /* intersect */
 t_intersect_old	intersect_sp_old(t_ray *ray, t_sphere *sp);

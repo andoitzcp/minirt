@@ -39,11 +39,11 @@ Test(transform, sphere)
 
     obj.type = ELID_SP;
     obj.data.sp = new_sphere();
-    cr_expect(matrix_eq(obj.data.sp.t, matrix_identity(4)));
+    cr_expect(matrix_eq(obj.data.sp.trans, matrix_identity(4)));
 
     m = matrix_translation(2, 3, 4);
     set_transform(&obj, m);
-    cr_expect(matrix_eq(obj.data.sp.t, matrix_translation(2, 3, 4)));
+    cr_expect(matrix_eq(obj.data.sp.trans, matrix_translation(2, 3, 4)));
 
     r = ray_new(tuple_point(0, 0, -5), tuple_vector(0, 0, 1));
     obj.data.sp = new_sphere();

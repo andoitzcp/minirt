@@ -21,7 +21,7 @@ void set_sphere_from_raw_data(t_sphere *sp, t_raw_sphere *rsp)
     return ;
 }
 
-// TODO decidir si eliminar p y dia
+// TODO si eliminar p y dia ??
 t_sphere new_sphere(void)
 {
     t_sphere sp;
@@ -29,7 +29,7 @@ t_sphere new_sphere(void)
     sp.p = tuple_point(0, 0, 0);
     sp.dia = 1;
     sp.mat = def_material();
-    sp.t = matrix_identity(4);
+    sp.trans = matrix_identity(4);
     return (sp);
 }
 
