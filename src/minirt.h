@@ -307,14 +307,16 @@ typedef struct s_object
     struct s_object *next;
 } t_object;
 
-typedef struct s_world_comps
+typedef struct s_comps
 {
     struct s_object obj; // object
     struct s_tuple point; // point
-    struct s_tuple eyev;
-    struct s_tuple normv;
+    struct s_tuple eyev; // eye vector
+    struct s_tuple normv; // normal vector
+    struct s_light light; // light
+    int is_shadowed; // object shadowe yes=1 no=0
 
-} t_world_comps;
+} t_comps;
 
 typedef struct s_world
 {
