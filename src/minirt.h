@@ -200,7 +200,7 @@ typedef struct s_intersect_old
 typedef struct s_intersects
 {
     float i; //intersections
-    struct s_elements *el;
+    struct s_object *obj;
     struct s_intersects *next;
 } t_intersects;
 
@@ -449,9 +449,9 @@ t_intersect_old	intersect_sp_old(t_ray *ray, t_sphere *sp);
 void			calc_ray_sp_intersects(float *array, t_ray *ray, t_sphere *sp);
 void 			calc_ray_pl_intersects(float *array, t_ray *ray, t_plane *pl);
 void 			calc_ray_cy_intersects(float *array, t_ray *ray, t_cylinder *cy);
-t_intersects	*new_intersect(t_elements *el, float i);
+t_intersects *new_intersect(t_object *obj, float i);
 void			insert_ray_intersect(t_intersects **head, t_intersects *node);
-void 			get_ray_el_intersects(t_ray *ray, t_elements *el);
+void get_ray_el_intersects(t_ray *ray, t_object *obj);
 float			hit(t_intersects **head);
 
 /* transform */

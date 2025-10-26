@@ -90,14 +90,14 @@ void calc_ray_cy_intersects(float *array, t_ray *ray, t_cylinder *cy)
     (void)cy;
 }
 
-t_intersects *new_intersect(t_elements *el, float i)
+t_intersects *new_intersect(t_object *obj, float i)
 {
     t_intersects *node;
 
     node = malloc(sizeof(t_intersects));
     if (node == NULL)
         return (NULL);
-    node->el = el;
+    node->obj = obj;
     node->i = i;
     node->next = NULL;
     return (node);
@@ -134,22 +134,22 @@ void insert_ray_intersect(t_intersects **head, t_intersects *node)
     return ;
 }
 
-void get_ray_el_intersects(t_ray *ray, t_elements *el)
+void get_ray_el_intersects(t_ray *ray, t_object *obj)
 {
     int i;
     float array[3];
     t_intersects *node;
 
-    if (el->type == ELID_SP)
-        calc_ray_sp_intersects(array, ray, &(el->elda.sp));
-    if (el->type == ELID_PL)
-        calc_ray_pl_intersects(array, ray, &(el->elda.pl));
-    if (el->type == ELID_CY)
-        calc_ray_cy_intersects(array, ray, &(el->elda.cy));
+    if (obj->type == ELID_SP)
+        calc_ray_sp_intersects(array, ray, &(obj->data.sp));
+    if (obj->type == ELID_PL)
+        calc_ray_pl_intersects(array, ray, &(obj->data.pl));
+    if (obj->type == ELID_CY)
+        calc_ray_cy_intersects(array, ray, &(obj->data.cy));
     i = 0;
     while (i++ < (int)array[0])
     {
-        node = new_intersect(el, array[i]);
+        node = new_intersect(obj, array[i]);
         insert_ray_intersect(&(ray->i), node);
     }
     return ;
