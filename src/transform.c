@@ -26,7 +26,7 @@ t_ray transform(t_ray r, t_matrix m)
 void set_transform_old(t_elements *el, t_matrix m)
 {
     if (el->type == ELID_SP)
-        el->elda.sp.t = m;
+        el->elda.sp.trans = m;
     else if (el->type == ELID_PL)
         el->elda.pl.t = m;
     else if (el->type == ELID_CY)
@@ -37,7 +37,7 @@ void set_transform_old(t_elements *el, t_matrix m)
 void set_transform(t_object *object, t_matrix m)
 {
     if (object->type == ELID_SP)
-        object->data.sp.t = m;
+        object->data.sp.trans = m;
     else if (object->type == ELID_PL)
         object->data.pl.t = m;
     else if (object->type == ELID_CY)

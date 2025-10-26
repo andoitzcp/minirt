@@ -56,7 +56,7 @@ void calc_ray_sp_intersects(float *array, t_ray *ray, t_sphere *sp)
     float dotp[3];
     float dis;
 
-    raytmp = transform(*ray, matrix_inverse((*sp).t));
+    raytmp = transform(*ray, matrix_inverse((*sp).trans));
     sp_to_ray = tuple_sub(raytmp.o, sp->p);
     dotp[0] = tuple_dot(raytmp.d, raytmp.d);
     dotp[1] = 2 * tuple_dot(raytmp.d, sp_to_ray);
