@@ -25,6 +25,7 @@ RELEASE_SRC= src/init.c \
              src/color.c \
              src/canvas.c \
              src/color_ops.c \
+			 src/intersect.c \
              src/intersect_sp.c \
              src/transform.c \
              src/sphere.c \

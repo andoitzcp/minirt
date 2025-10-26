@@ -43,7 +43,7 @@ Test(world, world_intersect)
     t_intersects *current;
 
     w = def_world();
-    r = ray_new(tuple_point(0, 0, -5), tuple_vector(0, 0, 1));
+    r = new_ray(tuple_point(0, 0, -5), tuple_vector(0, 0, 1));
     intersect_world(&w, &r);
 
     current = r.i;

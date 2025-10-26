@@ -3,7 +3,7 @@
 #include <criterion/criterion.h>
 #include <criterion/internal/assert.h>
 
-Test(ray, ray_new)
+Test(ray, new_ray)
 {
     t_tuple point;
     t_tuple vector;
@@ -11,7 +11,7 @@ Test(ray, ray_new)
 
     point = tuple_point(1, 2, 3);
     vector = tuple_vector(4, 5, 6);
-    ray = ray_new(point, vector);
+    ray = new_ray(point, vector);
 
     cr_expect_eq(ray.o.x, 1);
     cr_expect_eq(ray.o.y, 2);
@@ -29,7 +29,7 @@ Test(ray, position)
     t_ray ray;
     t_tuple pos;
 
-    ray = ray_new(tuple_point(2, 3, 4), tuple_vector(1, 0, 0));
+    ray = new_ray(tuple_point(2, 3, 4), tuple_vector(1, 0, 0));
     pos = position(ray, 0);
     cr_expect(tuple_eq(pos, tuple_point(2, 3, 4)));
     pos = position(ray, 1);

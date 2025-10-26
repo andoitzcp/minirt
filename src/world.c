@@ -25,14 +25,3 @@ t_world def_world(void)
     return (world);
 }
 
-void intersect_world(t_world *world, t_ray *ray)
-{
-    t_object *obj;
-
-    obj = world->objs;
-    while (obj != NULL)
-    {
-        get_ray_el_intersects(ray, obj);
-        obj = obj->next;
-    }
-}

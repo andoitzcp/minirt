@@ -9,7 +9,7 @@ Test(calc_ray_sp_intersects, twopoints)
     t_sphere sp;
     float array[3];
 
-    r = ray_new(tuple_point(0, 0, -5), tuple_vector(0, 0, 1));
+    r = new_ray(tuple_point(0, 0, -5), tuple_vector(0, 0, 1));
     sp = new_sphere();
     calc_ray_sp_intersects(array, &r, &sp);
 
@@ -25,7 +25,7 @@ Test(calc_ray_sp_intersects, tangent)
     t_sphere sp;
     float array[3];
 
-    r = ray_new(tuple_point(0, 1, -5), tuple_vector(0, 0, 1));
+    r = new_ray(tuple_point(0, 1, -5), tuple_vector(0, 0, 1));
     sp = new_sphere();
     calc_ray_sp_intersects(array, &r, &sp);
 
@@ -40,7 +40,7 @@ Test(calc_ray_sp_intersects, miss)
     t_sphere sp;
     float array[3];
 
-    r = ray_new(tuple_point(0, 2, -5), tuple_vector(0, 0, 1));
+    r = new_ray(tuple_point(0, 2, -5), tuple_vector(0, 0, 1));
     sp = new_sphere();
     calc_ray_sp_intersects(array, &r, &sp);
 
@@ -55,7 +55,7 @@ Test(calc_ray_sp_intersects, inside)
     t_sphere sp;
     float array[3];
 
-    r = ray_new(tuple_point(0, 0, 0), tuple_vector(0, 0, 1));
+    r = new_ray(tuple_point(0, 0, 0), tuple_vector(0, 0, 1));
     sp = new_sphere();
     calc_ray_sp_intersects(array, &r, &sp);
 
@@ -70,7 +70,7 @@ Test(calc_ray_sp_intersects, behind)
     t_sphere sp;
     float array[3];
 
-    r = ray_new(tuple_point(0, 0, 5), tuple_vector(0, 0, 1));
+    r = new_ray(tuple_point(0, 0, 5), tuple_vector(0, 0, 1));
     sp = new_sphere();
     calc_ray_sp_intersects(array, &r, &sp);
 
@@ -89,7 +89,7 @@ Test(get_ray_el_intersects, order)
     t_intersects *inters;
     int i;
 
-    r = ray_new(tuple_point(0, 0, -5), tuple_vector(0, 0, 1));
+    r = new_ray(tuple_point(0, 0, -5), tuple_vector(0, 0, 1));
 
     obj.type = ELID_SP;
     obj.data.sp = new_sphere();
@@ -138,7 +138,7 @@ Test(hit, general)
     t_object obj;
     float h;
 
-    r = ray_new(tuple_point(0, 0, -5), tuple_vector(0, 0, 1));
+    r = new_ray(tuple_point(0, 0, -5), tuple_vector(0, 0, 1));
 
     obj.type = ELID_SP;
     obj.data.sp = new_sphere();

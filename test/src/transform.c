@@ -8,7 +8,7 @@ Test(transform, translate)
     t_ray r;
     t_matrix m;
 
-    r = ray_new(tuple_point(1, 2, 3), tuple_vector(0, 1, 0));
+    r = new_ray(tuple_point(1, 2, 3), tuple_vector(0, 1, 0));
     m = matrix_translation(3, 4, 5);
 
     r = transform(r, m);
@@ -21,7 +21,7 @@ Test(transform, scaling)
     t_ray r;
     t_matrix m;
 
-    r = ray_new(tuple_point(1, 2, 3), tuple_vector(0, 1, 0));
+    r = new_ray(tuple_point(1, 2, 3), tuple_vector(0, 1, 0));
     m = matrix_scalation(2, 3, 4);
 
     r = transform(r, m);
@@ -45,7 +45,7 @@ Test(transform, sphere)
     set_transform(&obj, m);
     cr_expect(matrix_eq(obj.data.sp.trans, matrix_translation(2, 3, 4)));
 
-    r = ray_new(tuple_point(0, 0, -5), tuple_vector(0, 0, 1));
+    r = new_ray(tuple_point(0, 0, -5), tuple_vector(0, 0, 1));
     obj.data.sp = new_sphere();
     set_transform(&obj, matrix_scalation(2, 2, 2));
     calc_ray_sp_intersects(is, &r, &(obj.data.sp));

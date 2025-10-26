@@ -42,24 +42,43 @@ t_color	specular_lighting(t_material m, t_light l, float re_dot)
 	return (specular);
 }
 
-t_color	lighting(t_material m, t_tuple p, t_light l, t_tuple ev, t_tuple nv)
+// TODO test is_shadowed function
+int	is_shadowed(t_world *w, t_tuple p)
+{
+	t_tuple	v;
+	t_ray	r;
+	float	distance;
+	float	h;
+
+	v = tuple_sub(w->l.p, p);
+	distance = tuple_magnitude(v);
+	r = new_ray(p, tuple_normalize(v));
+	intersect_world(w, &r);
+	// TODO añadir t(distancia) a hit??
+	h = hit(&r.i);
+	if (h > 0 && h < distance)
+		return (1);
+	return (0);
+}
+
+t_color	lighting(t_comps comps)
 {
 	t_color	color;
 	t_tuple	lightv;
 	t_tuple reflex;
 	float	dot;
 	
-	color = ambient_lighting(m, l);
-	lightv = tuple_sub(l.p, p);
+	color = ambient_lighting(comps.mat, comps.light);
+	lightv = tuple_sub(comps.light.p, comps.point);
 	lightv = tuple_normalize(lightv);
-	dot = tuple_dot(lightv, nv);
-	if (dot < 0)
+	dot = tuple_dot(lightv, comps.normv);
+	if (dot < 0 || comps.is_shadowed)
 		return (color);
-	color = color_add(color, diffuse_lighting(m, l, dot));
-	reflex = reflect(tuple_negate(lightv), nv);
-	dot = tuple_dot(reflex, ev);
+	color = color_add(color, diffuse_lighting(comps.mat, comps.light, dot));
+	reflex = reflect(tuple_negate(lightv), comps.normv);
+	dot = tuple_dot(reflex, comps.eyev);
 	if (dot <= 0)
 		return	(color);
-	color = color_add(color, specular_lighting(m, l, dot));
+	color = color_add(color, specular_lighting(comps.mat, comps.light, dot));
 	return (color);
 }

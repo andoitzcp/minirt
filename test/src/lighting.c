@@ -142,80 +142,80 @@ Test(reflex, surface_45)
 
 Test(lighting, aligned_light_eye_normal)
 {
-	t_tuple e;
-	t_tuple n;
-	t_light l;
 	t_color ret;
 	t_color expec;
-
-	e = tuple_vector(0, 0, -1);
-	n = tuple_vector(0, 0, -1);
-	l = new_light(tuple_point(0, 0, -10), color_set(1,1,1), 1);
-	ret = lighting(def_material(), tuple_point(0,0,0), l, e, n);
+	t_comps comps;
+	
+	comps.point = tuple_point(0,0,0);
+	comps.mat = def_material();
+	comps.eyev = tuple_vector(0, 0, -1);
+	comps.normv = tuple_vector(0, 0, -1);
+	comps.light = new_light(tuple_point(0, 0, -10), color_set(1,1,1), 1);
+	ret = lighting(comps);
 	expec = color_set(1.9, 1.9, 1.9);
 	expect_color_eq(ret, expec, "lighting", 1);
 }
 
 Test(lighting, eye_45_from_normal)
 {
-	t_tuple e;
-	t_tuple n;
-	t_light l;
 	t_color ret;
 	t_color expec;
+	t_comps comps;
 
-	e = tuple_vector(0, sqrt(2)/2, sqrtf(2)/2);
-	n = tuple_vector(0, 0, -1);
-	l = new_light(tuple_point(0, 0, -10), color_set(1,1,1), 1);
-	ret = lighting(def_material(), tuple_point(0,0,0), l, e, n);
+	comps.point = tuple_point(0,0,0);
+	comps.mat = def_material();
+	comps.eyev = tuple_vector(0, sqrt(2)/2, sqrtf(2)/2);
+	comps.normv = tuple_vector(0, 0, -1);
+	comps.light = new_light(tuple_point(0, 0, -10), color_set(1,1,1), 1);
+	ret = lighting(comps);
 	expec = color_set(1, 1, 1);
 	expect_color_eq(ret, expec, "lighting", 2);
 }
 
 Test(lighting, light_45_from_normal)
 {
-	t_tuple e;
-	t_tuple n;
-	t_light l;
 	t_color ret;
 	t_color expec;
+	t_comps comps;
 
-	e = tuple_vector(0, 0, -1);
-	n = tuple_vector(0, 0, -1);
-	l = new_light(tuple_point(0, 10, -10), color_set(1,1,1), 1);
-	ret = lighting(def_material(), tuple_point(0,0,0), l, e, n);
+	comps.point = tuple_point(0,0,0);
+	comps.mat = def_material();
+	comps.eyev = tuple_vector(0, 0, -1);
+	comps.normv = tuple_vector(0, 0, -1);
+	comps.light = new_light(tuple_point(0, 10, -10), color_set(1,1,1), 1);
+	ret = lighting(comps);
 	expec = color_set(0.736396, 0.736396, 0.736396);
 	expect_color_eq(ret, expec, "lighting", 2);
 }
 
 Test(lighting, eye_and_light_45_from_normal)
 {
-	t_tuple e;
-	t_tuple n;
-	t_light l;
 	t_color ret;
 	t_color expec;
+	t_comps comps;
 
-	e = tuple_vector(0, -sqrt(2)/2, -sqrtf(2)/2);
-	n = tuple_vector(0, 0, -1);
-	l = new_light(tuple_point(0, 10, -10), color_set(1,1,1), 1);
-	ret = lighting(def_material(), tuple_point(0,0,0), l, e, n);
+	comps.point = tuple_point(0,0,0);
+	comps.mat = def_material();
+	comps.eyev = tuple_vector(0, -sqrt(2)/2, -sqrtf(2)/2);
+	comps.normv = tuple_vector(0, 0, -1);
+	comps.light = new_light(tuple_point(0, 10, -10), color_set(1,1,1), 1);
+	ret = lighting(comps);
 	expec = color_set(1.636385, 1.636385, 1.636385);
 	expect_color_eq(ret, expec, "lighting", 2);
 }
 
 Test(lighting, light_oposite_to_normal)
 {
-	t_tuple e;
-	t_tuple n;
-	t_light l;
 	t_color ret;
 	t_color expec;
+	t_comps comps;
 
-	e = tuple_vector(0, 0, -1);
-	n = tuple_vector(0, 0, -1);
-	l = new_light(tuple_point(0, 0, 10), color_set(1,1,1), 1);
-	ret = lighting(def_material(), tuple_point(0,0,0), l, e, n);
+	comps.point = tuple_point(0,0,0);
+	comps.mat = def_material();
+	comps.eyev = tuple_vector(0, 0, -1);
+	comps.normv = tuple_vector(0, 0, -1);
+	comps.light = new_light(tuple_point(0, 0, 10), color_set(1,1,1), 1);
+	ret = lighting(comps);
 	expec = color_set(0.1, 0.1, 0.1);
 	expect_color_eq(ret, expec, "lighting", 1);
 }

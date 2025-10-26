@@ -311,11 +311,11 @@ typedef struct s_comps
 {
     struct s_object obj; // object
     struct s_tuple point; // point
+	struct s_material mat;  // material
     struct s_tuple eyev; // eye vector
     struct s_tuple normv; // normal vector
     struct s_light light; // light
     int is_shadowed; // object shadowe yes=1 no=0
-
 } t_comps;
 
 typedef struct s_world
@@ -405,7 +405,7 @@ t_color		canvas_get_pixel(t_canvas can, int x, int y);
 int			canvas_to_ppm(t_canvas can, char *name);
 
 /* ray */
-t_ray	ray_new(t_tuple origin, t_tuple direction);
+t_ray	new_ray(t_tuple origin, t_tuple direction);
 t_tuple	position(t_ray ray, float t);
 t_tuple reflect(t_tuple in, t_tuple normal);
 
@@ -453,7 +453,6 @@ void object_append(t_object **head, t_object *node);
 /* world */
 t_world def_world(void);
 
-// TODO elegir entre sphere() y new_sphere()
 /* sphere */
 t_sphere	new_sphere(void);
 void		set_sphere_from_raw_data(t_sphere *sp, t_raw_sphere *rsp);
@@ -491,25 +490,26 @@ void		set_material(t_object *object, t_material material);
 
 /* world */
 t_world	def_world(void);
-void intersect_world(t_world *world, t_ray *ray);
 
 /* intersect */
-t_intersect_old	intersect_sp_old(t_ray *ray, t_sphere *sp);
-void			calc_ray_sp_intersects(float *array, t_ray *ray, t_sphere *sp);
-void 			calc_ray_pl_intersects(float *array, t_ray *ray, t_plane *pl);
-void 			calc_ray_cy_intersects(float *array, t_ray *ray, t_cylinder *cy);
 t_intersects *new_intersect(t_object *obj, float i);
 void			insert_ray_intersect(t_intersects **head, t_intersects *node);
 void get_ray_el_intersects(t_ray *ray, t_object *obj);
 float			hit(t_intersects **head);
+void intersect_world(t_world *world, t_ray *ray);
+
+/* intersect_sp */
+t_intersect_old	intersect_sp_old(t_ray *ray, t_sphere *sp);
+void			calc_ray_sp_intersects(float *array, t_ray *ray, t_sphere *sp);
+void 			calc_ray_pl_intersects(float *array, t_ray *ray, t_plane *pl);
+void 			calc_ray_cy_intersects(float *array, t_ray *ray, t_cylinder *cy);
 
 /* transform */
 t_matrix	sphere_transform(t_sphere sphere);
 t_tuple		transform_back(t_matrix transform, t_tuple point);
 
 /* lighting */
-t_color	lighting(t_material material, t_tuple point, t_light light,
-				t_tuple eyev, t_tuple normalv);
+t_color	lighting(t_comps comps);
 
 /* object */
 t_object *new_object(int type, t_matrix *transform, t_material *material);
