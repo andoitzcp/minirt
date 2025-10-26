@@ -10,6 +10,7 @@ t_ray ray_new(t_tuple origin, t_tuple direction)
     return (r);
 }
 
+// TODO revisar juntos
 t_tuple position(t_ray ray, float t)
 {
     t_tuple pret;

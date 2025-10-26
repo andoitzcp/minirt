@@ -20,7 +20,7 @@ t_camera convert_camera_from_raw(t_raw_camera raw_camera)
     return (camera);
 }
 
-t_camera default_camera(void)
+t_camera def_camera(void)
 {
     t_camera camera;
 

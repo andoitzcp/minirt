@@ -138,7 +138,6 @@ typedef struct s_color
     float b;
 } t_color;
 
-
 //------
 typedef struct s_raw_amblight
 {
@@ -330,51 +329,50 @@ typedef struct s_data
 /*******************************************************************************/
 
 /* parse */
-void parse(t_data *data, char *filepath);
-void get_raw_content(t_data *data, char *filepath);
+void	parse(t_data *data, char *filepath);
+void	get_raw_content(t_data *data, char *filepath);
 
 /* lines */
-char ***split_line(char *s);
-t_line *build_line_node(t_data *data, char ***line, int type);
-void append_line_node(t_line **head, t_line *node);
-void process_line(t_data *data, char *s);
+char	***split_line(char *s);
+t_line	*build_line_node(t_data *data, char ***line, int type);
+void	append_line_node(t_line **head, t_line *node);
+void	process_line(t_data *data, char *s);
 
 /* get data basic */
-uint8_t get_point_data(t_data *data, t_tuple *tuple, char **s);
-uint8_t get_vector_data(t_data *data, t_tuple *tuple, char **s);
-uint8_t get_color_data(t_data *data, t_color *color, char **s);
+uint8_t	get_point_data(t_data *data, t_tuple *tuple, char **s);
+uint8_t	get_vector_data(t_data *data, t_tuple *tuple, char **s);
+uint8_t	get_color_data(t_data *data, t_color *color, char **s);
 
 /* get data common elements */
-uint8_t get_amblight_data(t_data *data, t_raw_amblight *node, char ***line);
-uint8_t get_camera_data(t_data *data, t_raw_camera *node, char ***line);
-uint8_t get_light_data(t_data *data, t_raw_light *node, char ***line);
+uint8_t	get_amblight_data(t_data *data, t_raw_amblight *node, char ***line);
+uint8_t	get_camera_data(t_data *data, t_raw_camera *node, char ***line);
+uint8_t	get_light_data(t_data *data, t_raw_light *node, char ***line);
 
 /* get data geometric elements*/
-uint8_t get_sphere_data(t_data *data, t_raw_sphere *node, char ***line);
+uint8_t	get_sphere_data(t_data *data, t_raw_sphere *node, char ***line);
 uint8_t get_plane_data(t_data *data, t_raw_plane *node, char ***line);
 uint8_t get_cylinder_data(t_data *data, t_raw_cylinder *node, char ***line);
 
 /* check boundaries */
-uint8_t check_color_bounds(t_color *color);
-uint8_t check_nvector_bounds(t_tuple *vector);
+uint8_t	check_color_bounds(t_color *color);
+uint8_t	check_nvector_bounds(t_tuple *vector);
 
 /* input validation */
-int8_t is_valid_input_file(char *filepath);
-int8_t is_valid_data(t_data *data);
+int8_t	is_valid_input_file(char *filepath);
+int8_t	is_valid_data(t_data *data);
 
-void init(t_data *data);
+void	init(t_data *data);
 
 /* exit */
-int ft_exit(t_data *data, char *s);
-void free_lines(t_line **head);
-void free_els(t_elements **array);
+int		ft_exit(t_data *data, char *s);
+void	free_lines(t_line **head);
+void	free_els(t_elements **array);
 
 /* debugging */
-void print_ds_rawl(t_rawlines **head);
-void print_line_els(char ***line);
-void print_raw_element_list(t_elements **el);
-void print_intersections(t_intersects **head);
-
+void	print_ds_rawl(t_rawlines **head);
+void 	print_line_els(char ***line);
+void 	print_raw_element_list(t_elements **el);
+void 	print_intersections(t_intersects **head);
 
 /* color */
 t_color		color_set(float r, float g, float b);
@@ -385,7 +383,7 @@ t_color		color_sub(t_color a, t_color b);
 t_color		color_scale_up(t_color a, float n);
 t_color		color_scale_down(t_color a, float n);
 t_color		color_blend(t_color a, t_color b);
-t_color color_convert_from_raw(t_color color);
+t_color		color_convert_from_raw(t_color color);
 
 /* canvas */
 t_canvas	*canvas_init(int width, int height);
@@ -401,9 +399,9 @@ t_tuple reflect(t_tuple in, t_tuple normal);
 
 // TODO eliminar funciones transform ??
 /* transform */
-t_ray transform(t_ray r, t_matrix m);
-void set_transform_old(t_elements *el, t_matrix m);
-void set_transform(t_object *object, t_matrix m);
+t_ray	transform(t_ray r, t_matrix m);
+void	set_transform_old(t_elements *el, t_matrix m);
+void	set_transform(t_object *object, t_matrix m);
 
 /* sphere */
 t_sphere	new_sphere(void);
@@ -413,38 +411,38 @@ t_matrix	get_sphere_transform(t_sphere s);
 t_tuple		sphere_normal_at(t_sphere s, t_tuple p);
 
 /* plane */
-t_plane new_plane(void);
-void set_plane_from_raw_data(t_plane *pl, t_raw_plane *rpl);
+t_plane	new_plane(void);
+void	set_plane_from_raw_data(t_plane *pl, t_raw_plane *rpl);
 
 /* cylinder */
-t_cylinder new_cylinder(void);
-void set_cylinder_from_raw_data(t_cylinder *cy, t_raw_cylinder *rcy);
+t_cylinder	new_cylinder(void);
+void		set_cylinder_from_raw_data(t_cylinder *cy, t_raw_cylinder *rcy);
 
 /* light */
-t_light convert_light_from_raw(t_raw_light raw_light);
-t_light new_light(t_tuple point, t_color color, float ratio);
-t_light def_light(void);
+t_light	convert_light_from_raw(t_raw_light raw_light);
+t_light	new_light(t_tuple point, t_color color, float ratio);
+t_light	def_light(void);
 
 /* amblight */
-t_amblight new_amblight(t_color color, float ratio);
-t_amblight convert_amblight_from_raw(t_raw_amblight raw_amblight);
-t_amblight default_amblight(void);
+t_amblight	new_amblight(t_color color, float ratio);
+t_amblight 	convert_amblight_from_raw(t_raw_amblight raw_amblight);
+t_amblight 	def_amblight(void);
 
 /* camera */
-t_camera new_camera(t_tuple point, t_tuple vector, float fov);
-t_camera convert_camera_from_raw(t_raw_camera raw_camera);
-t_camera default_camera(void);
+t_camera	new_camera(t_tuple point, t_tuple vector, float fov);
+t_camera 	convert_camera_from_raw(t_raw_camera raw_camera);
+t_camera 	def_camera(void);
 
 /* material */
 t_material	def_material(void);
-void set_material(t_object *object, t_material material);
+void		set_material(t_object *object, t_material material);
 
 /* object */
-t_object *new_object(int type, t_matrix transform, t_material material);
-void object_append(t_object **head, t_object *node);
+t_object	*new_object(int type, t_matrix transform, t_material material);
+void		object_append(t_object **head, t_object *node);
 
 /* world */
-t_world default_world(void);
+t_world	def_world(void);
 
 /* intersect */
 t_intersect_old	intersect_sp_old(t_ray *ray, t_sphere *sp);

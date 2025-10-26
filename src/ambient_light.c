@@ -20,7 +20,7 @@ t_amblight convert_amblight_from_raw(t_raw_amblight raw_amblight)
     return (amblight);
 }
 
-t_amblight default_amblight(void)
+t_amblight def_amblight(void)
 {
     t_amblight amblight;
 

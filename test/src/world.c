@@ -2,7 +2,7 @@
 #include <criterion/redirect.h>
 #include "../../src/minirt.h"
 
-Test(world, default_world)
+Test(world, def_world)
 {
-    //default_world();
+    //def_world();
 }
