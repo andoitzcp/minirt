@@ -8,7 +8,7 @@ Test(sphere_transformation, translation)
 	t_tuple		expec;
 	float		d;
 
-	s = sphere();
+	s = new_sphere();
 	m = matrix_translation(0, 1, 0);
 	set_sphere_transform(&s, m);
 	ret = s.p;
@@ -26,7 +26,7 @@ Test(sphere_transformation, scalation)
 	t_tuple		expec;
 	float		d;
 
-	s = sphere();
+	s = new_sphere();
 	m = matrix_scalation(2, 2, 2);
 	set_sphere_transform(&s, m);
 	ret = s.p;
@@ -45,7 +45,7 @@ Test(sphere_transformation, combination)
 	t_tuple		expec;
 	float		d;
 
-	s = sphere();
+	s = new_sphere();
 	m = matrix_translation(0, 1, 5);
 	aux = matrix_scalation(9, 9, 9);
 	m = matrix_matrix_mult(m, aux);

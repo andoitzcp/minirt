@@ -21,7 +21,7 @@ void set_sphere_from_raw_data(t_sphere *sp, t_raw_sphere *rsp)
     return ;
 }
 
-// TODO elegir entre sphere() y new_sphere() y cambiar en el codigo
+// TODO decidir si eliminar p y dia
 t_sphere new_sphere(void)
 {
     t_sphere sp;
@@ -29,21 +29,8 @@ t_sphere new_sphere(void)
     sp.p = tuple_point(0, 0, 0);
     sp.dia = 1;
     sp.mat = def_material();
-    sp.col = color_set(0, 0, 0);
     sp.t = matrix_identity(4);
     return (sp);
-}
-
-t_sphere	sphere()
-{
-	t_sphere s;
-
-	s.p = tuple_point(0, 0, 0);
-	s.dia = 1;
-	s.trans = matrix_identity(4);
-	s.mat = def_material();
-
-	return (s);
 }
 
 t_sphere	*set_sphere_transform(t_sphere *s, t_matrix trans)

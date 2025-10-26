@@ -8,7 +8,7 @@ Test(sphere_normal_at, x)
 	t_tuple		ret;
 	t_tuple		expec;
 
-	s = sphere();
+	s = new_sphere();
 	p = tuple_point(1, 0, 0);
 	ret = sphere_normal_at(s, p);
 	expec = tuple_vector(1, 0, 0);
@@ -22,7 +22,7 @@ Test(sphere_normal_at, y)
 	t_tuple		ret;
 	t_tuple		expec;
 
-	s = sphere();
+	s = new_sphere();
 	p = tuple_point(0, 1, 0);
 	ret = sphere_normal_at(s, p);
 	expec = tuple_vector(0, 1, 0);
@@ -36,7 +36,7 @@ Test(sphere_normal_at, z)
 	t_tuple		ret;
 	t_tuple		expec;
 
-	s = sphere();
+	s = new_sphere();
 	p = tuple_point(0, 0, 1);
 	ret = sphere_normal_at(s, p);
 	expec = tuple_vector(0, 0, 1);
@@ -50,7 +50,7 @@ Test(sphere_normal_at, other_point)
 	t_tuple		ret;
 	t_tuple		expec;
 
-	s = sphere();
+	s = new_sphere();
 	p = tuple_point(sqrtf(3)/3,sqrtf(3)/3,sqrtf(3)/3);
 	ret = sphere_normal_at(s, p);
 	expec = tuple_vector(sqrtf(3)/3,sqrtf(3)/3,sqrtf(3)/3);
@@ -64,7 +64,7 @@ Test(sphere_normal_at, is_normalized)
 	t_tuple		ret;
 	t_tuple		expec;
 
-	s = sphere();
+	s = new_sphere();
 	p = tuple_point(sqrtf(3)/3,sqrtf(3)/3,sqrtf(3)/3);
 	ret = sphere_normal_at(s, p);
 	ret = tuple_normalize(ret);
@@ -81,7 +81,7 @@ Test(sphere_normal_at, transformed_sphere_point_1)
 	t_tuple		expec;
 	t_tuple		p;
 
-	s = sphere();
+	s = new_sphere();
 	m = matrix_translation(0, 1, 0);
 	set_sphere_transform(&s, m);
 
@@ -100,7 +100,7 @@ Test(sphere_normal_at, transformed_sphere_point_2)
 	t_tuple		expec;
 	t_tuple		p;
 
-	s = sphere();
+	s = new_sphere();
 	m = matrix_scalation(1, 0.5, 1);
 	aux = matrix_rot_z(radians_to_degrees(M_PI/5));
 	m = matrix_matrix_mult(m, aux);
