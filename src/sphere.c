@@ -28,7 +28,7 @@ t_sphere new_sphere(void)
 
     sp.p = tuple_point(0, 0, 0);
     sp.dia = 1;
-    sp.mat = default_material();
+    sp.mat = def_material();
     sp.col = color_set(0, 0, 0);
     sp.t = matrix_identity(4);
     return (sp);
@@ -41,7 +41,7 @@ t_sphere	sphere()
 	s.p = tuple_point(0, 0, 0);
 	s.dia = 1;
 	s.trans = matrix_identity(4);
-	s.mat = material();
+	s.mat = def_material();
 
 	return (s);
 }

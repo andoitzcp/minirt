@@ -9,7 +9,7 @@ t_cylinder new_cylinder(void)
     cy.v = tuple_vector(0, 0, 0);
     cy.dia = 1;
     cy.hei = 1;
-    cy.mat = default_material();
+    cy.mat = def_material();
     cy.t = matrix_identity(4);
     return (cy);
 }

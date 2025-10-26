@@ -62,22 +62,3 @@ int		matrix_is_invertible(t_matrix m)
 	return (1);
 }
 
-// TODO dejar esto en fichero debugging funcion PROHIBIDA!
-void	matrix_print(t_matrix m)
-{
-	int i;
-	int j;
-
-	i = 0;
-	while(i < m.size)
-	{
-		j = 0;
-		while(j < m.size)
-		{
-			printf("%f ", m.value[i][j]);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
-}

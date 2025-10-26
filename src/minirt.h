@@ -438,7 +438,7 @@ t_camera convert_camera_from_raw(t_raw_camera raw_camera);
 t_camera default_camera(void);
 
 /* material */
-t_material default_material(void); // temporal cuando se mergee borrar
+t_material	def_material(void);
 void set_material(t_object *object, t_material material);
 
 /* object */
@@ -468,9 +468,6 @@ float			hit(t_intersects **head);
 /* transform */
 t_matrix	sphere_transform(t_sphere sphere);
 t_tuple		transform_back(t_matrix transform, t_tuple point);
-
-/* material */
-t_material	material();
 
 /* lighting */
 t_color	lighting(t_material material, t_tuple point, t_light light,

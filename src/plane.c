@@ -7,7 +7,7 @@ t_plane new_plane(void)
 
     pl.p = tuple_point(0, 0, 0);
     pl.v = tuple_vector(0, 0, 0);
-    pl.mat = default_material();
+    pl.mat = def_material();
     pl.t = matrix_identity(4);
     return (pl);
 }
