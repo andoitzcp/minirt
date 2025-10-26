@@ -17,8 +17,22 @@ t_world def_world(void)
     mat.color = color_set(0.8, 1.0, 0.6);
     mat.diffuse = 0.7;
     mat.specular = 0.2;
+    world.objs = NULL;
+    obj = new_object(ELID_SP, NULL, &mat);
+    object_append(&world.objs, obj);
     obj = new_object(ELID_SP, &t, NULL);
     object_append(&world.objs, obj);
-    obj = new_object(ELID_SP, NULL, &mat);
     return (world);
+}
+
+void intersect_world(t_world *world, t_ray *ray)
+{
+    t_object *obj;
+
+    obj = world->objs;
+    while (obj != NULL)
+    {
+        get_ray_el_intersects(ray, obj);
+        obj = obj->next;
+    }
 }

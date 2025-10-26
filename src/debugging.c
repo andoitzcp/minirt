@@ -45,7 +45,6 @@ void print_raw_sphere(t_sphere *s)
     printf("\tSphere: %p\n", s);
     print_tuple(&(s->p));
     print_color(&(s->mat.color));
-    printf("\t\tDiameter: %f\n", s->dia);
 }
 
 void print_raw_plane(t_plane *p)

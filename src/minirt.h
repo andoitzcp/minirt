@@ -299,12 +299,22 @@ typedef struct s_raw_data
     uint nels;
 } t_raw_data;
 
+
 typedef struct s_object
 {
     enum e_elid type; // element data type (sp, pl, cy)
     union u_eldata data; // raw data
     struct s_object *next;
 } t_object;
+
+typedef struct s_world_comps
+{
+    struct s_object obj; // object
+    struct s_tuple point; // point
+    struct s_tuple eyev;
+    struct s_tuple normv;
+
+} t_world_comps;
 
 typedef struct s_world
 {
@@ -418,20 +428,20 @@ void set_cylinder_from_raw_data(t_cylinder *cy, t_raw_cylinder *rcy);
 /* light */
 t_light new_light(t_tuple point, t_color color, float ratio);
 t_light convert_light_from_raw(t_raw_light raw_light);
-t_light default_light(void);
+t_light def_light(void);
 
 /* amblight */
 t_amblight new_amblight(t_color color, float ratio);
 t_amblight convert_amblight_from_raw(t_raw_amblight raw_amblight);
-t_amblight default_amblight(void);
+t_amblight def_amblight(void);
 
 /* camera */
 t_camera new_camera(t_tuple point, t_tuple vector, float fov);
 t_camera convert_camera_from_raw(t_raw_camera raw_camera);
-t_camera default_camera(void);
+t_camera def_camera(void);
 
 /* material */
-t_material default_material(void); // temporal cuando se mergee borrar
+t_material def_material(void); // temporal cuando se mergee borrar
 void set_material(t_object *object, t_material material);
 
 /* object */
@@ -439,7 +449,7 @@ t_object *new_object(int type, t_matrix *transform, t_material *material);
 void object_append(t_object **head, t_object *node);
 
 /* world */
-t_world default_world(void);
+t_world def_world(void);
 
 // TODO elegir entre sphere() y new_sphere()
 /* sphere */
@@ -474,10 +484,12 @@ t_camera 	def_camera(void);
 
 /* material */
 t_material	def_material(void);
+t_material new_material(t_color color, float *specs);
 void		set_material(t_object *object, t_material material);
 
 /* world */
 t_world	def_world(void);
+void intersect_world(t_world *world, t_ray *ray);
 
 /* intersect */
 t_intersect_old	intersect_sp_old(t_ray *ray, t_sphere *sp);
@@ -493,13 +505,12 @@ float			hit(t_intersects **head);
 t_matrix	sphere_transform(t_sphere sphere);
 t_tuple		transform_back(t_matrix transform, t_tuple point);
 
-/* material */
-t_material	material();
-t_material default_material(void);
-t_material new_material(t_color color, float *specs);
-
 /* lighting */
 t_color	lighting(t_material material, t_tuple point, t_light light,
 				t_tuple eyev, t_tuple normalv);
+
+/* object */
+t_object *new_object(int type, t_matrix *transform, t_material *material);
+void object_append(t_object **head, t_object *node);
 
 #endif // MINIRT_H_

@@ -27,7 +27,6 @@ t_sphere new_sphere(void)
     t_sphere sp;
 
     sp.p = tuple_point(0, 0, 0);
-    sp.dia = 1;
     sp.mat = def_material();
     sp.trans = matrix_identity(4);
     return (sp);
@@ -39,7 +38,6 @@ t_sphere	*set_sphere_transform(t_sphere *s, t_matrix trans)
 
 	m = matrix_matrix_mult(trans, s->trans);
 	s->p = tuple_point(m.value[0][3], m.value[1][3], m.value[2][3]);
-	s->dia = m.value[0][0];
 	s->trans = m;
 	return (s);
 }
@@ -48,9 +46,6 @@ t_matrix	get_sphere_transform(t_sphere s)
 {
 	t_matrix	transform;
 	
-	transform.value[0][0] = s.dia;
-	transform.value[1][1] = s.dia;
-	transform.value[2][2] = s.dia;
 	transform.value[0][3] = s.p.x;
 	transform.value[1][3] = s.p.y;
 	transform.value[2][3] = s.p.z;

@@ -6,16 +6,13 @@ Test(sphere_transformation, translation)
 	t_matrix	m;
 	t_tuple		ret;
 	t_tuple		expec;
-	float		d;
 
 	s = new_sphere();
 	m = matrix_translation(0, 1, 0);
 	set_sphere_transform(&s, m);
 	ret = s.p;
 	expec = tuple_point(0, 1, 0);
-	d = 1;
 	expect_tuple_eq(ret, expec);
-	cr_expect(float_eq(d, s.dia));
 }
 
 Test(sphere_transformation, scalation)
@@ -24,16 +21,13 @@ Test(sphere_transformation, scalation)
 	t_matrix	m;
 	t_tuple		ret;
 	t_tuple		expec;
-	float		d;
 
 	s = new_sphere();
 	m = matrix_scalation(2, 2, 2);
 	set_sphere_transform(&s, m);
 	ret = s.p;
 	expec = tuple_point(0, 0, 0);
-	d = 2;
 	expect_tuple_eq(ret, expec);
-	cr_expect(float_eq(d, s.dia));
 }
 
 Test(sphere_transformation, combination)
@@ -43,7 +37,6 @@ Test(sphere_transformation, combination)
 	t_matrix	aux;
 	t_tuple		ret;
 	t_tuple		expec;
-	float		d;
 
 	s = new_sphere();
 	m = matrix_translation(0, 1, 5);
@@ -52,8 +45,5 @@ Test(sphere_transformation, combination)
 	set_sphere_transform(&s, m);
 	ret = s.p;
 	expec = tuple_point(0, 1, 5);
-	d = 9;
 	expect_tuple_eq(ret, expec);
-	cr_expect(float_eq(d, s.dia));
 }
-

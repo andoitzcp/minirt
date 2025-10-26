@@ -11,7 +11,6 @@ CC=gcc
 CFLAGS=-Wall -Werror -Wextra -g -I$(INC_DIR)
 TESTS_LDFLAGS=-lcriterion
 
-#RELEASE_SRC= src/color.c src/color_ops.c src/parse.c src/parse_utils.c src/input_validation.c src/exit.c src/debugging.c
 RELEASE_SRC= src/init.c \
              src/parse.c \
              src/lines.c \
@@ -37,9 +36,8 @@ RELEASE_SRC= src/init.c \
              src/material.c \
 			 src/lighting.c \
 			 src/light.c	\
+             src/object.c \
              src/debugging.c
-			
-			# 
 
 RELEASE_OBJ=$(subst src/,obj/,$(RELEASE_SRC:.c=.o))
 
@@ -126,13 +124,13 @@ test-libregex: $(LIBRE_A)
 
 
 test/bin:
-	mkdir $@
+	@mkdir $@
 
 test/obj:
-	mkdir $@
+	@mkdir $@
 
 obj:
-	mkdir $@
+	@mkdir $@
 
 clean:
 	@$(MAKE) -s -C $(LIBFT) clean
