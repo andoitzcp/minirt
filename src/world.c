@@ -36,3 +36,39 @@ void intersect_world(t_world *world, t_ray *ray)
         obj = obj->next;
     }
 }
+
+t_tuple normal_at(t_object *obj, t_tuple point)
+{
+    if (obj->type == ELID_SP)
+        return (sphere_normal_at(obj->data.sp, point));
+    if (obj->type == ELID_PL)
+        return (plane_normal_at(obj->data.pl, point));
+    if (obj->type == ELID_CY)
+        return (cylinder_normal_at(obj->data.cy, point));
+    return (tuple_point(0, 0, 0));
+}
+
+t_comps prep_comps(t_intersects *intersection, t_ray *ray)
+{
+    t_comps comps;
+
+    comps.t = intersection->i;
+    comps.obj = intersection->obj;
+    comps.point = position(*ray, comps.t);
+    comps.eyev = tuple_negate(ray->d);
+    comps.normv = normal_at(comps.obj, comps.point);
+    comps.is_inside = 0;
+    if (tuple_dot(comps.normv, comps.eyev) < 0)
+    {
+        comps.is_inside = 1;
+        comps.normv = tuple_negate(comps.normv);
+    }
+    return (comps);
+}
+
+t_color shade_hit(t_world *world, t_comps *comps)
+{
+
+    return (lighting(comps->obj.
+
+}

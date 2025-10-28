@@ -309,13 +309,14 @@ typedef struct s_object
 
 typedef struct s_comps
 {
-    struct s_object obj; // object
+    struct s_object *obj; // object
     struct s_tuple point; // point
     struct s_tuple eyev; // eye vector
     struct s_tuple normv; // normal vector
     struct s_light light; // light
+    float t;
     int is_shadowed; // object shadowe yes=1 no=0
-
+    int is_inside;
 } t_comps;
 
 typedef struct s_world
@@ -464,10 +465,12 @@ t_tuple		sphere_normal_at(t_sphere s, t_tuple p);
 /* plane */
 t_plane	new_plane(void);
 void	set_plane_from_raw_data(t_plane *pl, t_raw_plane *rpl);
+t_tuple	plane_normal_at(t_plane plane, t_tuple point);
 
 /* cylinder */
 t_cylinder	new_cylinder(void);
 void		set_cylinder_from_raw_data(t_cylinder *cy, t_raw_cylinder *rcy);
+t_tuple	cylinder_normal_at(t_cylinder cylinder, t_tuple point);
 
 /* light */
 t_light	convert_light_from_raw(t_raw_light raw_light);
@@ -492,6 +495,8 @@ void		set_material(t_object *object, t_material material);
 /* world */
 t_world	def_world(void);
 void intersect_world(t_world *world, t_ray *ray);
+t_comps prep_comps(t_intersects *intersection, t_ray *ray);
+t_color shade_hit(t_world *world, t_comps *comps);
 
 /* intersect */
 t_intersect_old	intersect_sp_old(t_ray *ray, t_sphere *sp);

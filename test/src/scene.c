@@ -59,3 +59,106 @@ Test(world, world_intersect)
     }
     cr_expect_eq(i, 4, "%d vs 4", i);
 }
+
+Test(world, prep_comps)
+{
+    t_ray r;
+    t_object *o;
+    t_intersects i;
+    t_comps c;
+
+    r = ray_new(tuple_point(0, 0, -5), tuple_vector(0, 0, 1));
+    o = new_object(ELID_SP, NULL, NULL);
+    i.obj = o;
+    i.i = 4.0;
+
+    c = prep_comps(&i, &r);
+    cr_assert(float_eq(c.t, i.i));
+    cr_assert(c.obj == o);
+    cr_assert(tuple_eq(c.point, tuple_point(0, 0, -1)));
+    cr_assert(tuple_eq(c.eyev, tuple_vector(0, 0, -1)));
+    cr_assert(tuple_eq(c.normv, tuple_vector(0, 0, -1)));
+    return ;
+}
+
+Test(world, prep_comps_outside)
+{
+    t_ray r;
+    t_object *o;
+    t_intersects i;
+    t_comps c;
+
+    r = ray_new(tuple_point(0, 0, -5), tuple_vector(0, 0, 1));
+    o = new_object(ELID_SP, NULL, NULL);
+    i.obj = o;
+    i.i = 4.0;
+
+    c = prep_comps(&i, &r);
+    cr_assert(c.is_inside == 0);
+    return ;
+}
+
+Test(world, prep_comps_inside)
+{
+    t_ray r;
+    t_object *o;
+    t_intersects i;
+    t_comps c;
+
+    r = ray_new(tuple_point(0, 0, 0), tuple_vector(0, 0, 1));
+    o = new_object(ELID_SP, NULL, NULL);
+    i.obj = o;
+    i.i = 1.0;
+
+    c = prep_comps(&i, &r);
+    cr_assert(c.is_inside == 1);
+    cr_assert(tuple_eq(c.point, tuple_point(0, 0, 1)));
+    cr_assert(tuple_eq(c.eyev, tuple_vector(0, 0, -1)));
+    cr_assert(tuple_eq(c.normv, tuple_vector(0, 0, -1)));
+    return ;
+}
+
+Test(world, shade_hit_outside)
+{
+    t_world w;
+    t_ray r;
+    t_object *o;
+    t_intersects i;
+    t_comps c;
+    t_color col;
+
+    w = def_world();
+    r = ray_new(tuple_point(0, 0, -5), tuple_vector(0, 0, 1));
+    o = w.objs;
+    i.i = 4.0;
+    i.obj = o;
+    c = prep_comps(&i, &r);
+
+    col = shade_hit(&w, &c);
+    cr_assert(float_eq(col.r, 0.38066));
+    cr_assert(float_eq(col.g, 0.47583));
+    cr_assert(float_eq(col.b, 0.28550));
+}
+
+Test(world, shade_hit_inside)
+{
+    t_world w;
+    t_ray r;
+    t_object *o;
+    t_intersects i;
+    t_comps c;
+    t_color col;
+
+    w = def_world();
+    w.l = new_light(tuple_point(0, 0.25, 0), color_set(1, 1, 1), 1);
+    r = ray_new(tuple_point(0, 0, 0), tuple_vector(0, 0, 1));
+    o = w.objs->next;
+    i.i = 0.5;
+    i.obj = o;
+    c = prep_comps(&i, &r);
+
+    col = shade_hit(&w, &c);
+    cr_assert(float_eq(col.r, 0.90498));
+    cr_assert(float_eq(col.g, 0.90498));
+    cr_assert(float_eq(col.b, 0.90498));
+}

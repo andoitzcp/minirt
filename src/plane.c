@@ -20,3 +20,13 @@ void set_plane_from_raw_data(t_plane *pl, t_raw_plane *rpl)
     (void)rpl;
     return ;
 }
+
+t_tuple	plane_normal_at(t_plane plane, t_tuple point)
+{
+    t_tuple tret;
+
+    (void)plane;
+    (void)point;
+    tret = tuple_point(0, 0, 0); //temporary
+    return (tret);
+}
