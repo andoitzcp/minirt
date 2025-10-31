@@ -69,6 +69,39 @@ t_comps prep_comps(t_intersects *intersection, t_ray *ray)
 t_color shade_hit(t_world *world, t_comps *comps)
 {
 
-    return (lighting(comps->obj.
+    if (comps->obj->type == ELID_SP)
+        return (lighting(comps->obj->data.sp.mat, comps->point, world->l, comps->eyev, comps->normv));
+    else if (comps->obj->type == ELID_PL)
+        return (lighting(comps->obj->data.pl.mat, comps->point, world->l, comps->eyev, comps->normv));
+    else
+        return (lighting(comps->obj->data.cy.mat, comps->point, world->l, comps->eyev, comps->normv));
+}
 
+t_intersects *get_hit_intersect(t_ray *ray, float hit)
+{
+    t_intersects *current;
+
+    current = ray->i;
+    while (current != NULL)
+    {
+        if (float_eq(current->i, hit))
+            return (current);
+        current = current->next;
+    }
+    return NULL;
+}
+
+t_color color_at(t_world *world, t_ray *ray)
+{
+    float h;
+    t_intersects *i;
+    t_comps c;
+
+    intersect_world(world, ray);
+    h = hit(&ray->i);
+    if (h == -1)
+        return (color_set(0, 0, 0));
+    i = get_hit_intersect(ray, h);
+    c = prep_comps(i, ray);
+    return (shade_hit(world, &c));
 }

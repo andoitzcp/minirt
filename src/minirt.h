@@ -497,6 +497,7 @@ t_world	def_world(void);
 void intersect_world(t_world *world, t_ray *ray);
 t_comps prep_comps(t_intersects *intersection, t_ray *ray);
 t_color shade_hit(t_world *world, t_comps *comps);
+t_color color_at(t_world *world, t_ray *ray);
 
 /* intersect */
 t_intersect_old	intersect_sp_old(t_ray *ray, t_sphere *sp);

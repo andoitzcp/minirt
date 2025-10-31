@@ -73,11 +73,11 @@ Test(world, prep_comps)
     i.i = 4.0;
 
     c = prep_comps(&i, &r);
-    cr_assert(float_eq(c.t, i.i));
-    cr_assert(c.obj == o);
-    cr_assert(tuple_eq(c.point, tuple_point(0, 0, -1)));
-    cr_assert(tuple_eq(c.eyev, tuple_vector(0, 0, -1)));
-    cr_assert(tuple_eq(c.normv, tuple_vector(0, 0, -1)));
+    cr_expect(float_eq(c.t, i.i));
+    cr_expect(c.obj == o);
+    cr_expect(tuple_eq(c.point, tuple_point(0, 0, -1)));
+    cr_expect(tuple_eq(c.eyev, tuple_vector(0, 0, -1)));
+    cr_expect(tuple_eq(c.normv, tuple_vector(0, 0, -1)));
     return ;
 }
 
@@ -94,7 +94,7 @@ Test(world, prep_comps_outside)
     i.i = 4.0;
 
     c = prep_comps(&i, &r);
-    cr_assert(c.is_inside == 0);
+    cr_expect(c.is_inside == 0);
     return ;
 }
 
@@ -111,10 +111,10 @@ Test(world, prep_comps_inside)
     i.i = 1.0;
 
     c = prep_comps(&i, &r);
-    cr_assert(c.is_inside == 1);
-    cr_assert(tuple_eq(c.point, tuple_point(0, 0, 1)));
-    cr_assert(tuple_eq(c.eyev, tuple_vector(0, 0, -1)));
-    cr_assert(tuple_eq(c.normv, tuple_vector(0, 0, -1)));
+    cr_expect(c.is_inside == 1);
+    cr_expect(tuple_eq(c.point, tuple_point(0, 0, 1)));
+    cr_expect(tuple_eq(c.eyev, tuple_vector(0, 0, -1)));
+    cr_expect(tuple_eq(c.normv, tuple_vector(0, 0, -1)));
     return ;
 }
 
@@ -135,9 +135,9 @@ Test(world, shade_hit_outside)
     c = prep_comps(&i, &r);
 
     col = shade_hit(&w, &c);
-    cr_assert(float_eq(col.r, 0.38066));
-    cr_assert(float_eq(col.g, 0.47583));
-    cr_assert(float_eq(col.b, 0.28550));
+    cr_expect(float_eq(col.r, 0.38066));
+    cr_expect(float_eq(col.g, 0.47583));
+    cr_expect(float_eq(col.b, 0.28550));
 }
 
 Test(world, shade_hit_inside)
@@ -158,7 +158,51 @@ Test(world, shade_hit_inside)
     c = prep_comps(&i, &r);
 
     col = shade_hit(&w, &c);
-    cr_assert(float_eq(col.r, 0.90498));
-    cr_assert(float_eq(col.g, 0.90498));
-    cr_assert(float_eq(col.b, 0.90498));
+    cr_expect(float_eq(col.r, 0.90498), "%f vs %f\n", col.r, 0.90498);
+    cr_expect(float_eq(col.g, 0.90498), "%f vs %f\n", col.g, 0.90498);
+    cr_expect(float_eq(col.b, 0.90498), "%f vs %f\n", col.b, 0.90498);
+}
+
+Test(world, color_at_miss)
+{
+    t_world w;
+    t_ray r;
+    t_color c;
+
+    w = def_world();
+    r = ray_new(tuple_point(0, 0, -5), tuple_vector(0, 1, 0));
+    c = color_at(&w, &r);
+    cr_expect(float_eq(c.r, 0.0), "%f vs %f\n", c.r, 0.0);
+    cr_expect(float_eq(c.g, 0.0), "%f vs %f\n", c.g, 0.0);
+    cr_expect(float_eq(c.b, 0.0), "%f vs %f\n", c.b, 0.0);
+}
+
+Test(world, color_at_hit)
+{
+    t_world w;
+    t_ray r;
+    t_color c;
+
+    w = def_world();
+    r = ray_new(tuple_point(0, 0, -5), tuple_vector(0, 0, 1));
+    c = color_at(&w, &r);
+    cr_expect(float_eq(c.r, 0.38066));
+    cr_expect(float_eq(c.g, 0.47583));
+    cr_expect(float_eq(c.b, 0.28550));
+}
+
+Test(world, color_at_intersect_behind)
+{
+    t_world w;
+    t_ray r;
+    t_color c;
+
+    w = def_world();
+    r = ray_new(tuple_point(0, 0, 0.75), tuple_vector(0, 0, -1));
+    w.objs->data.sp.mat.ambient = 1;
+    w.objs->next->data.sp.mat.ambient = 1;
+    c = color_at(&w, &r);
+    cr_expect(float_eq(c.r, w.objs->next->data.sp.mat.color.r), "%f vs %f\n", c.r, w.objs->data.sp.mat.color.r);
+    cr_expect(float_eq(c.g, w.objs->next->data.sp.mat.color.g), "%f vs %f\n", c.g, w.objs->data.sp.mat.color.g);
+    cr_expect(float_eq(c.b, w.objs->next->data.sp.mat.color.b), "%f vs %f\n", c.b, w.objs->data.sp.mat.color.b);
 }
