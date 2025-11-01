@@ -509,6 +509,7 @@ t_matrix	sphere_transform(t_sphere sphere);
 t_tuple		transform_back(t_matrix transform, t_tuple point);
 
 /* lighting */
+int		is_shadowed(t_world *w, t_tuple p);
 t_color	lighting(t_comps comps);
 
 /* object */
