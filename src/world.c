@@ -105,3 +105,48 @@ t_color color_at(t_world *world, t_ray *ray)
     c = prep_comps(i, ray);
     return (shade_hit(world, &c));
 }
+
+t_ray ray_for_pixel(t_camera c, int px, int py)
+{
+    float offset[2];
+    float world[2];
+    t_tuple pixel;
+    t_tuple rod[2];
+    t_ray ray;
+
+
+    offset[0] = (px + 0.5) * c.pix_sz;
+    offset[1] = (py + 0.5) * c.pix_sz;
+    world[0] = c.half_width - offset[0];
+    world[1] = c.half_height - offset[1];
+    pixel = matrix_tuple_mult(matrix_inverse(c.trans), tuple_point(world[0], world[1], -1));
+    rod[0] = matrix_tuple_mult(matrix_inverse(c.trans), tuple_point(0, 0, 0));
+    rod[1] = tuple_normalize(tuple_sub(pixel, rod[0]));
+    ray = ray_new(rod[0], rod[1]);
+    return (ray);
+}
+
+t_canvas *render(t_camera c, t_world w)
+{
+    int i;
+    int j;
+    t_canvas *image;
+    t_ray r;
+    t_color col;
+
+    image = canvas_init(c.hsize, c.vsize);
+    i = 0;
+    while (i < c.vsize)
+    {
+        j = 0;
+        while(j < c.hsize)
+        {
+            r = ray_for_pixel(c, j, i);
+            col = color_at(&w, &r);
+            canvas_set_pixel(image, j, i, col);
+            j++;
+        }
+        i++;
+    }
+    return (image);
+}

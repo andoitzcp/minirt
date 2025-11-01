@@ -234,7 +234,13 @@ typedef struct s_camera
 {
     struct s_tuple p;
     struct s_tuple v;
-    uint8_t fov; // Fiel Of View in degrees
+    int hsize;
+    int vsize;
+    float fov; // Fiel Of View in degrees
+    float pix_sz;
+    float half_width;
+    float half_height;
+    t_matrix trans;
 } t_camera;
 
 typedef struct s_light
@@ -420,43 +426,9 @@ t_matrix	sphere_transform(t_sphere sphere);
 t_tuple		transform_back(t_matrix transform, t_tuple point);
 t_matrix view_transform(t_tuple from, t_tuple to, t_tuple up);
 
-/* sphere*/
-t_sphere new_sphere(void);
-void set_sphere_from_raw_data(t_sphere *sp, t_raw_sphere *rsp);
-
-/* plane */
-t_plane new_plane(void);
-void set_plane_from_raw_data(t_plane *pl, t_raw_plane *rpl);
-
-/* cylinder */
-t_cylinder new_cylinder(void);
-void set_cylinder_from_raw_data(t_cylinder *cy, t_raw_cylinder *rcy);
-
-/* light */
-t_light new_light(t_tuple point, t_color color, float ratio);
-t_light convert_light_from_raw(t_raw_light raw_light);
-t_light def_light(void);
-
-/* amblight */
-t_amblight new_amblight(t_color color, float ratio);
-t_amblight convert_amblight_from_raw(t_raw_amblight raw_amblight);
-t_amblight def_amblight(void);
-
-/* camera */
-t_camera new_camera(t_tuple point, t_tuple vector, float fov);
-t_camera convert_camera_from_raw(t_raw_camera raw_camera);
-t_camera def_camera(void);
-
-/* material */
-t_material def_material(void); // temporal cuando se mergee borrar
-void set_material(t_object *object, t_material material);
-
 /* object */
 t_object *new_object(int type, t_matrix *transform, t_material *material);
 void object_append(t_object **head, t_object *node);
-
-/* world */
-t_world def_world(void);
 
 // TODO elegir entre sphere() y new_sphere()
 /* sphere */
@@ -487,9 +459,13 @@ t_amblight 	convert_amblight_from_raw(t_raw_amblight raw_amblight);
 t_amblight 	def_amblight(void);
 
 /* camera */
-t_camera	new_camera(t_tuple point, t_tuple vector, float fov);
+t_camera new_camera_old(t_tuple point, t_tuple vector, float fov);
+t_camera new_camera(int hsize, int vsize, float fov);
 t_camera 	convert_camera_from_raw(t_raw_camera raw_camera);
 t_camera 	def_camera(void);
+void camera_comps(t_camera *camera);
+t_ray ray_for_pixel(t_camera c, int px, int py);
+t_canvas *render(t_camera c, t_world w);
 
 /* material */
 t_material	def_material(void);
@@ -517,9 +493,5 @@ float			hit(t_intersects **head);
 /* lighting */
 t_color	lighting(t_material material, t_tuple point, t_light light,
 				t_tuple eyev, t_tuple normalv);
-
-/* object */
-t_object *new_object(int type, t_matrix *transform, t_material *material);
-void object_append(t_object **head, t_object *node);
 
 #endif // MINIRT_H_
