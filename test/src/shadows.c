@@ -107,3 +107,8 @@ Test(is_shadowed, lps_diagonal) {
 	expec = 0;
 	cr_expect(ret == expec);
 }
+
+// TODO Add this missing test (page 115)
+//Test(is_shadowe, overpoint)
+//{
+//}

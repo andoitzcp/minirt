@@ -16,7 +16,8 @@
 # include <stdio.h>
 
 // Constants
-# define EPS 1e-6f
+# define EPS 1e-5f
+//# define EPS 1e-6f
 
 // Float utils
 int		float_eq(float a, float b);

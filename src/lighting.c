@@ -67,12 +67,12 @@ t_color	lighting(t_comps comps)
 	t_tuple	lightv;
 	t_tuple reflex;
 	float	dot;
-	
+
 	color = ambient_lighting(comps.mat, comps.light);
 	lightv = tuple_sub(comps.light.p, comps.point);
 	lightv = tuple_normalize(lightv);
 	dot = tuple_dot(lightv, comps.normv);
-	if (dot < 0 || comps.is_shadowed)
+	if (dot < 0 || comps.is_shadowed) // Una vez lo arregles descomenta esta linea
 		return (color);
 	color = color_add(color, diffuse_lighting(comps.mat, comps.light, dot));
 	reflex = reflect(tuple_negate(lightv), comps.normv);

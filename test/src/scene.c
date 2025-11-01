@@ -59,3 +59,150 @@ Test(world, world_intersect)
     }
     cr_expect_eq(i, 4, "%d vs 4", i);
 }
+
+Test(world, prep_comps)
+{
+    t_ray r;
+    t_object *o;
+    t_intersects i;
+    t_comps c;
+
+    r = new_ray(tuple_point(0, 0, -5), tuple_vector(0, 0, 1));
+    o = new_object(ELID_SP, NULL, NULL);
+    i.obj = o;
+    i.i = 4.0;
+
+    c = prep_comps(&i, &r);
+    cr_expect(float_eq(c.t, i.i));
+    cr_expect(c.obj == o);
+    cr_expect(tuple_eq(c.point, tuple_point(0, 0, -1)));
+    cr_expect(tuple_eq(c.eyev, tuple_vector(0, 0, -1)));
+    cr_expect(tuple_eq(c.normv, tuple_vector(0, 0, -1)));
+    return ;
+}
+
+Test(world, prep_comps_outside)
+{
+    t_ray r;
+    t_object *o;
+    t_intersects i;
+    t_comps c;
+
+    r = new_ray(tuple_point(0, 0, -5), tuple_vector(0, 0, 1));
+    o = new_object(ELID_SP, NULL, NULL);
+    i.obj = o;
+    i.i = 4.0;
+
+    c = prep_comps(&i, &r);
+    cr_expect(c.is_inside == 0);
+    return ;
+}
+
+Test(world, prep_comps_inside)
+{
+    t_ray r;
+    t_object *o;
+    t_intersects i;
+    t_comps c;
+
+    r = new_ray(tuple_point(0, 0, 0), tuple_vector(0, 0, 1));
+    o = new_object(ELID_SP, NULL, NULL);
+    i.obj = o;
+    i.i = 1.0;
+
+    c = prep_comps(&i, &r);
+    cr_expect(c.is_inside == 1);
+    cr_expect(tuple_eq(c.point, tuple_point(0, 0, 1)));
+    cr_expect(tuple_eq(c.eyev, tuple_vector(0, 0, -1)));
+    cr_expect(tuple_eq(c.normv, tuple_vector(0, 0, -1)));
+    return ;
+}
+
+Test(world, shade_hit_outside)
+{
+    t_world w;
+    t_ray r;
+    t_object *o;
+    t_intersects i;
+    t_comps c;
+    t_color col;
+
+    w = def_world();
+    r = new_ray(tuple_point(0, 0, -5), tuple_vector(0, 0, 1));
+    o = w.objs;
+    i.i = 4.0;
+    i.obj = o;
+    c = prep_comps(&i, &r);
+
+    col = shade_hit(&w, &c);
+    cr_expect(float_eq(col.r, 0.38066));
+    cr_expect(float_eq(col.g, 0.47583));
+    cr_expect(float_eq(col.b, 0.28550));
+}
+
+Test(world, shade_hit_inside)
+{
+    t_world w;
+    t_ray r;
+    t_object *o;
+    t_intersects i;
+    t_comps c;
+    t_color col;
+
+    w = def_world();
+    w.l = new_light(tuple_point(0, 0.25, 0), color_set(1, 1, 1), 1);
+    r = new_ray(tuple_point(0, 0, 0), tuple_vector(0, 0, 1));
+    o = w.objs->next;
+    i.i = 0.5;
+    i.obj = o;
+    c = prep_comps(&i, &r);
+
+    col = shade_hit(&w, &c);
+    cr_expect(float_eq(col.r, 0.90498), "%f vs %f\n", col.r, 0.90498);
+    cr_expect(float_eq(col.g, 0.90498), "%f vs %f\n", col.g, 0.90498);
+    cr_expect(float_eq(col.b, 0.90498), "%f vs %f\n", col.b, 0.90498);
+}
+
+Test(world, color_at_miss)
+{
+    t_world w;
+    t_ray r;
+    t_color c;
+
+    w = def_world();
+    r = new_ray(tuple_point(0, 0, -5), tuple_vector(0, 1, 0));
+    c = color_at(&w, &r);
+    cr_expect(float_eq(c.r, 0.0), "%f vs %f\n", c.r, 0.0);
+    cr_expect(float_eq(c.g, 0.0), "%f vs %f\n", c.g, 0.0);
+    cr_expect(float_eq(c.b, 0.0), "%f vs %f\n", c.b, 0.0);
+}
+
+Test(world, color_at_hit)
+{
+    t_world w;
+    t_ray r;
+    t_color c;
+
+    w = def_world();
+    r = new_ray(tuple_point(0, 0, -5), tuple_vector(0, 0, 1));
+    c = color_at(&w, &r);
+    cr_expect(float_eq(c.r, 0.38066));
+    cr_expect(float_eq(c.g, 0.47583));
+    cr_expect(float_eq(c.b, 0.28550));
+}
+
+Test(world, color_at_intersect_behind)
+{
+    t_world w;
+    t_ray r;
+    t_color c;
+
+    w = def_world();
+    r = new_ray(tuple_point(0, 0, 0.75), tuple_vector(0, 0, -1));
+    w.objs->data.sp.mat.ambient = 1;
+    w.objs->next->data.sp.mat.ambient = 1;
+    c = color_at(&w, &r);
+    cr_expect(float_eq(c.r, w.objs->next->data.sp.mat.color.r), "%f vs %f\n", c.r, w.objs->data.sp.mat.color.r);
+    cr_expect(float_eq(c.g, w.objs->next->data.sp.mat.color.g), "%f vs %f\n", c.g, w.objs->data.sp.mat.color.g);
+    cr_expect(float_eq(c.b, w.objs->next->data.sp.mat.color.b), "%f vs %f\n", c.b, w.objs->data.sp.mat.color.b);
+}

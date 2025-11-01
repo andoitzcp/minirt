@@ -234,7 +234,13 @@ typedef struct s_camera
 {
     struct s_tuple p;
     struct s_tuple v;
-    uint8_t fov; // Fiel Of View in degrees
+    int hsize;
+    int vsize;
+    float fov; // Fiel Of View in degrees
+    float pix_sz;
+    float half_width;
+    float half_height;
+    t_matrix trans;
 } t_camera;
 
 typedef struct s_light
@@ -309,13 +315,15 @@ typedef struct s_object
 
 typedef struct s_comps
 {
-    struct s_object obj; // object
+    struct s_object *obj; // object
     struct s_tuple point; // point
 	struct s_material mat;  // material
     struct s_tuple eyev; // eye vector
     struct s_tuple normv; // normal vector
     struct s_light light; // light
+    float t;
     int is_shadowed; // object shadowe yes=1 no=0
+    int is_inside;
 } t_comps;
 
 typedef struct s_world
@@ -385,6 +393,7 @@ void	print_ds_rawl(t_rawlines **head);
 void 	print_line_els(char ***line);
 void 	print_raw_element_list(t_elements **el);
 void 	print_intersections(t_intersects **head);
+void print_matrix(t_matrix *m);
 
 /* color */
 t_color		color_set(float r, float g, float b);
@@ -414,44 +423,13 @@ t_tuple reflect(t_tuple in, t_tuple normal);
 t_ray	transform(t_ray r, t_matrix m);
 void	set_transform_old(t_elements *el, t_matrix m);
 void	set_transform(t_object *object, t_matrix m);
-
-/* sphere*/
-t_sphere new_sphere(void);
-void set_sphere_from_raw_data(t_sphere *sp, t_raw_sphere *rsp);
-
-/* plane */
-t_plane new_plane(void);
-void set_plane_from_raw_data(t_plane *pl, t_raw_plane *rpl);
-
-/* cylinder */
-t_cylinder new_cylinder(void);
-void set_cylinder_from_raw_data(t_cylinder *cy, t_raw_cylinder *rcy);
-
-/* light */
-t_light new_light(t_tuple point, t_color color, float ratio);
-t_light convert_light_from_raw(t_raw_light raw_light);
-t_light def_light(void);
-
-/* amblight */
-t_amblight new_amblight(t_color color, float ratio);
-t_amblight convert_amblight_from_raw(t_raw_amblight raw_amblight);
-t_amblight def_amblight(void);
-
-/* camera */
-t_camera new_camera(t_tuple point, t_tuple vector, float fov);
-t_camera convert_camera_from_raw(t_raw_camera raw_camera);
-t_camera def_camera(void);
-
-/* material */
-t_material def_material(void); // temporal cuando se mergee borrar
-void set_material(t_object *object, t_material material);
+t_matrix	sphere_transform(t_sphere sphere);
+t_tuple		transform_back(t_matrix transform, t_tuple point);
+t_matrix view_transform(t_tuple from, t_tuple to, t_tuple up);
 
 /* object */
 t_object *new_object(int type, t_matrix *transform, t_material *material);
 void object_append(t_object **head, t_object *node);
-
-/* world */
-t_world def_world(void);
 
 /* sphere */
 t_sphere	new_sphere(void);
@@ -463,10 +441,12 @@ t_tuple		sphere_normal_at(t_sphere s, t_tuple p);
 /* plane */
 t_plane	new_plane(void);
 void	set_plane_from_raw_data(t_plane *pl, t_raw_plane *rpl);
+t_tuple	plane_normal_at(t_plane plane, t_tuple point);
 
 /* cylinder */
 t_cylinder	new_cylinder(void);
 void		set_cylinder_from_raw_data(t_cylinder *cy, t_raw_cylinder *rcy);
+t_tuple	cylinder_normal_at(t_cylinder cylinder, t_tuple point);
 
 /* light */
 t_light	convert_light_from_raw(t_raw_light raw_light);
@@ -479,9 +459,13 @@ t_amblight 	convert_amblight_from_raw(t_raw_amblight raw_amblight);
 t_amblight 	def_amblight(void);
 
 /* camera */
-t_camera	new_camera(t_tuple point, t_tuple vector, float fov);
+t_camera new_camera_old(t_tuple point, t_tuple vector, float fov);
+t_camera new_camera(int hsize, int vsize, float fov);
 t_camera 	convert_camera_from_raw(t_raw_camera raw_camera);
 t_camera 	def_camera(void);
+void camera_comps(t_camera *camera);
+t_ray ray_for_pixel(t_camera c, int px, int py);
+t_canvas *render(t_camera c, t_world w);
 
 /* material */
 t_material	def_material(void);
@@ -490,13 +474,16 @@ void		set_material(t_object *object, t_material material);
 
 /* world */
 t_world	def_world(void);
+void intersect_world(t_world *world, t_ray *ray);
+t_comps prep_comps(t_intersects *intersection, t_ray *ray);
+t_color shade_hit(t_world *world, t_comps *comps);
+t_color color_at(t_world *world, t_ray *ray);
 
 /* intersect */
 t_intersects *new_intersect(t_object *obj, float i);
 void			insert_ray_intersect(t_intersects **head, t_intersects *node);
 void get_ray_el_intersects(t_ray *ray, t_object *obj);
 float			hit(t_intersects **head);
-void intersect_world(t_world *world, t_ray *ray);
 
 /* intersect_sp */
 t_intersect_old	intersect_sp_old(t_ray *ray, t_sphere *sp);
@@ -504,16 +491,9 @@ void			calc_ray_sp_intersects(float *array, t_ray *ray, t_sphere *sp);
 void 			calc_ray_pl_intersects(float *array, t_ray *ray, t_plane *pl);
 void 			calc_ray_cy_intersects(float *array, t_ray *ray, t_cylinder *cy);
 
-/* transform */
-t_matrix	sphere_transform(t_sphere sphere);
-t_tuple		transform_back(t_matrix transform, t_tuple point);
 
 /* lighting */
 int		is_shadowed(t_world *w, t_tuple p);
 t_color	lighting(t_comps comps);
-
-/* object */
-t_object *new_object(int type, t_matrix *transform, t_material *material);
-void object_append(t_object **head, t_object *node);
 
 #endif // MINIRT_H_
