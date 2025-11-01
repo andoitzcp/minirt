@@ -67,21 +67,6 @@ t_matrix view_transform(t_tuple from, t_tuple to, t_tuple up)
     forward = tuple_normalize(tuple_sub(to, from));
     left = tuple_cross(forward, tuple_normalize(up));
     true_up = tuple_cross(left, forward);
-    //ori.size = 4;
-    //tuple_to_array(left, vm.value[0]);
-    //tuple_to_array(true_up, vm.value[1]);
-    //tuple_to_array(tuple_negate(forward), vm.value[2]);
-    //tuple_to_array(tuple_point(0, 0, 0), vm.value[3]);
-    //printf("flag000\n");
-    //tuple_print(forward);
-    //printf("flag001.0\n");
-    //tuple_print(up);
-    //printf("flag001.1\n");
-    //tuple_print(tuple_normalize(up));
-    //printf("flag001\n");
-    //tuple_print(left);
-    //printf("flag002\n");
-    //tuple_print(true_up);
     ori.size = 4;
     ori.value[0][0] = left.x;
     ori.value[0][1] = left.y;
@@ -99,13 +84,7 @@ t_matrix view_transform(t_tuple from, t_tuple to, t_tuple up)
     ori.value[3][1] = 0;
     ori.value[3][2] = 0;
     ori.value[3][3] = 1;
-    //printf("flag003\n");
-	//print_matrix(&ori);
     trans = matrix_translation(-from.x, -from.y, -from.z);
-    //printf("flag004\n");
-	//print_matrix(&trans);
     vm = matrix_matrix_mult(ori, trans);
-    //printf("flag005\n");
-	//print_matrix(&vm);
     return (vm);
 }
