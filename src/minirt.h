@@ -386,6 +386,7 @@ void	print_ds_rawl(t_rawlines **head);
 void 	print_line_els(char ***line);
 void 	print_raw_element_list(t_elements **el);
 void 	print_intersections(t_intersects **head);
+void print_matrix(t_matrix *m);
 
 /* color */
 t_color		color_set(float r, float g, float b);
@@ -415,6 +416,9 @@ t_tuple reflect(t_tuple in, t_tuple normal);
 t_ray	transform(t_ray r, t_matrix m);
 void	set_transform_old(t_elements *el, t_matrix m);
 void	set_transform(t_object *object, t_matrix m);
+t_matrix	sphere_transform(t_sphere sphere);
+t_tuple		transform_back(t_matrix transform, t_tuple point);
+t_matrix view_transform(t_tuple from, t_tuple to, t_tuple up);
 
 /* sphere*/
 t_sphere new_sphere(void);
@@ -509,9 +513,6 @@ void			insert_ray_intersect(t_intersects **head, t_intersects *node);
 void get_ray_el_intersects(t_ray *ray, t_object *obj);
 float			hit(t_intersects **head);
 
-/* transform */
-t_matrix	sphere_transform(t_sphere sphere);
-t_tuple		transform_back(t_matrix transform, t_tuple point);
 
 /* lighting */
 t_color	lighting(t_material material, t_tuple point, t_light light,

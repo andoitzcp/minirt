@@ -32,6 +32,28 @@ void print_tuple(t_tuple *t)
     printf("\t\t\tw: %f\n", t->w);
 }
 
+void print_matrix(t_matrix *m)
+{
+    printf("Matrix: %p\n", m);
+    printf("\tm[0][0]: %f\n", m->value[0][0]);
+    printf("\tm[0][1]: %f\n", m->value[0][1]);
+    printf("\tm[0][2]: %f\n", m->value[0][2]);
+    printf("\tm[0][3]: %f\n", m->value[0][3]);
+    printf("\tm[1][0]: %f\n", m->value[1][0]);
+    printf("\tm[1][1]: %f\n", m->value[1][1]);
+    printf("\tm[1][2]: %f\n", m->value[1][2]);
+    printf("\tm[1][3]: %f\n", m->value[1][3]);
+    printf("\tm[2][0]: %f\n", m->value[2][0]);
+    printf("\tm[2][1]: %f\n", m->value[2][1]);
+    printf("\tm[2][2]: %f\n", m->value[2][2]);
+    printf("\tm[2][3]: %f\n", m->value[2][3]);
+    printf("\tm[3][0]: %f\n", m->value[3][0]);
+    printf("\tm[3][1]: %f\n", m->value[3][1]);
+    printf("\tm[3][2]: %f\n", m->value[3][2]);
+    printf("\tm[3][3]: %f\n", m->value[3][3]);
+
+}
+
 void print_color(t_color *c)
 {
     printf("\t\tColor: %p\n", c);
