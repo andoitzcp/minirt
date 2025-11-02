@@ -25,6 +25,19 @@ t_world def_world(void)
     return (world);
 }
 
+t_world new_world(void)
+{
+    t_world world;
+
+    world.res.x_sz = DEF_RESOLUTION_X;
+    world.res.y_sz = DEF_RESOLUTION_Y;
+    world.ali = def_amblight();
+    world.l = def_light();
+    world.c = def_camera();
+    world.objs = NULL;
+    return (world);
+}
+
 void intersect_world(t_world *world, t_ray *ray)
 {
     t_object *obj;
@@ -71,7 +84,9 @@ t_color shade_hit(t_world *world, t_comps *comps)
     t_tuple over_point;
 
     over_point = tuple_add(comps->point, tuple_scale_up(comps->normv, EPS));
+    //(void)over_point;
     comps->is_shadowed = is_shadowed(world, over_point);
+    //comps->is_shadowed = 0;
     comps->light = world->l;
     if (comps->obj->type == ELID_SP)
     {
