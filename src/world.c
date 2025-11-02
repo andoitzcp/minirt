@@ -70,10 +70,14 @@ t_comps prep_comps(t_intersects *intersection, t_ray *ray)
     comps.point = position(*ray, comps.t);
     comps.eyev = tuple_negate(ray->d);
     comps.normv = normal_at(comps.obj, comps.point);
+	comps.is_shadowed = 0;
+    comps.op = tuple_add(comps.point, tuple_scale_up(comps.normv, 1000*EPS));
     comps.is_inside = 0;
     if (tuple_dot(comps.normv, comps.eyev) < 0)
     {
         comps.is_inside = 1;
+		// TODO REVISAR test "shade_hit_inside" en "scene" comentando esta linea
+		comps.op = tuple_sub(comps.point, tuple_scale_up(comps.normv, EPS));
         comps.normv = tuple_negate(comps.normv);
     }
     return (comps);
@@ -81,12 +85,8 @@ t_comps prep_comps(t_intersects *intersection, t_ray *ray)
 
 t_color shade_hit(t_world *world, t_comps *comps)
 {
-    t_tuple over_point;
 
-    over_point = tuple_add(comps->point, tuple_scale_up(comps->normv, EPS));
-    //(void)over_point;
-    comps->is_shadowed = is_shadowed(world, over_point);
-    //comps->is_shadowed = 0;
+    comps->is_shadowed = is_shadowed(world, comps->op);
     comps->light = world->l;
     if (comps->obj->type == ELID_SP)
     {

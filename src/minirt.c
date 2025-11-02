@@ -70,7 +70,7 @@ int main(int argc, char **argv)
     object_append(&world.objs, middle);
     object_append(&world.objs, right);
     object_append(&world.objs, left);
-    camera = new_camera(1920, 1080, M_PI / 3);
+    camera = new_camera(900, 500, M_PI / 3);
     camera.trans = view_transform(tuple_point(0, 1.5, -5),
                                   tuple_point(0, 1, 0),
                                   tuple_vector(0, 1, 0));

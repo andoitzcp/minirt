@@ -317,6 +317,7 @@ typedef struct s_comps
 {
     struct s_object *obj; // object
     struct s_tuple point; // point
+    struct s_tuple op; // point
 	struct s_material mat;  // material
     struct s_tuple eyev; // eye vector
     struct s_tuple normv; // normal vector
