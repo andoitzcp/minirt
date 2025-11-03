@@ -61,6 +61,18 @@ int	is_shadowed(t_world *w, t_tuple p)
 	return (0);
 }
 
+/* t_color	lighting(t_comps comps) */
+/* { */
+/* 	t_color effective_col; */
+/* 	t_tuple lightv; */
+/* 	t_color ambient; */
+
+/* 	effective_col = color_blend(comps.mat.color, comps.light.col); */
+/* 	lightv = tuple_normalize(tuple_sub(comps.light.p, comps.point)); */
+/* 	ambient = color_scale_up(effective_col, comps.mat.ambient); */
+
+/* } */
+
 t_color	lighting(t_comps comps)
 {
 	t_color	color;

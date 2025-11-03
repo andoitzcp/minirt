@@ -26,11 +26,6 @@ t_material	def_material(void)
 
 void set_material(t_object *object, t_material material)
 {
-    if (object->type == ELID_SP)
-        object->data.sp.mat = material;
-    else if (object->type == ELID_PL)
-        object->data.pl.mat = material;
-    else if (object->type == ELID_CY)
-        object->data.cy.mat = material;
+    object->mat = material;
     return ;
 }

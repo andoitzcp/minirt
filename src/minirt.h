@@ -253,35 +253,29 @@ typedef struct s_light
 
 typedef struct s_sphere
 {
-	// TODO eliminar p y dia ??
-    struct s_tuple		p;
-	struct s_matrix		trans; //MERGE
-	struct s_material	mat;
+    void *normal_at;
+    void *intersect;
 } t_sphere;
 
 typedef struct s_cylinder
 {
-    struct s_tuple p;
-    struct s_tuple v;
+    void *normal_at;
+    void *intersect;
     float dia; // Diameter
     float hei; // Height
-    t_matrix t;
-    t_material mat;
 } t_cylinder;
 
 typedef struct s_plane
 {
-    struct s_tuple p;
-    struct s_tuple v;
-    t_matrix t;
-    t_material mat;
+    void *normal_at;
+    void *intersect;
 } t_plane;
 
 typedef union u_eldata
 {
-    struct s_sphere sp;
-    struct s_cylinder cy;
-    struct s_plane pl;
+    struct s_raw_sphere sp;
+    struct s_raw_cylinder cy;
+    struct s_raw_plane pl;
 } t_eldata;
 
 typedef struct s_elements
@@ -306,10 +300,19 @@ typedef struct s_raw_data
 } t_raw_data;
 
 
+typedef union u_objdata
+{
+    struct s_sphere sp;
+    struct s_cylinder cy;
+    struct s_plane pl;
+} t_objdata;
+
 typedef struct s_object
 {
     enum e_elid type; // element data type (sp, pl, cy)
-    union u_eldata data; // raw data
+    union u_objdata data; // raw data
+	struct s_matrix	trans; //MERGE
+	struct s_material	mat;
     struct s_object *next;
 } t_object;
 
@@ -435,7 +438,6 @@ void object_append(t_object **head, t_object *node);
 t_sphere	new_sphere(void);
 void		set_sphere_from_raw_data(t_sphere *sp, t_raw_sphere *rsp);
 t_sphere	*set_sphere_transform(t_sphere *s, t_matrix trans);
-t_matrix	get_sphere_transform(t_sphere s);
 t_tuple		sphere_normal_at(t_sphere s, t_tuple p);
 
 /* plane */
@@ -476,6 +478,8 @@ void		set_material(t_object *object, t_material material);
 t_world new_world(void);
 t_world	def_world(void);
 void intersect_world(t_world *world, t_ray *ray);
+t_tuple normal_at(t_object *obj, t_tuple point);
+t_tuple local_normal_at(t_object *obj, t_tuple local_point);
 t_comps prep_comps(t_intersects *intersection, t_ray *ray);
 t_color shade_hit(t_world *world, t_comps *comps);
 t_color color_at(t_world *world, t_ray *ray);
@@ -487,10 +491,9 @@ void get_ray_el_intersects(t_ray *ray, t_object *obj);
 float			hit(t_intersects **head);
 
 /* intersect_sp */
-t_intersect_old	intersect_sp_old(t_ray *ray, t_sphere *sp);
-void			calc_ray_sp_intersects(float *array, t_ray *ray, t_sphere *sp);
-void 			calc_ray_pl_intersects(float *array, t_ray *ray, t_plane *pl);
-void 			calc_ray_cy_intersects(float *array, t_ray *ray, t_cylinder *cy);
+void calc_ray_sp_intersects(float *array, t_ray *ray);
+void calc_ray_pl_intersects(float *array, t_ray *ray);
+void calc_ray_cy_intersects(float *array, t_ray *ray);
 
 
 /* lighting */

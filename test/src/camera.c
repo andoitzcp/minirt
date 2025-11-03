@@ -89,7 +89,7 @@ Test(camera, render)
     c.trans = view_transform(from, to, up);
     image = render(c, w);
     pix = canvas_get_pixel(*image, 5, 5);
-    cr_expect(float_eq(pix.r, 0.38066));
-    cr_expect(float_eq(pix.g, 0.47583));
-    cr_expect(float_eq(pix.b, 0.2855));
+    cr_expect(float_eq(pix.r, 0.38066), "%f vs %f\n", pix.r, 0.38066);
+    cr_expect(float_eq(pix.g, 0.47583), "%f vs %f\n", pix.g, 0.47583);
+    cr_expect(float_eq(pix.b, 0.2855), "%f vs %f\n", pix.b, 0.2855);
 }

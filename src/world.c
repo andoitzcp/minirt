@@ -50,15 +50,33 @@ void intersect_world(t_world *world, t_ray *ray)
     }
 }
 
-t_tuple normal_at(t_object *obj, t_tuple point)
+t_tuple local_normal_at(t_object *obj, t_tuple local_point)
 {
     if (obj->type == ELID_SP)
-        return (sphere_normal_at(obj->data.sp, point));
+        return (tuple_sub(local_point, tuple_point(0,0,0)));
     if (obj->type == ELID_PL)
-        return (plane_normal_at(obj->data.pl, point));
+        return (tuple_vector(0, 1, 0));
     if (obj->type == ELID_CY)
-        return (cylinder_normal_at(obj->data.cy, point));
-    return (tuple_point(0, 0, 0));
+        return (tuple_vector(local_point.x, 0, local_point.z));
+    else
+        return (tuple_vector(0, 0, 0));
+
+}
+
+t_tuple normal_at(t_object *obj, t_tuple point)
+{
+	t_matrix	inverse;
+    t_tuple local_point;
+    t_tuple local_normal;
+    t_tuple world_normal;
+
+    inverse = matrix_inverse(obj->trans);
+    local_point = matrix_tuple_mult(inverse, point);
+    local_normal = local_normal_at(obj, local_point);
+    world_normal = matrix_tuple_mult(matrix_transpose(inverse),
+                                     local_normal);
+    world_normal.w = 0;
+    return (tuple_normalize(world_normal));
 }
 
 t_comps prep_comps(t_intersects *intersection, t_ray *ray)
@@ -83,26 +101,12 @@ t_color shade_hit(t_world *world, t_comps *comps)
 {
     t_tuple over_point;
 
-    over_point = tuple_add(comps->point, tuple_scale_up(comps->normv, EPS));
+    over_point = tuple_add(comps->point, tuple_scale_up(comps->normv, 1000 * EPS));
     //(void)over_point;
     comps->is_shadowed = is_shadowed(world, over_point);
     //comps->is_shadowed = 0;
     comps->light = world->l;
-    if (comps->obj->type == ELID_SP)
-    {
-        comps->mat = comps->obj->data.sp.mat;
-        //return (lighting(comps->obj->data.sp.mat, comps->point, world->l, comps->eyev, comps->normv));
-    }
-    else if (comps->obj->type == ELID_PL)
-    {
-        comps->mat = comps->obj->data.sp.mat;
-        //return (lighting(comps->obj->data.pl.mat, comps->point, world->l, comps->eyev, comps->normv));
-    }
-    else
-    {
-        comps->mat = comps->obj->data.sp.mat;
-        //return (lighting(comps->obj->data.cy.mat, comps->point, world->l, comps->eyev, comps->normv));
-    }
+    comps->mat = comps->obj->mat;
     return (lighting(*comps));
 }
 

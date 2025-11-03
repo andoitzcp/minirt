@@ -60,13 +60,15 @@ void get_ray_el_intersects(t_ray *ray, t_object *obj)
     int i;
     float array[3];
     t_intersects *node;
+    t_ray local_ray;
 
+    local_ray= transform(*ray, matrix_inverse(obj->trans));
     if (obj->type == ELID_SP)
-        calc_ray_sp_intersects(array, ray, &(obj->data.sp));
+        calc_ray_sp_intersects(array, &local_ray);
     if (obj->type == ELID_PL)
-        calc_ray_pl_intersects(array, ray, &(obj->data.pl));
+        calc_ray_pl_intersects(array, &local_ray);
     if (obj->type == ELID_CY)
-        calc_ray_cy_intersects(array, ray, &(obj->data.cy));
+        calc_ray_cy_intersects(array, &local_ray);
     i = 0;
     while (i++ < (int)array[0])
     {

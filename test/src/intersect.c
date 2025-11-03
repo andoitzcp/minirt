@@ -3,15 +3,13 @@
 #include <criterion/criterion.h>
 #include <criterion/internal/assert.h>
 
-Test(calc_ray_sp_intersects, twopoints)
+Test(sp_intersect, twopoints)
 {
     t_ray r;
-    t_sphere sp;
     float array[3];
 
     r = new_ray(tuple_point(0, 0, -5), tuple_vector(0, 0, 1));
-    sp = new_sphere();
-    calc_ray_sp_intersects(array, &r, &sp);
+    calc_ray_sp_intersects(array, &r);
 
     cr_expect_eq(array[0], 2);
     cr_expect(float_eq(array[1], 4), "%f, %f\n", array[1], (float)4);
@@ -22,12 +20,10 @@ Test(calc_ray_sp_intersects, twopoints)
 Test(calc_ray_sp_intersects, tangent)
 {
     t_ray r;
-    t_sphere sp;
     float array[3];
 
     r = new_ray(tuple_point(0, 1, -5), tuple_vector(0, 0, 1));
-    sp = new_sphere();
-    calc_ray_sp_intersects(array, &r, &sp);
+    calc_ray_sp_intersects(array, &r);
 
     cr_expect_eq(array[0], 2);
     cr_expect(float_eq(array[1], 5), "%f, %f\n", array[1], (float)0);
@@ -37,12 +33,10 @@ Test(calc_ray_sp_intersects, tangent)
 Test(calc_ray_sp_intersects, miss)
 {
     t_ray r;
-    t_sphere sp;
     float array[3];
 
     r = new_ray(tuple_point(0, 2, -5), tuple_vector(0, 0, 1));
-    sp = new_sphere();
-    calc_ray_sp_intersects(array, &r, &sp);
+    calc_ray_sp_intersects(array, &r);
 
     cr_expect_eq(array[0], 0);
     cr_expect(float_eq(array[1], 0), "%f, %f\n", array[1], (float)0);
@@ -52,12 +46,10 @@ Test(calc_ray_sp_intersects, miss)
 Test(calc_ray_sp_intersects, inside)
 {
     t_ray r;
-    t_sphere sp;
     float array[3];
 
     r = new_ray(tuple_point(0, 0, 0), tuple_vector(0, 0, 1));
-    sp = new_sphere();
-    calc_ray_sp_intersects(array, &r, &sp);
+    calc_ray_sp_intersects(array, &r);
 
     cr_expect_eq(array[0], 2);
     cr_expect(float_eq(array[1], -1), "%f, %f\n", array[1],(float) -1);
@@ -67,12 +59,10 @@ Test(calc_ray_sp_intersects, inside)
 Test(calc_ray_sp_intersects, behind)
 {
     t_ray r;
-    t_sphere sp;
     float array[3];
 
     r = new_ray(tuple_point(0, 0, 5), tuple_vector(0, 0, 1));
-    sp = new_sphere();
-    calc_ray_sp_intersects(array, &r, &sp);
+    calc_ray_sp_intersects(array, &r);
 
     cr_expect_eq(array[0], 2);
     cr_expect(float_eq(array[1], -6), "%f, %f\n", array[1], (float)-6);
@@ -92,23 +82,27 @@ Test(get_ray_el_intersects, order)
     r = new_ray(tuple_point(0, 0, -5), tuple_vector(0, 0, 1));
 
     obj.type = ELID_SP;
-    obj.data.sp = new_sphere();
-    obj.data.sp.p = tuple_point(0, 0, 5);
+    //obj.data.sp = new_sphere();
+    //obj.data.sp.p = tuple_point(0, 0, 5);
+    obj.trans = matrix_translation(0, 0, 5);
     get_ray_el_intersects(&r, &obj);
 
     obj.type = ELID_SP;
-    obj.data.sp = new_sphere();
-    obj.data.sp.p = tuple_point(0, 0, 1);
+    //obj.data.sp = new_sphere();
+    //obj.data.sp.p = tuple_point(0, 0, 1);
+    obj.trans = matrix_translation(0, 0, 1);
     get_ray_el_intersects(&r, &obj);
 
     obj.type = ELID_SP;
-    obj.data.sp = new_sphere();
-    obj.data.sp.p = tuple_point(0, 0, 3);
+    //obj.data.sp = new_sphere();
+    //obj.data.sp.p = tuple_point(0, 0, 3);
+    obj.trans = matrix_translation(0, 0, 3);
     get_ray_el_intersects(&r, &obj);
 
     obj.type = ELID_SP;
-    obj.data.sp = new_sphere();
-    obj.data.sp.p = tuple_point(0, 0, 0);
+    //obj.data.sp = new_sphere();
+    //obj.data.sp.p = tuple_point(0, 0, 0);
+    obj.trans = matrix_translation(0, 0, 0);
     get_ray_el_intersects(&r, &obj);
 
     float array[8] = {4, 5, 6, 7, 7, 9, 9, 11};
@@ -141,65 +135,75 @@ Test(hit, general)
     r = new_ray(tuple_point(0, 0, -5), tuple_vector(0, 0, 1));
 
     obj.type = ELID_SP;
-    obj.data.sp = new_sphere();
-    obj.data.sp.p = tuple_point(0, 0, -50);
+    //obj.data.sp = new_sphere();
+    //obj.data.sp.p = tuple_point(0, 0, -50);
+    obj.trans = matrix_translation(0, 0, -50);
     get_ray_el_intersects(&r, &obj);
 
     h = hit(&(&r)->i);
     cr_expect_eq(h, -1, "hit: %f vs expect %f\n", h, -1.0);
 
     obj.type = ELID_SP;
-    obj.data.sp = new_sphere();
-    obj.data.sp.p = tuple_point(0, 0, -30);
+    //obj.data.sp = new_sphere();
+    //obj.data.sp.p = tuple_point(0, 0, -30);
+    obj.trans = matrix_translation(0, 0, -30);
     get_ray_el_intersects(&r, &obj);
 
     h = hit(&(&r)->i);
     cr_expect_eq(h, -1, "hit: %f vs expect %f\n", h, -1.0);
 
     obj.type = ELID_SP;
-    obj.data.sp = new_sphere();
-    obj.data.sp.p = tuple_point(0, 0, 5);
+    //obj.data.sp = new_sphere();
+    //obj.data.sp.p = tuple_point(0, 0, 5);
+    obj.trans = matrix_translation(0, 0, 5);
     get_ray_el_intersects(&r, &obj);
 
     obj.type = ELID_SP;
-    obj.data.sp = new_sphere();
-    obj.data.sp.p = tuple_point(0, 0, 1);
+    //obj.data.sp = new_sphere();
+    //obj.data.sp.p = tuple_point(0, 0, 1);
+    obj.trans = matrix_translation(0, 0, 1);
     get_ray_el_intersects(&r, &obj);
 
     obj.type = ELID_SP;
-    obj.data.sp = new_sphere();
-    obj.data.sp.p = tuple_point(0, 0, 3);
+    //obj.data.sp = new_sphere();
+    //obj.data.sp.p = tuple_point(0, 0, 3);
+    obj.trans = matrix_translation(0, 0, 3);
     get_ray_el_intersects(&r, &obj);
 
     obj.type = ELID_SP;
-    obj.data.sp = new_sphere();
-    obj.data.sp.p = tuple_point(0, 0, 0);
+    //obj.data.sp = new_sphere();
+    //obj.data.sp.p = tuple_point(0, 0, 0);
+    obj.trans = matrix_translation(0, 0, 0);
     get_ray_el_intersects(&r, &obj);
 
     h = hit(&(&r)->i);
     cr_expect_eq(h, 4, "hit: %f vs expect %f\n", h, 4.0);
 
     obj.type = ELID_SP;
-    obj.data.sp = new_sphere();
-    obj.data.sp.p = tuple_point(0, 0, -3);
+    //obj.data.sp = new_sphere();
+    //obj.data.sp.p = tuple_point(0, 0, -3);
+    obj.trans = matrix_translation(0, 0, -3);
     get_ray_el_intersects(&r, &obj);
 
     obj.type = ELID_SP;
-    obj.data.sp = new_sphere();
-    obj.data.sp.p = tuple_point(0, 0, -4);
+    //obj.data.sp = new_sphere();
+    //obj.data.sp.p = tuple_point(0, 0, -4);
+    obj.trans = matrix_translation(0, 0, -4);
     get_ray_el_intersects(&r, &obj);
 
     obj.type = ELID_SP;
-    obj.data.sp = new_sphere();
-    obj.data.sp.p = tuple_point(0, 0, -8);
+    //obj.data.sp = new_sphere();
+    //obj.data.sp.p = tuple_point(0, 0, -8);
+    obj.trans = matrix_translation(0, 0, -8);
     get_ray_el_intersects(&r, &obj);
 
     h = hit(&(&r)->i);
     cr_expect_eq(h, 1, "hit: %f vs expect %f\n", h, 1.0);
 
     obj.type = ELID_SP;
-    obj.data.sp = new_sphere();
-    obj.data.sp.p = tuple_point(0, 0, -3.5);
+    //obj.data.sp = new_sphere();
+    //obj.data.sp.p = tuple_point(0, 0, -3.5);
+    obj.trans = matrix_translation(0, 0, -3.5);
     get_ray_el_intersects(&r, &obj);
 
     h = hit(&(&r)->i);
