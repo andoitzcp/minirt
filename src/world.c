@@ -52,12 +52,21 @@ void intersect_world(t_world *world, t_ray *ray)
 
 t_tuple local_normal_at(t_object *obj, t_tuple local_point)
 {
+    float dist;
     if (obj->type == ELID_SP)
         return (tuple_sub(local_point, tuple_point(0,0,0)));
     if (obj->type == ELID_PL)
         return (tuple_vector(0, 1, 0));
     if (obj->type == ELID_CY)
-        return (tuple_vector(local_point.x, 0, local_point.z));
+    {
+        dist = powf(local_point.x, 2) + powf(local_point.z, 2);
+        if (dist < 1 && local_point.y >= 1 - EPS)
+            return (tuple_vector(0, 1, 0));
+        else if (dist < 1 && local_point.y <= -1 + EPS)
+            return (tuple_vector(0, -1, 0));
+        else
+            return (tuple_vector(local_point.x, 0, local_point.z));
+    }
     else
         return (tuple_vector(0, 0, 0));
 
@@ -101,7 +110,7 @@ t_color shade_hit(t_world *world, t_comps *comps)
 {
     t_tuple over_point;
 
-    over_point = tuple_add(comps->point, tuple_scale_up(comps->normv, 1000 * EPS));
+    over_point = tuple_add(comps->point, tuple_scale_up(comps->normv, 100 * EPS));
     //(void)over_point;
     comps->is_shadowed = is_shadowed(world, over_point);
     //comps->is_shadowed = 0;
@@ -172,6 +181,7 @@ t_canvas *render(t_camera c, t_world w)
     while (i < c.vsize)
     {
         j = 0;
+        printf("Progress: %f\n", (float)100 * i / c.vsize);
         while(j < c.hsize)
         {
             r = ray_for_pixel(c, j, i);

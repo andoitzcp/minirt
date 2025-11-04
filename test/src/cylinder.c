@@ -80,7 +80,6 @@ Test(cilinder, hit)
     t12 = 6;
     t13 = 7.08872;
 
-    printf("flag200\n");
     array[0] = 0;
     array[1] = 0;
     array[2] = 0;

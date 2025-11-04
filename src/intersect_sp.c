@@ -20,6 +20,25 @@ static void bzero_array(float *array, size_t sz)
     return ;
 }
 
+static void add_intersect(float *array, float t)
+{
+    if (array[0] > 1)
+        return ;
+    array[0] += 1;
+    array[(int)array[0]] = t;
+    return ;
+}
+
+static float check_cap(t_ray *ray, float t)
+{
+    float x;
+    float z;
+
+    x = ray->o.x + t * ray->d.x;
+    z = ray->o.z + t * ray->d.z;
+    return ((powf(x, 2) + powf(z, 2) <= 1));
+}
+
 void calc_ray_sp_intersects(float *array, t_ray *ray)
 {
     t_tuple sp_to_ray;
@@ -58,6 +77,8 @@ void calc_ray_cy_intersects(float *array, t_ray *ray)
 {
     float abc[3];
     float disc;
+    float t[2];
+    float y[2];
 
     bzero_array(array, 3);
     abc[0] = powf(ray->d.x, 2) + powf(ray->d.z, 2);
@@ -66,14 +87,27 @@ void calc_ray_cy_intersects(float *array, t_ray *ray)
     abc[1] = 2 *ray->o.x * ray->d.x + 2*ray->o.z * ray->d.z;
     abc[2] = powf(ray->o.x, 2) + powf(ray->o.z, 2) - 1;
     disc = powf(abc[1], 2) -4 * abc[0] * abc[2];
-    printf("flag000 a: %f, b: %f, c: %f\n", abc[0], abc[1], abc[2]);
-    printf("flag001 %f\n", disc);
     if (disc < 0)
         return ;
-    printf("flag002\n");
-    array[0] = 2;
-    array[1] = (-abc[1] - sqrtf(disc)) / (2 * abc[0]);
-    printf("flag0021 %f\n", array[1]);
-    array[2] = (-abc[1] + sqrtf(disc)) / (2 * abc[0]);
-    printf("flag0022 %f\n", array[2]);
+    t[0] = (-abc[1] - sqrtf(disc)) / (2 * abc[0]);
+    t[1] = (-abc[1] + sqrtf(disc)) / (2 * abc[0]);
+    y[0] = ray->o.y + t[0] * ray->d.y;
+    y[1] = ray->o.y + t[1] * ray->d.y;
+    if (-1 < y[0] && y[0] < 1)
+        add_intersect(array, t[0]);
+    if (-1 < y[1] && y[1] < 1)
+        add_intersect(array, t[1]);
+    t[0] = (-1 - ray->o.y) / ray->d.y;
+    t[1] = (+1 - ray->o.y) / ray->d.y;
+    if (check_cap(ray, t[0]))
+        add_intersect(array, t[0]);
+    if (check_cap(ray, t[1]))
+        add_intersect(array, t[1]);
+}
+
+void calc_ray_caps_intersects(float *array, t_ray *ray)
+{
+    (void)array;
+    (void)ray;
+    (void)check_cap(ray,0);
 }

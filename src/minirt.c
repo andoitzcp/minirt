@@ -64,10 +64,10 @@ int main(int argc, char **argv)
     left = new_object(ELID_SP, &transform, &material);
 
     transform = matrix_translation(-0.5, 1, 0.5);
-    transform = matrix_matrix_mult(transform, matrix_rot_x(-30));
-    transform = matrix_matrix_mult(transform, matrix_rot_z(-30));
-    //transform = matrix_matrix_mult(transform, matrix_rot_y(-30));
-    transform = matrix_matrix_mult(transform, matrix_scalation(0.33, 0.33, 0.33));
+    transform = matrix_matrix_mult(transform, matrix_rot_z(-90));
+    transform = matrix_matrix_mult(transform, matrix_rot_x(-90));
+    //transform = matrix_matrix_mult(transform, matrix_rot_y(-90));
+    transform = matrix_matrix_mult(transform, matrix_scalation(0.33, 2.33, 0.33));
     cyl = new_object(ELID_CY, &transform, &material);
 
     world = new_world();
@@ -75,11 +75,13 @@ int main(int argc, char **argv)
     object_append(&world.objs, floor);
     //object_append(&world.objs, left_wall);
     //object_append(&world.objs, right_wall);
-    object_append(&world.objs, middle);
+    (void)middle;
+    //object_append(&world.objs, middle);
     object_append(&world.objs, right);
     object_append(&world.objs, left);
     object_append(&world.objs, cyl);
-    camera = new_camera(400, 400, M_PI / 3);
+    camera = new_camera(500, 500, M_PI / 3);
+    //camera = new_camera(1920, 1080, M_PI / 3);
     camera.trans = view_transform(tuple_point(0, 1.5, -5),
                                   tuple_point(0, 1, 0),
                                   tuple_vector(0, 1, 0));
