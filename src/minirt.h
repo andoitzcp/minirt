@@ -281,7 +281,7 @@ typedef union u_eldata
 typedef struct s_elements
 {
     enum e_elid type; // element data type (sp, pl, cy)
-    union u_eldata elda; // data
+    //union u_eldata elda; // data
     union u_eldata relda; // raw elements data
 } t_elements;
 
@@ -396,6 +396,7 @@ void	print_ds_rawl(t_rawlines **head);
 void 	print_line_els(char ***line);
 void 	print_raw_element_list(t_elements **el);
 void 	print_intersections(t_intersects **head);
+void print_parsed_content(t_data *data);
 void print_matrix(t_matrix *m);
 
 /* color */

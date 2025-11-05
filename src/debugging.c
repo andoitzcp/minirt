@@ -93,11 +93,11 @@ void print_raw_element(t_elements *el)
     printf("Printing element:%p\n", el);
     printf("\tType: %d\n", el->type);
     if (el->type == ELID_SP)
-        print_raw_sphere(&el->elda.sp);
+        print_raw_sphere(&el->relda.sp);
     if (el->type == ELID_PL)
-        print_raw_plane(&el->elda.pl);
+        print_raw_plane(&el->relda.pl);
     if (el->type == ELID_CY)
-        print_raw_cylinder(&el->elda.cy);
+        print_raw_cylinder(&el->relda.cy);
 }
 
 void print_raw_element_list(t_elements **el)
@@ -110,6 +110,33 @@ void print_raw_element_list(t_elements **el)
         print_raw_element(el[i]);
         i++;
     }
+}
+
+void print_parsed_content(t_data *data)
+{
+    printf("Printing parsed content:%p\n", data);
+    printf("Printing Camera: %p", &data->raw.c);
+    printf("\t fov = %d\n", data->raw.c.fov);
+    printf("\t position:\n");
+    print_tuple(&data->raw.c.p);
+    printf("\t direction:\n");
+    print_tuple(&data->raw.c.v);
+    printf("\n");
+
+    printf("Printing Ambient Light: %p", &data->raw.ali);
+    printf("\t ratio = %f\n", data->raw.ali.ratio);
+    printf("\t color:\n");
+    print_color(&data->raw.ali.col);
+    printf("\n");
+
+    printf("Printing Light: %p", &data->raw.l);
+    printf("\t ratio = %f\n", data->raw.l.abr);
+    printf("\t position:\n");
+    print_tuple(&data->raw.l.p);
+    printf("\t color:\n");
+    print_color(&data->raw.l.col);
+    printf("\n");
+
 }
 
 void print_intersections(t_intersects **head)

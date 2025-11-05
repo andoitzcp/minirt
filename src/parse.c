@@ -29,6 +29,8 @@ static t_elements *build_element_node(t_data *data, char ***line, int type)
         get_plane_data(data, (t_raw_plane *)&(node->relda.pl), line);
     if (type == ELID_CY)
         get_cylinder_data(data, (t_raw_cylinder *)&(node->relda.cy), line);
+    printf("flag3000\n");
+    tuple_print(node->relda.sp.p);
     return (node);
 }
 
@@ -52,6 +54,7 @@ static void store_file_data(t_data *data)
         else
         {
             els[i] = build_element_node(data, node->content, node->type);
+            printf("flag1000 %s\n", node->content[0][1]);
             (els[i])->type = node->type;
             i++;
         }
@@ -106,6 +109,7 @@ void parse(t_data *data, char *filepath)
     check_unique_elements(data, &(data->raw.lines));
     alloc_els(data);
     store_file_data(data);
+    print_parsed_content(data);
     print_raw_element_list(data->raw.els);
     close(fd);
     return ;
