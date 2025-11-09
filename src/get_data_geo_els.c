@@ -11,7 +11,6 @@ uint8_t get_sphere_data(t_data *data, t_raw_sphere *node, char ***line)
         return (0);
     if (check_color_bounds(&(node->col)) == 0)
         return (0);
-    printf("flag2000\n");
     tuple_print(node->p);
     return (1);
 }

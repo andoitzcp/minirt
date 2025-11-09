@@ -10,12 +10,12 @@ Test(is_shadowed, lps_triangle) {
 	t_material m;
 	t_object *obj;
 
+    w = def_world();
     w.res.x_sz = DEF_RESOLUTION_X;
     w.res.y_sz = DEF_RESOLUTION_Y;
     w.ali = def_amblight();
     w.l = def_light();
 	w.l.p = tuple_point(-10, 10, 0);
-    w.c = def_camera();
 	p = tuple_point(0, 10, 0);
     w.objs = NULL;
 	m = def_material();

@@ -38,6 +38,7 @@ RELEASE_SRC= src/init.c \
 			 src/lighting.c \
 			 src/light.c	\
              src/object.c \
+             src/interfase_world_parse.c \
              src/debugging.c
 
 RELEASE_OBJ=$(subst src/,obj/,$(RELEASE_SRC:.c=.o))

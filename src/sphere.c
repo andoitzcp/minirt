@@ -14,9 +14,16 @@
 
 // TODO Implement funtion to take raw data plane and convert it into matrix
 // and material and set plane data
-void set_sphere_from_raw_data(t_sphere *sp, t_raw_sphere *rsp)
+t_object *new_sphere_from_raw_data(t_raw_sphere *rsp, t_amblight *ambl)
 {
-    (void)sp;
-    (void)rsp;
-    return ;
+    t_matrix trans;
+    t_material mat;
+
+    trans = matrix_translation(rsp->p.x, rsp->p.y, rsp->p.z);
+    trans = matrix_matrix_mult(trans,
+                               matrix_scalation(rsp->dia,
+                                                rsp->dia,
+                                                rsp->dia));
+    mat = new_material_from_raw_data(&rsp->col, ambl);
+    return (new_object(ELID_SP, &trans, &mat));
 }

@@ -425,11 +425,9 @@ t_tuple reflect(t_tuple in, t_tuple normal);
 // TODO eliminar funciones transform ??
 /* transform */
 t_ray	transform(t_ray r, t_matrix m);
-void	set_transform_old(t_elements *el, t_matrix m);
 void	set_transform(t_object *object, t_matrix m);
-t_matrix	sphere_transform(t_sphere sphere);
-t_tuple		transform_back(t_matrix transform, t_tuple point);
 t_matrix view_transform(t_tuple from, t_tuple to, t_tuple up);
+t_matrix view_transform2(t_tuple from, t_tuple forward, t_tuple up);
 
 /* object */
 t_object *new_object(int type, t_matrix *transform, t_material *material);
@@ -440,43 +438,46 @@ t_sphere	new_sphere(void);
 void		set_sphere_from_raw_data(t_sphere *sp, t_raw_sphere *rsp);
 t_sphere	*set_sphere_transform(t_sphere *s, t_matrix trans);
 t_tuple		sphere_normal_at(t_sphere s, t_tuple p);
+t_object *new_sphere_from_raw_data(t_raw_sphere *rsp, t_amblight *ambl);
 
 /* plane */
 t_plane	new_plane(void);
 void	set_plane_from_raw_data(t_plane *pl, t_raw_plane *rpl);
 t_tuple	plane_normal_at(t_plane plane, t_tuple point);
+t_object *new_plane_from_raw_data(t_raw_plane *rpl, t_amblight *ambl);
 
 /* cylinder */
 t_cylinder	new_cylinder(void);
 void		set_cylinder_from_raw_data(t_cylinder *cy, t_raw_cylinder *rcy);
 t_tuple	cylinder_normal_at(t_cylinder cylinder, t_tuple point);
+t_object *new_cylinder_from_raw_data(t_raw_cylinder *rcy, t_amblight *ambl);
 
 /* light */
-t_light	convert_light_from_raw(t_raw_light raw_light);
 t_light	new_light(t_tuple point, t_color color, float ratio);
 t_light	def_light(void);
+t_light get_light_from_raw_data(t_raw_data *rd);
 
 /* amblight */
 t_amblight	new_amblight(t_color color, float ratio);
-t_amblight 	convert_amblight_from_raw(t_raw_amblight raw_amblight);
 t_amblight 	def_amblight(void);
+t_amblight get_amblight_from_raw_data(t_raw_data *rd);
 
 /* camera */
-t_camera new_camera_old(t_tuple point, t_tuple vector, float fov);
 t_camera new_camera(int hsize, int vsize, float fov);
-t_camera 	convert_camera_from_raw(t_raw_camera raw_camera);
 t_camera 	def_camera(void);
 void camera_comps(t_camera *camera);
 t_ray ray_for_pixel(t_camera c, int px, int py);
 t_canvas *render(t_camera c, t_world w);
+t_camera get_camera_from_raw_data(t_raw_data *rd);
 
 /* material */
 t_material	def_material(void);
-t_material new_material(t_color color, float *specs);
+t_material new_material(t_color *col, float ratio);
+t_material new_material_from_raw_data(t_color *col, t_amblight *ambl);
 void		set_material(t_object *object, t_material material);
 
 /* world */
-t_world new_world(void);
+t_world new_world(t_resolution *res, t_amblight *ambl, t_light *l, t_camera *cam);
 t_world	def_world(void);
 void intersect_world(t_world *world, t_ray *ray);
 t_tuple normal_at(t_object *obj, t_tuple point);
@@ -500,5 +501,9 @@ void calc_ray_cy_intersects(float *array, t_ray *ray);
 /* lighting */
 int		is_shadowed(t_world *w, t_tuple p);
 t_color	lighting(t_comps comps);
+
+
+/* interfase_world_parse */
+t_world sig_mundus_creatus_est(t_raw_data *rd);
 
 #endif // MINIRT_H_

@@ -14,7 +14,7 @@ uint8_t get_point_data(t_data *data, t_tuple *tuple, char **s)
     tuple->x = ft_atof(s[0]);
     tuple->y = ft_atof(s[1]);
     tuple->z = ft_atof(s[2]);
-    tuple->w = 0;
+    tuple->w = 1;
     return (1);
 }
 
@@ -32,7 +32,7 @@ uint8_t get_vector_data(t_data *data, t_tuple *tuple, char **s)
     tuple->x = ft_atof(s[0]);
     tuple->y = ft_atof(s[1]);
     tuple->z = ft_atof(s[2]);
-    tuple->w = 1;
+    tuple->w = 0;
     return (1);
 }
 

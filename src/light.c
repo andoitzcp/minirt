@@ -12,18 +12,9 @@
 
 #include "minirt.h"
 
-t_light convert_light_from_raw(t_raw_light raw_light)
-{
-    t_light light;
-
-    light.p = raw_light.p;
-    light.abr = raw_light.abr;
-    light.col.r = raw_light.col.r / 255;
-    light.col.g = raw_light.col.g / 255;
-    light.col.b = raw_light.col.b / 255;
-    return (light);
-}
-
+/*
+ * Create new light struct from parameters
+ */
 t_light new_light(t_tuple point, t_color color, float ratio)
 {
     t_light light;
@@ -34,6 +25,9 @@ t_light new_light(t_tuple point, t_color color, float ratio)
     return (light);
 }
 
+/*
+ * Auxiliary function used in tests
+ */
 t_light def_light(void)
 {
     t_light light;
@@ -41,5 +35,18 @@ t_light def_light(void)
     light.p = tuple_point(-10, -10, -10);
     light.abr = 1;
     light.col = color_set(1, 1, 1);
+    return (light);
+}
+
+/**
+ * Converts parsed light parameters into usable light variables
+ */
+t_light get_light_from_raw_data(t_raw_data *rd)
+{
+    t_light light;
+
+    light.p = rd->l.p;
+    light.abr = rd->l.abr;
+    light.col = color_scale_down(rd->l.col, 255);
     return (light);
 }

@@ -1,15 +1,8 @@
 #include "minirt.h"
 
-t_camera new_camera_old(t_tuple point, t_tuple vector, float fov)
-{
-    t_camera camera;
-
-    camera.p = point;
-    camera.v = vector;
-    camera.fov = fov;
-    return (camera);
-}
-
+/**
+ * Creates a new camera struct
+ */
 t_camera new_camera(int hsize, int vsize, float fov)
 {
     t_camera camera;
@@ -22,26 +15,20 @@ t_camera new_camera(int hsize, int vsize, float fov)
     return (camera);
 }
 
-t_camera convert_camera_from_raw(t_raw_camera raw_camera)
-{
-    t_camera camera;
-
-    camera.p = raw_camera.p;
-    camera.v = raw_camera.v;
-    camera.fov = raw_camera.fov / 180;
-    return (camera);
-}
-
+/**
+ * Auxiliary function used for tests
+ */
 t_camera def_camera(void)
 {
-    t_camera camera;
+    t_camera cam;
 
-    camera.p = tuple_point(0, 0, 0);
-    camera.v = tuple_vector(0, 0, 1);
-    camera.fov = 180;
-    return (camera);
+    cam = new_camera(DEF_RESOLUTION_X, DEF_RESOLUTION_Y, M_PI);
+    return (cam);
 }
 
+/**
+ * Computes key values to renderization of the image.
+ */
 void camera_comps(t_camera *camera)
 {
     float half_view;
@@ -60,4 +47,23 @@ void camera_comps(t_camera *camera)
         camera->half_height = half_view;
     }
     camera->pix_sz = (camera->half_width * 2) / camera->hsize;
+}
+
+/**
+ * Converts parsed camera parameters into usable camera variables
+ */
+t_camera get_camera_from_raw_data(t_raw_data *rd)
+{
+    t_camera c;
+    int res[2];
+    float fov;
+
+    res[0] = rd->res.x_sz;
+    res[1] = rd->res.y_sz;
+    fov = degrees_to_radians(rd->c.fov);
+    c = new_camera(res[0], res[1], fov);
+    c.trans = view_transform2(rd->c.p,
+                              rd->c.v,
+                              tuple_vector(0, 1, 0));
+    return (c);
 }

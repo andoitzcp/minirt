@@ -25,16 +25,16 @@ t_world def_world(void)
     return (world);
 }
 
-t_world new_world(void)
+t_world new_world(t_resolution *res, t_amblight *ambl, t_light *l, t_camera *cam)
 {
     t_world world;
 
-    world.res.x_sz = DEF_RESOLUTION_X;
-    world.res.y_sz = DEF_RESOLUTION_Y;
-    world.ali = def_amblight();
-    world.l = def_light();
-    world.c = def_camera();
+    world.res = *res;
+    world.ali = *ambl;
+    world.l = *l;
+    world.c = *cam;
     world.objs = NULL;
+
     return (world);
 }
 
