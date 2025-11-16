@@ -26,8 +26,6 @@ t_cylinder new_cylinder(void)
 t_matrix matrix_from_tuples(t_tuple x, t_tuple y, t_tuple z)
 {
 	t_matrix	m;
-	int	i;
-	int	j;
 
 	m = matrix_zero();
 	m.value[0][0] = x.x;
@@ -45,7 +43,7 @@ t_matrix matrix_from_tuples(t_tuple x, t_tuple y, t_tuple z)
 
 // TODO get matrix rotation from a source and destiny vector
 // TODO move to liblinmath
-t_matrix matrix_rotation(t_tuple org, t_tuple dest)
+t_matrix matrix_rotation(t_tuple dest)
 {
 	t_matrix	r;
 	t_tuple		tmp;
@@ -79,7 +77,7 @@ t_object *new_cylinder_from_raw_data(t_raw_cylinder *rcy, t_amblight *ambl)
     t_material mat;
 
     t = matrix_translation(rcy->p.x, rcy->p.y, rcy->p.z);
-	r = matrix_rotation(tuple_vector(0,1,0), rcy->v);
+	r = matrix_rotation(rcy->v);
     s = matrix_scalation(rcy->dia, rcy->hei / 2, rcy->dia);
 	trans = matrix_matrix_mult(t, r);
 	trans = matrix_matrix_mult(trans, s);
