@@ -263,6 +263,7 @@ typedef struct s_cylinder
     void *intersect;
     float dia; // Diameter
     float hei; // Height
+	t_tuple	axis; // Axis vector
 } t_cylinder;
 
 typedef struct s_plane
