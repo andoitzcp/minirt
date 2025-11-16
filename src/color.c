@@ -52,3 +52,17 @@ t_color color_convert_from_raw(t_color color)
 	c.b = color.b;
 	return (c);
 }
+
+int	color_to_int(t_color rgb)
+{
+	int	color;
+	int	r;
+	int	g;
+	int	b;
+	
+	r = (int)rgb.r;
+	g = (int)rgb.g;
+	b = (int)rgb.b;
+	color = (r << 16) | (g << 8) | b;
+	return (color);
+}

@@ -347,6 +347,24 @@ typedef struct s_data
 
 } t_data;
 
+typedef struct s_img
+{
+	void	*ptr;
+	char	*addr;
+	int		bpp;
+	int		line_len;
+	int		endian;
+}			t_img;
+
+typedef struct s_gui
+{
+	void	*mlx;
+	int		width;
+	int		height;
+	void	*window;
+	t_img	img;
+}			t_gui;
+
 /*******************************************************************************/
 /* Function definitions                                                        */
 /*******************************************************************************/
@@ -398,6 +416,16 @@ void 	print_raw_element_list(t_elements **el);
 void 	print_intersections(t_intersects **head);
 void print_parsed_content(t_data *data);
 void print_matrix(t_matrix *m);
+void	print_color(t_color *c);
+
+/* draw */
+void	draw_point(t_gui *gui, int x, int y, int color);
+void	draw_canvas(t_gui *gui, t_canvas canv);
+
+/* gui */
+void	gui_init(t_gui *gui, t_canvas canv);
+void	free_gui(t_gui *gui);
+void	gui_loop(t_gui *gui);
 
 /* color */
 t_color		color_set(float r, float g, float b);
@@ -409,6 +437,7 @@ t_color		color_scale_up(t_color a, float n);
 t_color		color_scale_down(t_color a, float n);
 t_color		color_blend(t_color a, t_color b);
 t_color		color_convert_from_raw(t_color color);
+int			color_to_int(t_color rgb);
 
 /* canvas */
 t_canvas	*canvas_init(int width, int height);

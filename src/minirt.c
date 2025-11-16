@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minirt.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iubieta- <iubieta@student.42.fr>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/15 14:08:03 by iubieta-          #+#    #+#             */
+/*   Updated: 2025/11/15 14:09:10 by iubieta-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 int populate_world(t_world *w, t_raw_data *rd)
@@ -32,8 +44,11 @@ int main(int argc, char **argv)
     t_data data;
     t_canvas *canvas;
 
-    data.raw.res.x_sz = DEF_RESOLUTION_X;
-    data.raw.res.y_sz = DEF_RESOLUTION_Y;
+    data.raw.res.x_sz = 900;
+    data.raw.res.y_sz = 500;
+
+    // data.raw.res.x_sz = DEF_RESOLUTION_X;
+    // data.raw.res.y_sz = DEF_RESOLUTION_Y;
     if (argc != 2)
         exit(1);
     if (is_valid_input_file(argv[1]) == 0)
@@ -46,6 +61,10 @@ int main(int argc, char **argv)
     canvas_init(data.world.c.hsize, data.world.c.hsize);
     canvas = render(data.world.c, data.world);
     canvas_to_ppm(*canvas, "first_render.ppm");
+	t_gui	gui;
+	gui_init(&gui, *canvas);
+	draw_canvas(&gui, *canvas);
+	gui_loop(&gui);
 }
 
 /* int main(int argc, char **argv) */

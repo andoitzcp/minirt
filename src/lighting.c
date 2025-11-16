@@ -12,6 +12,7 @@
 
 #include "minirt.h"
 
+//TODO check amblighting ratio influence
 t_color	ambient_lighting(t_material m, t_light l)
 {
 	t_color	ambient;
@@ -42,7 +43,6 @@ t_color	specular_lighting(t_material m, t_light l, float re_dot)
 	return (specular);
 }
 
-// TODO test is_shadowed function
 int	is_shadowed(t_world *w, t_tuple p)
 {
 	t_tuple	v;
