@@ -415,8 +415,8 @@ void	print_ds_rawl(t_rawlines **head);
 void 	print_line_els(char ***line);
 void 	print_raw_element_list(t_elements **el);
 void 	print_intersections(t_intersects **head);
-void print_parsed_content(t_data *data);
-void print_matrix(t_matrix *m);
+void	print_parsed_content(t_data *data);
+void	print_matrix(t_matrix *m);
 void	print_color(t_color *c);
 
 /* draw */
@@ -456,6 +456,7 @@ t_tuple reflect(t_tuple in, t_tuple normal);
 /* transform */
 t_ray	transform(t_ray r, t_matrix m);
 void	set_transform(t_object *object, t_matrix m);
+t_matrix matrix_rotation(t_tuple dest);
 t_matrix view_transform(t_tuple from, t_tuple to, t_tuple up);
 t_matrix view_transform2(t_tuple from, t_tuple forward, t_tuple up);
 
