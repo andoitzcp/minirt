@@ -20,7 +20,7 @@ static void init_re_element_types(t_data *data)
     while (i < RE_TYPE_QTY)
     {
         if (re_array[i++] == NULL)
-            ft_exit(data, ERRORS006);
+            ft_exit(data, ERRORS008);
     }
 }
 

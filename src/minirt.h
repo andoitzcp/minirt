@@ -34,7 +34,7 @@
 #define EL_TRIANGLE_ID "tr "
 #define EL_BLANK_LINE_ID ""
 
-#define RE_TYPE_QTY 9
+#define RE_TYPE_QTY 7
 #define RE_AMBLIGHT "^A "
 #define RE_CAMERA "^C "
 #define RE_LIGHT "^L "
