@@ -6,7 +6,7 @@
 /*   By: iubieta- <iubieta@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 09:39:02 by iubieta-          #+#    #+#             */
-/*   Updated: 2025/11/08 12:00:04 by iubieta-         ###   ########.fr       */
+/*   Updated: 2025/11/20 20:34:56 by iubieta-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,4 +111,3 @@ void	gui_loop(t_gui *gui)
 	mlx_hook(gui->window, 2, 1L << 0, handle_key, gui);
 	mlx_loop(gui->mlx);
 }
-
