@@ -14,24 +14,24 @@
 
 void	matrix_print(t_matrix m)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
-	while(i < m.size)
+	while (i < m.size)
 	{
 		j = 0;
-		while(j < m.size)
+		while (j < m.size)
 		{
-			printf("%f ", m.value[i][j]);
+			printf ("%f ", m.value[i][j]);
 			j++;
 		}
-		printf("\n");
+		printf ("\n");
 		i++;
 	}
 }
 
 void	tuple_print(t_tuple t)
 {
-	printf("x: %f, y: %f, z: %f, w: %f\n", t.x,t.y,t.z,t.w);
+	printf("x: %f, y: %f, z: %f, w: %f\n", t.x, t.y, t.z, t.w);
 }

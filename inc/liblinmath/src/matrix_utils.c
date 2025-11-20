@@ -37,8 +37,8 @@ int	matrix_eq(t_matrix a, t_matrix b)
 void	matrix_fill_limits(t_matrix *m, float value)
 {
 	int	i;
-	int j;
-	int size;
+	int	j;
+	int	size;
 
 	size = m->size;
 	i = 0;
@@ -55,10 +55,9 @@ void	matrix_fill_limits(t_matrix *m, float value)
 	}
 }
 
-int		matrix_is_invertible(t_matrix m)
+int	matrix_is_invertible(t_matrix m)
 {
 	if (matrix_determinant(m) == 0)
 		return (0);
 	return (1);
 }
-

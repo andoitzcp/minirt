@@ -20,12 +20,12 @@
 //# define EPS 1e-6f
 
 // Float utils
-int		float_eq(float a, float b);
-float	float_limit(float n, float min, float max);
+int			float_eq(float a, float b);
+float		float_limit(float n, float min, float max);
 
 // Angle utils
-float	degrees_to_radians(float deg);
-float	radians_to_degrees(float rad);
+float		degrees_to_radians(float deg);
+float		radians_to_degrees(float rad);
 
 // Tuples: points and vectors
 typedef struct s_tuple
@@ -36,31 +36,32 @@ typedef struct s_tuple
 	float	w;
 }	t_tuple;
 
-t_tuple	tuple_set(float x, float y, float z, float w);
-float	*tuple_to_array(t_tuple t, float ar[4]);
-int		tuple_eq(t_tuple a, t_tuple b);
+t_tuple		tuple_set(float x, float y, float z, float w);
+float		*tuple_to_array(t_tuple t, float ar[4]);
+int			tuple_eq(t_tuple a, t_tuple b);
 
-t_tuple	tuple_point(float x, float y, float z);
-t_tuple	tuple_vector(float x, float y, float z);
-int		tuple_is_point(t_tuple t);
-int		tuple_is_vector(t_tuple t);
+t_tuple		tuple_point(float x, float y, float z);
+t_tuple		tuple_vector(float x, float y, float z);
+int			tuple_is_point(t_tuple t);
+int			tuple_is_vector(t_tuple t);
 
-t_tuple	tuple_add(t_tuple a, t_tuple b);
-t_tuple	tuple_sub(t_tuple a, t_tuple b);
-t_tuple	tuple_scale_up(t_tuple v, float n);
-t_tuple	tuple_scale_down(t_tuple v, float n);
-t_tuple	tuple_negate(t_tuple v);
+t_tuple		tuple_add(t_tuple a, t_tuple b);
+t_tuple		tuple_sub(t_tuple a, t_tuple b);
+t_tuple		tuple_scale_up(t_tuple v, float n);
+t_tuple		tuple_scale_down(t_tuple v, float n);
+t_tuple		tuple_negate(t_tuple v);
 
-float	tuple_magnitude(t_tuple v);
-t_tuple	tuple_normalize(t_tuple v);
-float	tuple_dot(t_tuple a, t_tuple b);
-t_tuple	tuple_cross(t_tuple a, t_tuple b);
+float		tuple_magnitude(t_tuple v);
+t_tuple		tuple_normalize(t_tuple v);
+float		tuple_dot(t_tuple a, t_tuple b);
+t_tuple		tuple_cross(t_tuple a, t_tuple b);
 
 // Matrices
-typedef struct s_matrix {
-	int	size;
-	float value[4][4];
-} t_matrix;
+typedef struct s_matrix
+{
+	int		size;
+	float	value[4][4];
+}	t_matrix;
 
 t_matrix	matrix_zero(void);
 t_matrix	matrix_identity(int size);

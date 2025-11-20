@@ -48,25 +48,25 @@ t_matrix	matrix_matrix_mult(t_matrix a, t_matrix b)
 		}
 		i++;
 	}
-	return c;
+	return (c);
 }
 
 t_tuple	matrix_tuple_mult(t_matrix m, t_tuple t)
 {
 	t_tuple	ret;
 
-	ret.x = m.value[0][0] * t.x + m.value[0][1] * t.y +
-		m.value[0][2] * t.z + m.value[0][3] * t.w;
-	ret.y = m.value[1][0] * t.x + m.value[1][1] * t.y +
-		m.value[1][2] * t.z + m.value[1][3] * t.w;
-	ret.z = m.value[2][0] * t.x + m.value[2][1] * t.y +
-		m.value[2][2] * t.z + m.value[2][3] * t.w;
-	ret.w = m.value[3][0] * t.x + m.value[3][1] * t.y +
-		m.value[3][2] * t.z + m.value[3][3] * t.w;
+	ret.x = m.value[0][0] * t.x + m.value[0][1] * t.y
+		+ m.value[0][2] * t.z + m.value[0][3] * t.w;
+	ret.y = m.value[1][0] * t.x + m.value[1][1] * t.y
+		+ m.value[1][2] * t.z + m.value[1][3] * t.w;
+	ret.z = m.value[2][0] * t.x + m.value[2][1] * t.y
+		+ m.value[2][2] * t.z + m.value[2][3] * t.w;
+	ret.w = m.value[3][0] * t.x + m.value[3][1] * t.y
+		+ m.value[3][2] * t.z + m.value[3][3] * t.w;
 	return (ret);
 }
 
-t_matrix matrix_transpose(t_matrix m)
+t_matrix	matrix_transpose(t_matrix m)
 {
 	t_matrix	new;
 	int			i;
@@ -77,14 +77,14 @@ t_matrix matrix_transpose(t_matrix m)
 	while (i < m.size)
 	{
 		j = 0;
-		while(j < m.size)
+		while (j < m.size)
 		{
 			new.value[i][j] = m.value[j][i];
 			j++;
 		}
 		i++;
 	}
-	return new;
+	return (new);
 }
 
 float	matrix_determinant(t_matrix m)
@@ -104,5 +104,5 @@ float	matrix_determinant(t_matrix m)
 		det = det + m.value[0][j] * matrix_cofactor(m, 0, j);
 		j++;
 	}
-	return det;
+	return (det);
 }

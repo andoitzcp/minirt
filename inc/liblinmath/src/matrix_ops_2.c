@@ -45,7 +45,7 @@ float	matrix_minor(t_matrix m, int row, int col)
 {
 	float		minor;
 	t_matrix	subm;
-	
+
 	subm = matrix_submatrix(m, row, col);
 	minor = matrix_determinant(subm);
 	return (minor);
@@ -54,9 +54,9 @@ float	matrix_minor(t_matrix m, int row, int col)
 float	matrix_cofactor(t_matrix m, int row, int col)
 {
 	float	cofactor;
-	
+
 	cofactor = matrix_minor(m, row, col);
 	if ((row + col) % 2 != 0)
 		cofactor = cofactor * (-1);
-	return(cofactor);
+	return (cofactor);
 }

@@ -67,14 +67,14 @@ t_matrix	matrix_from_array(int size, float array[16])
 	return (m);
 }
 
-t_matrix matrix_inverse(t_matrix m)
+t_matrix	matrix_inverse(t_matrix m)
 {
 	t_matrix	inverse;
 	float		det;
 	float		c;
 	int			i;
 	int			j;
-	
+
 	det = matrix_determinant(m);
 	if (det == 0)
 	{
