@@ -6,7 +6,7 @@
 /*   By: iubieta- <iubieta@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 09:59:20 by iubieta-          #+#    #+#             */
-/*   Updated: 2025/11/08 12:24:23 by iubieta-         ###   ########.fr       */
+/*   Updated: 2025/11/20 20:26:25 by iubieta-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,6 @@ void	draw_canvas(t_gui *gui, t_canvas canv)
 		while (x < canv.width)
 		{
 			color = color_to_int(color_clamp(canv.image[y][x]));
-			// printf("flag100: x:%i y:%i)\n", x, y);
-			// printf("flag100: r:%f)\n", canv.image[y][x].r);
-			// printf("flag100: r:%f)\n", canv.image[y][x].r);
-			// printf("flag100: r:%f)\n", canv.image[y][x].r);
-			// printf("flag100: r:%i)\n", color);
 			draw_point(gui, x, y, color);
 			x++;
 		}
