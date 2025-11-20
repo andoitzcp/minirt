@@ -61,3 +61,12 @@ int	matrix_is_invertible(t_matrix m)
 		return (0);
 	return (1);
 }
+
+t_matrix	matrix_null(void)
+{
+	t_matrix	m;
+
+	m = matrix_zero();
+	m.size = 0;
+	return (m);
+}

@@ -88,6 +88,7 @@ t_matrix	matrix_rot_z(float angle);
 int			matrix_eq(t_matrix a, t_matrix b);
 void		matrix_fill_limits(t_matrix *m, float value);
 int			matrix_is_invertible(t_matrix m);
+t_matrix	matrix_null(void);
 
 // DEBUG
 void		matrix_print(t_matrix m);

@@ -77,11 +77,7 @@ t_matrix	matrix_inverse(t_matrix m)
 
 	det = matrix_determinant(m);
 	if (det == 0)
-	{
-		inverse = matrix_zero();
-		inverse.size = 0;
-		return (inverse);
-	}
+		return (matrix_null());
 	i = 0;
 	j = 0;
 	inverse.size = m.size;
