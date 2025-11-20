@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   canvas.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: iubieta- <iubieta@student.42.fr>           +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/07 16:13:45 by iubieta-          #+#    #+#             */
-/*   Updated: 2025/09/15 23:28:39 by iubieta-         ###   ########.fr       */
-/*                                                                            */
+/*																			  */
+/*														  :::	   ::::::::   */
+/*	 canvas.c											:+:		 :+:	:+:   */
+/*													  +:+ +:+		  +:+	  */
+/*	 By: iubieta- <iubieta@student.42.fr>			+#+  +:+	   +#+		  */
+/*												  +#+#+#+#+#+	+#+			  */
+/*	 Created: 2025/09/07 16:13:45 by iubieta-		   #+#	  #+#			  */
+/*	 Updated: 2025/11/20 20:07:48 by iubieta-		  ###	########.fr		  */
+/*																			  */
 /* ************************************************************************** */
 
 #include "minirt.h"
@@ -26,7 +26,7 @@ t_canvas	*canvas_init(int width, int height)
 	can->pixel_block = (t_color *)malloc(sizeof(t_color) * width * height + 1);
 	if (!can->pixel_block)
 		return (NULL);
-	can->image = (t_color **)malloc(sizeof(t_color*) * height);
+	can->image = (t_color **)malloc(sizeof(t_color *) * height);
 	if (!can->image)
 		return (NULL);
 	canvas_set_color(can, color_set(0, 0, 0));
@@ -37,7 +37,7 @@ void	canvas_set_color(t_canvas *can, t_color c)
 {
 	int			i;
 	int			j;
-	
+
 	i = 0;
 	while (i < can->height)
 	{
@@ -63,5 +63,3 @@ t_color	canvas_get_pixel(t_canvas can, int x, int y)
 		return (color_set(NAN, NAN, NAN));
 	return (can.image[y][x]);
 }
-
-
