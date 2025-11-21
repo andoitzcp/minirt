@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ppm.c                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: iubieta- <iubieta@student.42.fr>           +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/15 22:17:27 by iubieta-          #+#    #+#             */
-/*   Updated: 2025/09/15 23:31:26 by iubieta-         ###   ########.fr       */
-/*                                                                            */
+/*																			  */
+/*														  :::	   ::::::::   */
+/*	 ppm.c												:+:		 :+:	:+:   */
+/*													  +:+ +:+		  +:+	  */
+/*	 By: iubieta- <iubieta@student.42.fr>			+#+  +:+	   +#+		  */
+/*												  +#+#+#+#+#+	+#+			  */
+/*	 Created: 2025/09/15 22:17:27 by iubieta-		   #+#	  #+#			  */
+/*	 Updated: 2025/09/15 23:31:26 by iubieta-		  ###	########.fr		  */
+/*																			  */
 /* ************************************************************************** */
 
 #include "minirt.h"
@@ -26,7 +26,7 @@ int	ppm_write_value(int value, int linelen, int fd)
 {
 	char	*s;
 	int		len;
-	
+
 	s = ft_itoa(value);
 	len = ft_strlen(s);
 	if (linelen + 1 + len > 70)
@@ -41,7 +41,7 @@ int	ppm_write_value(int value, int linelen, int fd)
 	return (len);
 }
 
-int ppm_write_pixel(t_color c, int linelen, int fd)
+int	ppm_write_pixel(t_color c, int linelen, int fd)
 {
 	int	len;
 
@@ -56,9 +56,9 @@ int ppm_write_pixel(t_color c, int linelen, int fd)
 int	canvas_to_ppm(t_canvas can, char *path)
 {
 	int	fd;
-	int i;
-	int j;
-	int len;
+	int	i;
+	int	j;
+	int	len;
 
 	if (!path || !path[0])
 		return (1);
