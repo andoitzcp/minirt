@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   lighting.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: iubieta- <iubieta@student.42.fr>           +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/23 21:14:11 by iubieta-          #+#    #+#             */
-/*   Updated: 2025/10/25 18:51:51 by iubieta-         ###   ########.fr       */
-/*                                                                            */
+/*																			  */
+/*														  :::	   ::::::::   */
+/*	 lighting.c											:+:		 :+:	:+:   */
+/*													  +:+ +:+		  +:+	  */
+/*	 By: iubieta- <iubieta@student.42.fr>			+#+  +:+	   +#+		  */
+/*												  +#+#+#+#+#+	+#+			  */
+/*	 Created: 2025/10/23 21:14:11 by iubieta-		   #+#	  #+#			  */
+/*	 Updated: 2025/10/25 18:51:51 by iubieta-		  ###	########.fr		  */
+/*																			  */
 /* ************************************************************************** */
 
 #include "minirt.h"
@@ -19,7 +19,7 @@ t_color	ambient_lighting(t_material m, t_light l)
 
 	ambient = color_blend(m.color, l.col);
 	ambient = color_scale_up(ambient, m.ambient);
-	return	(ambient);
+	return (ambient);
 }
 
 t_color	diffuse_lighting(t_material m, t_light l, float ln_dot)
@@ -54,7 +54,6 @@ int	is_shadowed(t_world *w, t_tuple p)
 	distance = tuple_magnitude(v);
 	r = new_ray(p, tuple_normalize(v));
 	intersect_world(w, &r);
-	// TODO añadir t(distancia) a hit??
 	h = hit(&r.i);
 	if (h > 0 && h < distance)
 		return (1);
@@ -63,13 +62,13 @@ int	is_shadowed(t_world *w, t_tuple p)
 
 /* t_color	lighting(t_comps comps) */
 /* { */
-/* 	t_color effective_col; */
-/* 	t_tuple lightv; */
-/* 	t_color ambient; */
+/*	t_color effective_col; */
+/*	t_tuple lightv; */
+/*	t_color ambient; */
 
-/* 	effective_col = color_blend(comps.mat.color, comps.light.col); */
-/* 	lightv = tuple_normalize(tuple_sub(comps.light.p, comps.point)); */
-/* 	ambient = color_scale_up(effective_col, comps.mat.ambient); */
+/*	effective_col = color_blend(comps.mat.color, comps.light.col); */
+/*	lightv = tuple_normalize(tuple_sub(comps.light.p, comps.point)); */
+/*	ambient = color_scale_up(effective_col, comps.mat.ambient); */
 
 /* } */
 
@@ -77,20 +76,20 @@ t_color	lighting(t_comps comps)
 {
 	t_color	color;
 	t_tuple	lightv;
-	t_tuple reflex;
+	t_tuple	reflex;
 	float	dot;
 
 	color = ambient_lighting(comps.mat, comps.light);
 	lightv = tuple_sub(comps.light.p, comps.point);
 	lightv = tuple_normalize(lightv);
 	dot = tuple_dot(lightv, comps.normv);
-	if (dot < 0 || comps.is_shadowed) // Una vez lo arregles descomenta esta linea
+	if (dot < 0 || comps.is_shadowed)
 		return (color);
 	color = color_add(color, diffuse_lighting(comps.mat, comps.light, dot));
 	reflex = reflect(tuple_negate(lightv), comps.normv);
 	dot = tuple_dot(reflex, comps.eyev);
 	if (dot <= 0)
-		return	(color);
+		return (color);
 	color = color_add(color, specular_lighting(comps.mat, comps.light, dot));
 	return (color);
 }
