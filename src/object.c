@@ -1,38 +1,49 @@
+/* ************************************************************************** */
+/*																			  */
+/*														  :::	   ::::::::   */
+/*	 object.c											:+:		 :+:	:+:   */
+/*													  +:+ +:+		  +:+	  */
+/*	 By: iubieta- <iubieta@student.42.fr>			+#+  +:+	   +#+		  */
+/*												  +#+#+#+#+#+	+#+			  */
+/*	 Created: 2025/11/21 21:51:55 by iubieta-		   #+#	  #+#			  */
+/*	 Updated: 2025/11/21 21:51:55 by iubieta-		  ###	########.fr		  */
+/*																			  */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
-t_object *new_object(int type, t_matrix *transform, t_material *material)
+t_object	*new_object(int type, t_matrix *transform, t_material *material)
 {
-    t_object *obj;
+	t_object	*obj;
 
-    obj = malloc(sizeof(t_object));
-    if (obj == NULL)
-        return (NULL);
-    obj->type = type;
-
-    if (transform != NULL)
-        set_transform(obj, *transform);
-    else
-        obj->trans = matrix_identity(4);
-    if (material != NULL)
-        set_material(obj, *material);
-    else
-        obj->mat = def_material();
-    obj->next = NULL;
-    return (obj);
+	obj = malloc(sizeof(t_object));
+	if (obj == NULL)
+		return (NULL);
+	obj->type = type;
+	if (transform != NULL)
+		set_transform(obj, *transform);
+	else
+		obj->trans = matrix_identity(4);
+	if (material != NULL)
+		set_material(obj, *material);
+	else
+		obj->mat = def_material();
+	obj->next = NULL;
+	return (obj);
 }
 
-void object_append(t_object **head, t_object *node)
+void	object_append(t_object **head, t_object *node)
 {
-    t_object *current;
+	t_object	*current;
 
-    if (*head == NULL)
-    {
-        *head = node;
-        return ;
-    }
-    current = *head;
-    while (current->next != NULL)
-        current = current->next;
-    current->next = node;
-    return ;
+	if (*head == NULL)
+	{
+		*head = node;
+		return ;
+	}
+	current = *head;
+	while (current->next != NULL)
+		current = current->next;
+	current->next = node;
+	return ;
 }
