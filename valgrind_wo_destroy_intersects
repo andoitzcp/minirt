@@ -1,0 +1,47 @@
+==60631== Syscall param writev(vector[0]) points to uninitialised byte(s)
+==60631==    at 0x4BC6894: writev (writev.c:26)
+==60631==    by 0x4CBDACA: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==60631==    by 0x4CBDC4E: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==60631==    by 0x4CBED7E: xcb_writev (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==60631==    by 0x49A10B8: _XSend (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==60631==    by 0x49A6148: _XReadEvents (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==60631==    by 0x49A652B: XWindowEvent (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==60631==    by 0x117AF5: mlx_int_wait_first_expose (in /home/iubieta-/42/minirt/minirt)
+==60631==    by 0x117835: mlx_new_window (in /home/iubieta-/42/minirt/minirt)
+==60631==    by 0x11270A: gui_init (gui.c:45)
+==60631==    by 0x10AFDA: main (minirt.c:62)
+==60631==  Address 0x1c1f6cec is 28 bytes inside a block of size 16,384 alloc'd
+==60631==    at 0x484D953: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==60631==    by 0x499042D: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==60631==    by 0x1175E6: mlx_init (in /home/iubieta-/42/minirt/minirt)
+==60631==    by 0x1126A6: gui_init (gui.c:37)
+==60631==    by 0x10AFDA: main (minirt.c:62)
+==60631==
+==60631== Invalid free() / delete / delete[] / realloc()
+==60631==    at 0x484988F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==60631==    by 0x112870: free_gui (gui.c:76)
+==60631==    by 0x1128D3: window_ctrl (gui.c:94)
+==60631==    by 0x11290C: handle_key (gui.c:104)
+==60631==    by 0x117995: mlx_loop (in /home/iubieta-/42/minirt/minirt)
+==60631==    by 0x112988: gui_loop (gui.c:112)
+==60631==    by 0x10B025: main (minirt.c:64)
+==60631==  Address 0x1ffefffb20 is on thread 1's stack
+==60631==  in frame #6, created by main (minirt.c:43)
+==60631==
+==60631==
+==60631== HEAP SUMMARY:
+==60631==     in use at exit: 55,098,291 bytes in 1,664,463 blocks
+==60631==   total heap usage: 4,364,866 allocs, 2,700,404 frees, 74,109,216 bytes allocated
+==60631==
+==60631== LEAK SUMMARY:
+==60631==    definitely lost: 19,203,725 bytes in 800,184 blocks
+==60631==    indirectly lost: 30,462,641 bytes in 863,982 blocks
+==60631==      possibly lost: 168 bytes in 7 blocks
+==60631==    still reachable: 5,431,757 bytes in 290 blocks
+==60631==         suppressed: 0 bytes in 0 blocks
+==60631== Rerun with --leak-check=full to see details of leaked memory
+==60631==
+==60631== Use --track-origins=yes to see where uninitialised values come from
+==60631== For lists of detected and suppressed errors, rerun with: -s
+==60631== ERROR SUMMARY: 3 errors from 2 contexts (suppressed: 0 from 0)
+
