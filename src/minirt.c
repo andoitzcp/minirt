@@ -61,9 +61,8 @@ int	main(int argc, char **argv)
 	canvas_to_ppm(*canvas, "first_render.ppm");
 	gui_init(&gui, *canvas);
 	draw_canvas(&gui, *canvas);
-	// gui_loop(&gui);
-	free_gui(&gui);
 	destroy_canvas(canvas);
+	gui_loop(&gui);
 }
 
 /* int main(int argc, char **argv) */
