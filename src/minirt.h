@@ -555,4 +555,9 @@ t_color			lighting(t_comps comps);
 /* interfase_world_parse */
 t_world			sig_mundus_creatus_est(t_raw_data *rd);
 
+/* destroy */
+void			destroy_intersects(t_intersects *i);
+void			destroy_canvas(t_canvas *can);
+
+
 #endif // MINIRT_H_

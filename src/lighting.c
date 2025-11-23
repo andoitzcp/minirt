@@ -55,6 +55,7 @@ int	is_shadowed(t_world *w, t_tuple p)
 	r = new_ray(p, tuple_normalize(v));
 	intersect_world(w, &r);
 	h = hit(&r.i);
+	destroy_intersects(r.i);
 	if (h > 0 && h < distance)
 		return (1);
 	return (0);

@@ -56,12 +56,14 @@ int	main(int argc, char **argv)
 	data.world = sig_mundus_creatus_est(&data.raw);
 	if (populate_world(&data.world, &data.raw) != 0)
 		ft_exit(&data, "TMP");
-	canvas_init(data.world.c.hsize, data.world.c.hsize);
+	// canvas_init(data.world.c.hsize, data.world.c.hsize); //TODO eliminar??
 	canvas = render(data.world.c, data.world);
 	canvas_to_ppm(*canvas, "first_render.ppm");
 	gui_init(&gui, *canvas);
 	draw_canvas(&gui, *canvas);
-	gui_loop(&gui);
+	// gui_loop(&gui);
+	free_gui(&gui);
+	destroy_canvas(canvas);
 }
 
 /* int main(int argc, char **argv) */
