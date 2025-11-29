@@ -18,10 +18,8 @@ int	populate_world(t_world *w, t_raw_data *rd)
 	uint		i;
 
 	i = 0;
-	printf("flag1000: nels = %d\n", rd->nels);
 	while (i < rd->nels)
 	{
-		printf("flag1001: nels = %d\n", rd->nels);
 		if (rd->els[i]->type == ELID_SP)
 			o = new_sphere_from_raw_data(&rd->els[i]->relda.sp, &w->ali);
 		else if (rd->els[i]->type == ELID_PL)
@@ -32,7 +30,6 @@ int	populate_world(t_world *w, t_raw_data *rd)
 			return (2);
 		if (o == NULL)
 			return (1);
-		printf("flag1002: %p\n", o);
 		object_append(&w->objs, o);
 		i++;
 	}
@@ -45,8 +42,8 @@ int	main(int argc, char **argv)
 	t_canvas	*canvas;
 	t_gui		gui;
 
-	data.raw.res.x_sz = 400;
-	data.raw.res.y_sz = 200;
+	data.raw.res.x_sz = DEF_RESOLUTION_X;
+	data.raw.res.y_sz = DEF_RESOLUTION_Y;
 	if (argc != 2)
 		exit(1);
 	if (is_valid_input_file(argv[1]) == 0)
@@ -56,9 +53,7 @@ int	main(int argc, char **argv)
 	data.world = sig_mundus_creatus_est(&data.raw);
 	if (populate_world(&data.world, &data.raw) != 0)
 		ft_exit(&data, "TMP");
-	// canvas_init(data.world.c.hsize, data.world.c.hsize); //TODO eliminar??
 	canvas = render(data.world.c, data.world);
-	canvas_to_ppm(*canvas, "first_render.ppm");
 	gui_init(&gui, *canvas);
 	draw_canvas(&gui, *canvas);
 	destroy_canvas(canvas);
