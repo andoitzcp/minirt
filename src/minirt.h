@@ -92,8 +92,14 @@
 # define RE_EL_CY "^ *cy {1}[^, ]{1},[^, ]{1},[^, ]{1} {1}[^, ]{1},[^, ]{1},[^, ]{1} {1}[^, ]{1} {1}[^, ]{1} {1}[^, ]{1},[^, ]{1},[^, ]{1} *$"
 # define RE_EL_BLANK "^\n$"
 
-# define DEF_RESOLUTION_X 1920
-# define DEF_RESOLUTION_Y 1080
+# define DEF_RESOLUTION_X 1000
+# define DEF_RESOLUTION_Y 1000
+
+# define DEF_DIFFUSE	0.9
+# define DEF_SPECULAR	0.9
+# define DEF_SHININESS	200
+
+# define DEF_LIGHT_BRIGHTNESS	0.01
 
 typedef enum e_elid
 {

@@ -45,8 +45,8 @@ int	main(int argc, char **argv)
 	t_canvas	*canvas;
 	t_gui		gui;
 
-	data.raw.res.x_sz = 400;
-	data.raw.res.y_sz = 200;
+	data.raw.res.x_sz = DEF_RESOLUTION_X;
+	data.raw.res.y_sz = DEF_RESOLUTION_Y;
 	if (argc != 2)
 		exit(1);
 	if (is_valid_input_file(argv[1]) == 0)

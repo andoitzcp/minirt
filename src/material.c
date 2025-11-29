@@ -28,9 +28,9 @@ t_material	new_material_from_raw_data(t_color *col, t_amblight *ambl)
 
 	mat.color = color_scale_up(color_blend(*col, ambl->col), ambl->ratio);
 	mat.ambient = ambl->ratio;
-	mat.diffuse = 0.9;
-	mat.specular = 0.9;
-	mat.shininess = 200;
+	mat.diffuse = DEF_DIFFUSE;
+	mat.specular = DEF_SPECULAR;
+	mat.shininess = DEF_SHININESS;
 	return (mat);
 }
 
