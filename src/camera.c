@@ -23,6 +23,7 @@ t_camera	new_camera(int hsize, int vsize, float fov)
 	camera.vsize = vsize;
 	camera.fov = fov;
 	camera.trans = matrix_identity(4);
+	camera.inverse = matrix_inverse(camera.trans);
 	camera_comps(&camera);
 	return (camera);
 }

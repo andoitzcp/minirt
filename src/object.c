@@ -28,6 +28,7 @@ t_object	*new_object(int type, t_matrix *transform, t_material *material)
 		set_material(obj, *material);
 	else
 		obj->mat = def_material();
+	obj->inverse = matrix_inverse(obj->trans);
 	obj->next = NULL;
 	return (obj);
 }

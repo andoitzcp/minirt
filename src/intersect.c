@@ -62,7 +62,7 @@ void	get_ray_el_intersects(t_ray *ray, t_object *obj)
 	t_intersects	*node;
 	t_ray			local_ray;
 
-	local_ray = transform(*ray, matrix_inverse(obj->trans));
+	local_ray = transform(*ray, obj->inverse);
 	if (obj->type == ELID_SP)
 		calc_ray_sp_intersects(array, &local_ray);
 	if (obj->type == ELID_PL)

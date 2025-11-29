@@ -262,6 +262,7 @@ typedef struct s_camera
 	float			half_width;
 	float			half_height;
 	t_matrix		trans;
+	t_matrix		inverse;
 }	t_camera;
 
 typedef struct s_light
@@ -332,6 +333,7 @@ typedef struct s_object
 	enum e_elid			type; // element data type (sp, pl, cy)
 	union u_objdata		data; // raw data
 	struct s_matrix		trans; //MERGE
+	struct s_matrix		inverse; //MERGE
 	struct s_material	mat;
 	struct s_object		*next;
 }	t_object;
