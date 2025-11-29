@@ -50,14 +50,19 @@ int	main(int argc, char **argv)
 		exit(1);
 	init(&data);
 	parse(&data, argv[1]);
-	data.world = sig_mundus_creatus_est(&data.raw);
-	if (populate_world(&data.world, &data.raw) != 0)
-		ft_exit(&data, "TMP");
-	canvas = render(data.world.c, data.world);
-	gui_init(&gui, *canvas);
-	draw_canvas(&gui, *canvas);
-	destroy_canvas(canvas);
-	gui_loop(&gui);
+	destroy_regex(&data);
+	destroy_rawlines(data.raw.lines);
+	//data.world = sig_mundus_creatus_est(&data.raw);
+	//if (populate_world(&data.world, &data.raw) != 0)
+	//	ft_exit(&data, "TMP");
+	//canvas = render(data.world.c, data.world);
+	//gui_init(&gui, *canvas);
+	//draw_canvas(&gui, *canvas);
+	//destroy_canvas(canvas);
+	//gui_loop(&gui);
+	//
+	(void)canvas;
+	(void)gui;
 }
 
 /* int main(int argc, char **argv) */

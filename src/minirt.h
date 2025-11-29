@@ -466,7 +466,7 @@ t_color			color_blend(t_color a, t_color b);
 t_color			color_convert_from_raw(t_color color);
 int				color_to_int(t_color rgb);
 
-/* canvas */	
+/* canvas */
 t_canvas		*canvas_init(int width, int height);
 void			canvas_set_color(t_canvas *can, t_color c);
 int				canvas_set_pixel(t_canvas *can, int x, int y, t_color c);
@@ -486,12 +486,12 @@ t_matrix		matrix_rotation(t_tuple dest);
 t_matrix		view_transform(t_tuple from, t_tuple to, t_tuple up);
 t_matrix		view_transform2(t_tuple from, t_tuple forward, t_tuple up);
 
-/* object */	
+/* object */
 t_object		*new_object(int type, t_matrix *transform,
 					t_material *material);
 void			object_append(t_object **head, t_object *node);
 
-/* sphere */	
+/* sphere */
 t_sphere		new_sphere(void);
 void			set_sphere_from_raw_data(t_sphere *sp, t_raw_sphere *rsp);
 t_sphere		*set_sphere_transform(t_sphere *s, t_matrix trans);
@@ -521,7 +521,7 @@ t_amblight		new_amblight(t_color color, float ratio);
 t_amblight		def_amblight(void);
 t_amblight		get_amblight_from_raw_data(t_raw_data *rd);
 
-/* camera */	
+/* camera */
 t_camera		new_camera(int hsize, int vsize, float fov);
 t_camera		def_camera(void);
 void			camera_comps(t_camera *camera);
@@ -567,6 +567,7 @@ t_world			sig_mundus_creatus_est(t_raw_data *rd);
 /* destroy */
 void			destroy_intersects(t_intersects *i);
 void			destroy_canvas(t_canvas *can);
-
+void destroy_regex(t_data *data);
+void destroy_rawlines(t_line *rls);
 
 #endif // MINIRT_H_

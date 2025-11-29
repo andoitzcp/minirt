@@ -1,11 +1,11 @@
 #include "libregex.h"
 
-void re_destroy(t_re *re)
+void re_destroy(t_re **re)
 {
     t_re *node;
     t_re *p;
 
-    node = re;
+    node = *re;
     while (node)
     {
         p = node;

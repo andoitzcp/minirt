@@ -6,7 +6,7 @@
 
 NAME = libregex.a
 CC = gcc
-CFLAGS	= -Wall -Werror -Wextra
+CFLAGS	= -Wall -Werror -Wextra -g
 TESTS_LDFLAGS=-lcriterion
 
 RELEASE_OBJ_DIR=obj/

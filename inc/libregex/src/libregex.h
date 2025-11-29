@@ -37,6 +37,6 @@ typedef struct s_re
 
 int match(t_re **head, char *str);
 t_re **re_new(char *s);
-void re_destroy(t_re *re);
+void re_destroy(t_re **re);
 
 #endif // LIBREGEX_H_
