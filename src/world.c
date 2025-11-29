@@ -91,7 +91,8 @@ t_tuple	normal_at(t_object *obj, t_tuple point)
 	t_tuple		local_normal;
 	t_tuple		world_normal;
 
-	inverse = matrix_inverse(obj->trans);
+	//inverse = matrix_inverse(obj->trans);
+	inverse = obj->inverse;
 	local_point = matrix_tuple_mult(inverse, point);
 	local_normal = local_normal_at(obj, local_point);
 	world_normal = matrix_tuple_mult(matrix_transpose(inverse),
@@ -171,9 +172,11 @@ t_ray	ray_for_pixel(t_camera c, int px, int py)
 	offset[1] = (py + 0.5) * c.pix_sz;
 	world[0] = c.half_width - offset[0];
 	world[1] = c.half_height - offset[1];
-	pixel = matrix_tuple_mult(matrix_inverse(c.trans),
+	pixel = matrix_tuple_mult(matrix_inverse(c.trans), // A
+	//pixel = matrix_tuple_mult(c.inverse, // A'
 			tuple_point(world[0], world[1], -1));
-	rod[0] = matrix_tuple_mult(matrix_inverse(c.trans), tuple_point(0, 0, 0));
+	rod[0] = matrix_tuple_mult(matrix_inverse(c.trans), tuple_point(0, 0, 0)); // B
+	//rod[0] = matrix_tuple_mult(c.inverse, tuple_point(0, 0, 0)); // B'
 	rod[1] = tuple_normalize(tuple_sub(pixel, rod[0]));
 	ray = new_ray(rod[0], rod[1]);
 	return (ray);
