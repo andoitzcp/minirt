@@ -1,0 +1,229 @@
+==493731== Memcheck, a memory error detector
+==493731== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==493731== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==493731== Command: ./minirt scenes/fronton.rt
+==493731== 
+==493731== Invalid read of size 4
+==493731==    at 0x117E06: mlx_loop (in /home/iubieta-/IkerUbieta/proyectos/MINIRT/repo/minirt)
+==493731==    by 0x112E27: gui_loop (gui.c:108)
+==493731==    by 0x10AF10: main (minirt.c:60)
+==493731==  Address 0x1a483b80 is 128 bytes inside a block of size 136 free'd
+==493731==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==493731==    by 0x112D1F: free_gui (gui.c:73)
+==493731==    by 0x112D82: window_ctrl (gui.c:91)
+==493731==    by 0x112DB1: handle_key (gui.c:100)
+==493731==    by 0x117E05: mlx_loop (in /home/iubieta-/IkerUbieta/proyectos/MINIRT/repo/minirt)
+==493731==    by 0x112E27: gui_loop (gui.c:108)
+==493731==    by 0x10AF10: main (minirt.c:60)
+==493731==  Block was alloc'd at
+==493731==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==493731==    by 0x1179EF: mlx_init (in /home/iubieta-/IkerUbieta/proyectos/MINIRT/repo/minirt)
+==493731==    by 0x112B72: gui_init (gui.c:37)
+==493731==    by 0x10AEC8: main (minirt.c:57)
+==493731== 
+==493731== Invalid read of size 8
+==493731==    at 0x117D30: mlx_loop (in /home/iubieta-/IkerUbieta/proyectos/MINIRT/repo/minirt)
+==493731==    by 0x112E27: gui_loop (gui.c:108)
+==493731==    by 0x10AF10: main (minirt.c:60)
+==493731==  Address 0x1a483b38 is 56 bytes inside a block of size 136 free'd
+==493731==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==493731==    by 0x112D1F: free_gui (gui.c:73)
+==493731==    by 0x112D82: window_ctrl (gui.c:91)
+==493731==    by 0x112DB1: handle_key (gui.c:100)
+==493731==    by 0x117E05: mlx_loop (in /home/iubieta-/IkerUbieta/proyectos/MINIRT/repo/minirt)
+==493731==    by 0x112E27: gui_loop (gui.c:108)
+==493731==    by 0x10AF10: main (minirt.c:60)
+==493731==  Block was alloc'd at
+==493731==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==493731==    by 0x1179EF: mlx_init (in /home/iubieta-/IkerUbieta/proyectos/MINIRT/repo/minirt)
+==493731==    by 0x112B72: gui_init (gui.c:37)
+==493731==    by 0x10AEC8: main (minirt.c:57)
+==493731== 
+==493731== Invalid read of size 8
+==493731==    at 0x117D43: mlx_loop (in /home/iubieta-/IkerUbieta/proyectos/MINIRT/repo/minirt)
+==493731==    by 0x112E27: gui_loop (gui.c:108)
+==493731==    by 0x10AF10: main (minirt.c:60)
+==493731==  Address 0x1a483b00 is 0 bytes inside a block of size 136 free'd
+==493731==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==493731==    by 0x112D1F: free_gui (gui.c:73)
+==493731==    by 0x112D82: window_ctrl (gui.c:91)
+==493731==    by 0x112DB1: handle_key (gui.c:100)
+==493731==    by 0x117E05: mlx_loop (in /home/iubieta-/IkerUbieta/proyectos/MINIRT/repo/minirt)
+==493731==    by 0x112E27: gui_loop (gui.c:108)
+==493731==    by 0x10AF10: main (minirt.c:60)
+==493731==  Block was alloc'd at
+==493731==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==493731==    by 0x1179EF: mlx_init (in /home/iubieta-/IkerUbieta/proyectos/MINIRT/repo/minirt)
+==493731==    by 0x112B72: gui_init (gui.c:37)
+==493731==    by 0x10AEC8: main (minirt.c:57)
+==493731== 
+==493731== Invalid read of size 8
+==493731==    at 0x499BEC1: XNextEvent (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==493731==    by 0x117D52: mlx_loop (in /home/iubieta-/IkerUbieta/proyectos/MINIRT/repo/minirt)
+==493731==    by 0x112E27: gui_loop (gui.c:108)
+==493731==    by 0x10AF10: main (minirt.c:60)
+==493731==  Address 0x1a484538 is 2,408 bytes inside a block of size 4,704 free'd
+==493731==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==493731==    by 0x498E8C0: XCloseDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==493731==    by 0x112D10: free_gui (gui.c:72)
+==493731==    by 0x112D82: window_ctrl (gui.c:91)
+==493731==    by 0x112DB1: handle_key (gui.c:100)
+==493731==    by 0x117E05: mlx_loop (in /home/iubieta-/IkerUbieta/proyectos/MINIRT/repo/minirt)
+==493731==    by 0x112E27: gui_loop (gui.c:108)
+==493731==    by 0x10AF10: main (minirt.c:60)
+==493731==  Block was alloc'd at
+==493731==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==493731==    by 0x499CB31: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==493731==    by 0x117A07: mlx_init (in /home/iubieta-/IkerUbieta/proyectos/MINIRT/repo/minirt)
+==493731==    by 0x112B72: gui_init (gui.c:37)
+==493731==    by 0x10AEC8: main (minirt.c:57)
+==493731== 
+==493731== Invalid read of size 8
+==493731==    at 0x49AF708: _XFreeEventCookies (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==493731==    by 0x499BED6: XNextEvent (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==493731==    by 0x117D52: mlx_loop (in /home/iubieta-/IkerUbieta/proyectos/MINIRT/repo/minirt)
+==493731==    by 0x112E27: gui_loop (gui.c:108)
+==493731==    by 0x10AF10: main (minirt.c:60)
+==493731==  Address 0x1a484e10 is 4,672 bytes inside a block of size 4,704 free'd
+==493731==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==493731==    by 0x498E8C0: XCloseDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==493731==    by 0x112D10: free_gui (gui.c:72)
+==493731==    by 0x112D82: window_ctrl (gui.c:91)
+==493731==    by 0x112DB1: handle_key (gui.c:100)
+==493731==    by 0x117E05: mlx_loop (in /home/iubieta-/IkerUbieta/proyectos/MINIRT/repo/minirt)
+==493731==    by 0x112E27: gui_loop (gui.c:108)
+==493731==    by 0x10AF10: main (minirt.c:60)
+==493731==  Block was alloc'd at
+==493731==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==493731==    by 0x499CB31: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==493731==    by 0x117A07: mlx_init (in /home/iubieta-/IkerUbieta/proyectos/MINIRT/repo/minirt)
+==493731==    by 0x112B72: gui_init (gui.c:37)
+==493731==    by 0x10AEC8: main (minirt.c:57)
+==493731== 
+==493731== Invalid read of size 8
+==493731==    at 0x499BED7: XNextEvent (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==493731==    by 0x117D52: mlx_loop (in /home/iubieta-/IkerUbieta/proyectos/MINIRT/repo/minirt)
+==493731==    by 0x112E27: gui_loop (gui.c:108)
+==493731==    by 0x10AF10: main (minirt.c:60)
+==493731==  Address 0x1a483c48 is 120 bytes inside a block of size 4,704 free'd
+==493731==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==493731==    by 0x498E8C0: XCloseDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==493731==    by 0x112D10: free_gui (gui.c:72)
+==493731==    by 0x112D82: window_ctrl (gui.c:91)
+==493731==    by 0x112DB1: handle_key (gui.c:100)
+==493731==    by 0x117E05: mlx_loop (in /home/iubieta-/IkerUbieta/proyectos/MINIRT/repo/minirt)
+==493731==    by 0x112E27: gui_loop (gui.c:108)
+==493731==    by 0x10AF10: main (minirt.c:60)
+==493731==  Block was alloc'd at
+==493731==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==493731==    by 0x499CB31: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==493731==    by 0x117A07: mlx_init (in /home/iubieta-/IkerUbieta/proyectos/MINIRT/repo/minirt)
+==493731==    by 0x112B72: gui_init (gui.c:37)
+==493731==    by 0x10AEC8: main (minirt.c:57)
+==493731== 
+==493731== Invalid read of size 8
+==493731==    at 0x49B2E44: _XReadEvents (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==493731==    by 0x499BFA7: XNextEvent (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==493731==    by 0x117D52: mlx_loop (in /home/iubieta-/IkerUbieta/proyectos/MINIRT/repo/minirt)
+==493731==    by 0x112E27: gui_loop (gui.c:108)
+==493731==    by 0x10AF10: main (minirt.c:60)
+==493731==  Address 0x1a483cc8 is 248 bytes inside a block of size 4,704 free'd
+==493731==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==493731==    by 0x498E8C0: XCloseDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==493731==    by 0x112D10: free_gui (gui.c:72)
+==493731==    by 0x112D82: window_ctrl (gui.c:91)
+==493731==    by 0x112DB1: handle_key (gui.c:100)
+==493731==    by 0x117E05: mlx_loop (in /home/iubieta-/IkerUbieta/proyectos/MINIRT/repo/minirt)
+==493731==    by 0x112E27: gui_loop (gui.c:108)
+==493731==    by 0x10AF10: main (minirt.c:60)
+==493731==  Block was alloc'd at
+==493731==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==493731==    by 0x499CB31: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==493731==    by 0x117A07: mlx_init (in /home/iubieta-/IkerUbieta/proyectos/MINIRT/repo/minirt)
+==493731==    by 0x112B72: gui_init (gui.c:37)
+==493731==    by 0x10AEC8: main (minirt.c:57)
+==493731== 
+==493731== Invalid read of size 8
+==493731==    at 0x49AE586: _XSend (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==493731==    by 0x49B2E5F: _XReadEvents (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==493731==    by 0x499BFA7: XNextEvent (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==493731==    by 0x117D52: mlx_loop (in /home/iubieta-/IkerUbieta/proyectos/MINIRT/repo/minirt)
+==493731==    by 0x112E27: gui_loop (gui.c:108)
+==493731==    by 0x10AF10: main (minirt.c:60)
+==493731==  Address 0x1a484600 is 2,608 bytes inside a block of size 4,704 free'd
+==493731==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==493731==    by 0x498E8C0: XCloseDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==493731==    by 0x112D10: free_gui (gui.c:72)
+==493731==    by 0x112D82: window_ctrl (gui.c:91)
+==493731==    by 0x112DB1: handle_key (gui.c:100)
+==493731==    by 0x117E05: mlx_loop (in /home/iubieta-/IkerUbieta/proyectos/MINIRT/repo/minirt)
+==493731==    by 0x112E27: gui_loop (gui.c:108)
+==493731==    by 0x10AF10: main (minirt.c:60)
+==493731==  Block was alloc'd at
+==493731==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==493731==    by 0x499CB31: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==493731==    by 0x117A07: mlx_init (in /home/iubieta-/IkerUbieta/proyectos/MINIRT/repo/minirt)
+==493731==    by 0x112B72: gui_init (gui.c:37)
+==493731==    by 0x10AEC8: main (minirt.c:57)
+==493731== 
+==493731== Invalid read of size 8
+==493731==    at 0x49AE58D: _XSend (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==493731==    by 0x49B2E5F: _XReadEvents (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==493731==    by 0x499BFA7: XNextEvent (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==493731==    by 0x117D52: mlx_loop (in /home/iubieta-/IkerUbieta/proyectos/MINIRT/repo/minirt)
+==493731==    by 0x112E27: gui_loop (gui.c:108)
+==493731==    by 0x10AF10: main (minirt.c:60)
+==493731==  Address 0x1a483cc8 is 248 bytes inside a block of size 4,704 free'd
+==493731==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==493731==    by 0x498E8C0: XCloseDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==493731==    by 0x112D10: free_gui (gui.c:72)
+==493731==    by 0x112D82: window_ctrl (gui.c:91)
+==493731==    by 0x112DB1: handle_key (gui.c:100)
+==493731==    by 0x117E05: mlx_loop (in /home/iubieta-/IkerUbieta/proyectos/MINIRT/repo/minirt)
+==493731==    by 0x112E27: gui_loop (gui.c:108)
+==493731==    by 0x10AF10: main (minirt.c:60)
+==493731==  Block was alloc'd at
+==493731==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==493731==    by 0x499CB31: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==493731==    by 0x117A07: mlx_init (in /home/iubieta-/IkerUbieta/proyectos/MINIRT/repo/minirt)
+==493731==    by 0x112B72: gui_init (gui.c:37)
+==493731==    by 0x10AEC8: main (minirt.c:57)
+==493731== 
+==493731== Invalid read of size 8
+==493731==    at 0x49AE597: _XSend (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==493731==    by 0x49B2E5F: _XReadEvents (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==493731==    by 0x499BFA7: XNextEvent (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==493731==    by 0x117D52: mlx_loop (in /home/iubieta-/IkerUbieta/proyectos/MINIRT/repo/minirt)
+==493731==    by 0x112E27: gui_loop (gui.c:108)
+==493731==    by 0x10AF10: main (minirt.c:60)
+==493731==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==493731== 
+==493731== 
+==493731== Process terminating with default action of signal 11 (SIGSEGV)
+==493731==  Access not within mapped region at address 0x0
+==493731==    at 0x49AE597: _XSend (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==493731==    by 0x49B2E5F: _XReadEvents (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==493731==    by 0x499BFA7: XNextEvent (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==493731==    by 0x117D52: mlx_loop (in /home/iubieta-/IkerUbieta/proyectos/MINIRT/repo/minirt)
+==493731==    by 0x112E27: gui_loop (gui.c:108)
+==493731==    by 0x10AF10: main (minirt.c:60)
+==493731==  If you believe this happened as a result of a stack
+==493731==  overflow in your program's main thread (unlikely but
+==493731==  possible), you can try to increase the size of the
+==493731==  main thread stack using the --main-stacksize= flag.
+==493731==  The main thread stack size used in this run was 8388608.
+==493731== 
+==493731== HEAP SUMMARY:
+==493731==     in use at exit: 67,001,477 bytes in 2,790,829 blocks
+==493731==   total heap usage: 5,618,170 allocs, 2,827,341 frees, 146,989,183 bytes allocated
+==493731== 
+==493731== LEAK SUMMARY:
+==493731==    definitely lost: 24,000,877 bytes in 1,000,057 blocks
+==493731==    indirectly lost: 42,972,416 bytes in 1,790,518 blocks
+==493731==      possibly lost: 96 bytes in 4 blocks
+==493731==    still reachable: 28,088 bytes in 250 blocks
+==493731==         suppressed: 0 bytes in 0 blocks
+==493731== Rerun with --leak-check=full to see details of leaked memory
+==493731== 
+==493731== For lists of detected and suppressed errors, rerun with: -s
+==493731== ERROR SUMMARY: 10 errors from 10 contexts (suppressed: 1 from 1)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gui.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iubieta- <iubieta@student.42.fr>           +#+  +:+       +#+        */
+/*   By: iubieta- <iubieta-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 09:39:02 by iubieta-          #+#    #+#             */
-/*   Updated: 2025/11/23 14:26:36 by iubieta-         ###   ########.fr       */
+/*   Updated: 2025/11/29 19:41:58 by iubieta-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	free_gui(t_gui *gui)
 		free(gui->mlx);
 		gui->mlx = NULL;
 	}
+	exit(0);
 }
 
 int	close_window(void *param)
