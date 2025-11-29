@@ -13,13 +13,13 @@
 #include "minirt.h"
 
 //TODO check amblighting ratio influence
-t_color	ambient_lighting(t_material m, t_light l)
+t_color	ambient_lighting(t_material m, t_amblight ambl)
 {
 	t_color	ambient;
 
-	ambient = color_blend(m.color, l.col);
+	ambient = color_blend(m.color, ambl.col);
 	// ambient = color_scale_up(ambient, DEF_LIGHT_BRIGHTNESS);
-	ambient = color_scale_up(ambient, l.abr);
+	ambient = color_scale_up(ambient, ambl.ratio);
 	ambient = color_scale_up(ambient, m.ambient);
 	return (ambient);
 }
@@ -85,7 +85,7 @@ t_color	lighting(t_comps comps)
 	t_tuple	reflex;
 	float	dot;
 
-	color = ambient_lighting(comps.mat, comps.light);
+	color = ambient_lighting(comps.mat, comps.amblight);
 	lightv = tuple_sub(comps.light.p, comps.point);
 	lightv = tuple_normalize(lightv);
 	dot = tuple_dot(lightv, comps.normv);

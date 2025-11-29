@@ -157,6 +157,7 @@ t_color	color_at(t_world *world, t_ray *ray)
 		return (color_set(0, 0, 0));
 	i = get_hit_intersect(ray, h);
 	c = prep_comps(i, ray);
+	c.amblight = world->ali;
 	return (shade_hit(world, &c));
 }
 

@@ -44,7 +44,7 @@ uint8_t	get_light_data(t_data *data, t_raw_light *node, char ***line)
 		return (0);
 	if (match(data->raw.re_float, line[2][0]) == 0)
 		return (0);
-	node->abr = ft_atof(line[2][0]) / 10;
+	node->abr = ft_atof(line[2][0]);
 	if (node->abr < 0 || node->abr > 1)
 		return (0);
 	if (get_color_data(data, &(node->col), line[3]) == 0)

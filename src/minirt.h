@@ -95,11 +95,11 @@
 # define DEF_RESOLUTION_X 1000
 # define DEF_RESOLUTION_Y 1000
 
-# define DEF_DIFFUSE	0.9
+# define DEF_DIFFUSE	0.1
 # define DEF_SPECULAR	0.9
-# define DEF_SHININESS	200
+# define DEF_SHININESS	100
 
-# define DEF_LIGHT_BRIGHTNESS	0.01
+# define DEF_LIGHT_BRIGHTNESS	0.2
 
 typedef enum e_elid
 {
@@ -345,6 +345,7 @@ typedef struct s_comps
 	struct s_material	mat;	// material
 	struct s_tuple		eyev; // eye vector
 	struct s_tuple		normv; // normal vector
+	struct s_amblight	amblight; // ambient light
 	struct s_light		light; // light
 	float				t;
 	int					is_shadowed; // object shadowe yes=1 no=0
