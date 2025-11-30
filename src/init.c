@@ -20,19 +20,12 @@ static void	init_re_element_types(t_data *data)
 	re_array = data->raw.re_el_types;
 	data->emf = data->emf | EMF_REET;
 	re_array[ELID_A] = re_new(RE_EL_A);
-	printf("flag101: %p\n", re_array[ELID_A]);
 	re_array[ELID_C] = re_new(RE_EL_C);
-	printf("flag102: %p\n", re_array[ELID_C]);
 	re_array[ELID_L] = re_new(RE_EL_L);
-	printf("flag103: %p\n", re_array[ELID_L]);
 	re_array[ELID_SP] = re_new(RE_EL_SP);
-	printf("flag104: %p\n", re_array[ELID_SP]);
 	re_array[ELID_PL] = re_new(RE_EL_PL);
-	printf("flag105: %p\n", re_array[ELID_PL]);
 	re_array[ELID_CY] = re_new(RE_EL_CY);
-	printf("flag106: %p\n", re_array[ELID_CY]);
 	re_array[ELID_BLANK_LINE] = re_new(RE_EL_BLANK);
-	printf("flag107: %p\n", re_array[ELID_BLANK_LINE]);
 	re_array[RE_TYPE_QTY] = NULL;
 	i = 0;
 	while (i < RE_TYPE_QTY)

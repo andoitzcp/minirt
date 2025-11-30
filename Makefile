@@ -8,10 +8,11 @@
 
 NAME=minirt
 CC=gcc
-CFLAGS=-Wall -Werror -Wextra -g -I$(INC_DIR)
-TESTS_LDFLAGS=-lcriterion
+UNUSEDFLAGS = -Wunused -Wunreachable-code
+CFLAGS=-Wall -Werror -Wextra -g -I$(INC_DIR) $(UNUSEDFLAGS)
 
-RELEASE_SRC= src/init.c \
+RELEASE_SRC= src/minirt.c \
+			 src/init.c \
              src/parse.c \
              src/lines.c \
              src/get_data_basic.c \
@@ -20,7 +21,6 @@ RELEASE_SRC= src/init.c \
              src/check_boundaries.c \
              src/input_validation.c \
              src/exit.c \
-             src/ppm.c \
              src/ray.c \
              src/color.c \
              src/canvas.c \
@@ -41,18 +41,13 @@ RELEASE_SRC= src/init.c \
              src/interfase_world_parse.c \
 			 src/draw.c	\
 			 src/gui.c	\
-			 src/destroy.c	\
-             src/debugging.c
+			 src/destroy.c
 
 RELEASE_OBJ=$(subst src/,obj/,$(RELEASE_SRC:.c=.o))
 
-TESTS_SRC=$(shell find test/src/ -type f -name '*.c')
-TESTS_OBJ=$(subst src/,obj/,$(TESTS_SRC:.c=.o))
-TESTS_BIN=$(subst src/,bin/,$(TESTS_SRC:.c=))
-
 INC_DIR = inc/
+OBJ_DIR = obj/
 
-HEADERS = src/minirt.h
 LIBFT	= $(addprefix $(INC_DIR), libft/)
 LIBFT_A	= $(addprefix $(LIBFT), libft.a)
 
@@ -79,8 +74,8 @@ WHITE = \033[0;97m
 
 all: $(NAME)
 
-$(NAME): obj/minirt.o $(RELEASE_OBJ) $(LIBFT_A) $(LINMATH_A) $(LIBRE_A) $(MLX_A) $(HEADERS)
-	@$(CC) $(CFLAGS) obj/$(NAME).o $(RELEASE_OBJ) -L$(LIBFT) -lft -L$(LINMATH) -llinmath -L$(LIBRE) -lregex -L$(MLX) -lmlx -lm -lXext -lX11 -o $(NAME)
+$(NAME): $(RELEASE_OBJ) $(LIBFT_A) $(LINMATH_A) $(LIBRE_A) $(MLX_A)
+	@$(CC) $(CFLAGS) $(RELEASE_OBJ) -L$(LIBFT) -lft -L$(LINMATH) -llinmath -L$(LIBRE) -lregex -L$(MLX) -lmlx -lm -lXext -lX11 -o $(NAME)
 	@echo "$(GREEN)$(NAME) compiled!$(DEF_COLOR)"
 
 $(LIBFT_A):
@@ -100,66 +95,32 @@ $(MLX_A):
 	@make CC=clang -s -C $(MLX) 2>/dev/null;
 	@echo "Compiled $(MLX_A)"
 
-obj/minirt.o: src/minirt.c
-	@$(CC) $(CFLAGS) -c $^ -o $@
-
-obj/%.o: src/%.c | obj
+$(OBJ_DIR)%.o: src/%.c | $(OBJ_DIR)
 	@$(CC) $(CFLAGS) -c $^ -o $@
 	@echo "release objects created"
 
-test/obj/%.o: test/src/%.c | test/obj
-	@$(CC) $(CFLAGS) -c $^ -o $@
-	@echo "test objects created"
-
-test/bin/%: $(TESTS_OBJ) $(RELEASE_OBJ) $(LIBFT_A) $(LINMATH_A) $(LIBRE_A) $(HEADERS)| test/bin
-	@$(CC) $(TESTS_LDFLAGS) $^ -L$(MLX) -lmlx -lm -lXext -lX11 -o $@
-	#@$(CC) $(TESTS_LDFLAGS) $^ -lm -o $@
-
-# prevent deleting object in rules chain
-$(TESTS_BIN): $(RELEASE_OBJ) $(TESTS_OBJ)
-
-run-tests: $(TESTS_BIN)
-	@./$^ || true
-
-test-linmath: $(LINMATH_A)
-	@$(MAKE) run-tests -s -C $(LINMATH)
-
-test-libregex: $(LIBRE_A)
-	@$(MAKE) run-tests -s -C $(LIBRE)
-
-
-test/bin:
-	@mkdir $@
-
-test/obj:
-	@mkdir $@
-
-obj:
-	@mkdir $@
+$(OBJ_DIR):
+	mkdir -p $@
 
 clean:
 	@$(MAKE) -s -C $(LIBFT) clean
 	@$(MAKE) -s -C $(LIBRE) clean
 	@$(MAKE) -s -C $(LINMATH) clean
-	@rm -f $(RELEASE_OBJ) $(TESTS_OBJ) obj/minirt.o
-	@rm -rf $(RELEASE_OBJ)
+	@rm -rf $(OBJ_DIR)
 	@echo "$(BLUE)$(NAME) release object files succesfully cleaned!$(DEF_COLOR)"
-	@rm -rf $(TESTS_OBJ)
-	@echo "$(BLUE)$(NAME) test object files succesfully cleaned!$(DEF_COLOR)"
 	@rm -f src/minirt.h.gch
 
 fclean: clean
 	@$(MAKE) -s -C $(LIBFT) fclean
 	@$(MAKE) -s -C $(LIBRE) fclean
 	@$(MAKE) -s -C $(LINMATH) fclean
+	@rm -rf $()
 	@rm -f $(LIBFT)/$(LIBFT_A)
 	@echo "$(CYAN)$(LIBFT) executable files succesfully cleaned!$(DEF_COLOR)"
 	@rm -f $(LIBRE)/$(LIBRE_A)
 	@echo "$(CYAN)$(LIBRE) executable files succesfully cleaned!$(DEF_COLOR)"
 	@rm -f $(NAME)
 	@echo "$(CYAN)$(NAME) main executable file succesfully cleaned!$(DEF_COLOR)"
-	@rm -f $(TESTS_BIN)
-	@echo "$(CYAN)$(NAME) test executable files succesfully cleaned!$(DEF_COLOR)"
 
 re: fclean all
 	@echo "$(GREEN)Everything was cleaned and the rebuilt for $(NAME)!$(DEF_COLOR)"

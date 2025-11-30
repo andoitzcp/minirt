@@ -127,14 +127,6 @@ typedef struct s_intarray
 	size_t	len;
 }	t_intarray;
 
-//typedef struct s_rawlines
-//{
-//	enum e_elid			elid;
-//	char				***line;
-//	int					element_qty;
-//	struct s_rawlines	*next;
-//}	t_rawlines;
-
 /*
 ** The idea of this enums is to set flags in the data structure when some
 ** structure is allocated to the pass to the ft_exit function which will lookup
@@ -303,7 +295,6 @@ typedef union u_eldata
 typedef struct s_elements
 {
 	enum e_elid		type; // element data type (sp, pl, cy)
-	//union u_eldata elda; // data
 	union u_eldata	relda; // raw elements data
 }	t_elements;
 
@@ -436,15 +427,6 @@ int				ft_exit(t_data *data, char *s);
 void			free_lines(t_line **head);
 void			free_els(t_elements **array);
 
-/* debugging */
-//void			print_ds_rawl(t_rawlines **head);
-void			print_line_els(char ***line);
-void			print_raw_element_list(t_elements **el);
-void			print_intersections(t_intersects **head);
-void			print_parsed_content(t_data *data);
-void			print_matrix(t_matrix *m);
-void			print_color(t_color *c);
-
 /* draw */
 void			draw_point(t_gui *gui, int x, int y, int color);
 void			draw_canvas(t_gui *gui, t_canvas canv);
@@ -471,14 +453,12 @@ t_canvas		*canvas_init(int width, int height);
 void			canvas_set_color(t_canvas *can, t_color c);
 int				canvas_set_pixel(t_canvas *can, int x, int y, t_color c);
 t_color			canvas_get_pixel(t_canvas can, int x, int y);
-int				canvas_to_ppm(t_canvas can, char *name);
 
 /* ray */
 t_ray			new_ray(t_tuple origin, t_tuple direction);
 t_tuple			position(t_ray ray, float t);
 t_tuple			reflect(t_tuple in, t_tuple normal);
 
-// TODO eliminar funciones transform ??
 /* transform */
 t_ray			transform(t_ray r, t_matrix m);
 void			set_transform(t_object *object, t_matrix m);
