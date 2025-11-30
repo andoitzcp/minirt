@@ -18,7 +18,6 @@ t_color	ambient_lighting(t_material m, t_amblight ambl)
 	t_color	ambient;
 
 	ambient = color_blend(m.color, ambl.col);
-	// ambient = color_scale_up(ambient, DEF_LIGHT_BRIGHTNESS);
 	ambient = color_scale_up(ambient, ambl.ratio);
 	ambient = color_scale_up(ambient, m.ambient);
 	return (ambient);
@@ -29,7 +28,6 @@ t_color	diffuse_lighting(t_material m, t_light l, float ln_dot)
 	t_color	diffuse;
 
 	diffuse = color_blend(m.color, l.col);
-	// diffuse = color_scale_up(diffuse, DEF_LIGHT_BRIGHTNESS);
 	diffuse = color_scale_up(diffuse, l.abr);
 	diffuse = color_scale_up(diffuse, m.diffuse);
 	diffuse = color_scale_up(diffuse, ln_dot);

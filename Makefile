@@ -27,13 +27,17 @@ RELEASE_SRC= src/minirt.c \
              src/color_ops.c \
 			 src/intersect.c \
              src/intersect_sp.c \
+             src/intersect_sp_2.c \
              src/transform.c \
+             src/transform_2.c \
              src/sphere.c \
              src/plane.c \
              src/cylinder.c \
              src/camera.c \
              src/ambient_light.c \
              src/world.c \
+			 src/comps.c	\
+			 src/render.c	\
              src/material.c \
 			 src/lighting.c \
 			 src/light.c	\
@@ -41,7 +45,9 @@ RELEASE_SRC= src/minirt.c \
              src/interfase_world_parse.c \
 			 src/draw.c	\
 			 src/gui.c	\
-			 src/destroy.c
+			 src/gui_2.c	\
+			 src/destroy.c	\
+			 src/destroy_2.c
 
 RELEASE_OBJ=$(subst src/,obj/,$(RELEASE_SRC:.c=.o))
 

@@ -12,45 +12,6 @@
 
 #include "minirt.h"
 
-static void	swap(float *a, float *b)
-{
-	float	c;
-
-	c = *a;
-	*a = *b;
-	*b = c;
-	return ;
-}
-
-static void	bzero_array(float *array, size_t sz)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < sz)
-		array[i++] = 0;
-	return ;
-}
-
-static void	add_intersect(float *array, float t)
-{
-	if (array[0] > 1)
-		return ;
-	array[0] += 1;
-	array[(int)array[0]] = t;
-	return ;
-}
-
-static float	check_cap(t_ray *ray, float t)
-{
-	float	x;
-	float	z;
-
-	x = ray->o.x + t * ray->d.x;
-	z = ray->o.z + t * ray->d.z;
-	return ((powf(x, 2) + powf(z, 2) <= 1));
-}
-
 void	calc_ray_sp_intersects(float *array, t_ray *ray)
 {
 	t_tuple	sp_to_ray;
@@ -109,12 +70,7 @@ void	calc_ray_cy_intersects(float *array, t_ray *ray)
 		add_intersect(array, t[0]);
 	if (-1 < y[1] && y[1] < 1)
 		add_intersect(array, t[1]);
-	t[0] = (-1 - ray->o.y) / ray->d.y;
-	t[1] = (+1 - ray->o.y) / ray->d.y;
-	if (check_cap(ray, t[0]))
-		add_intersect(array, t[0]);
-	if (check_cap(ray, t[1]))
-		add_intersect(array, t[1]);
+	check_cap_2(ray, t, array);
 }
 
 void	calc_ray_caps_intersects(float *array, t_ray *ray)

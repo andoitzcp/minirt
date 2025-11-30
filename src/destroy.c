@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.c                                          :+:      :+:    :+:   */
+/*   destroy.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iubieta- <iubieta@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 12:15:06 by iubieta-          #+#    #+#             */
-/*   Updated: 2025/11/23 13:06:38 by iubieta-         ###   ########.fr       */
+/*   Updated: 2025/11/30 22:19:26 by iubieta-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	destroy_objs(t_object *objs)
 {
 	t_object	*cur;
 	t_object	*next;
-	
+
 	cur = objs;
 	while (cur)
 	{
@@ -54,10 +54,10 @@ void	destroy_intersects(t_intersects *intersects)
 	intersects = NULL;
 }
 
-void destroy_rawlines(t_line *rls)
+void	destroy_rawlines(t_line *rls)
 {
-	t_line *node;
-	t_line *p;
+	t_line	*node;
+	t_line	*p;
 
 	node = rls;
 	while (node != NULL)
@@ -68,11 +68,10 @@ void destroy_rawlines(t_line *rls)
 		free(p);
 		p = NULL;
 	}
-
 	return ;
 }
 
-void destroy_regex(t_data *data)
+void	destroy_regex(t_data *data)
 {
 	t_re	***re_array;
 
@@ -95,35 +94,5 @@ void destroy_regex(t_data *data)
 	data->raw.re_el_types[ELID_BLANK_LINE] = NULL;
 	data->raw.re_float = NULL;
 	data->raw.re_int = NULL;
-	return ;
-}
-
-void free_3parray(char ***array)
-{
-	size_t i;
-
-	i = 0;
-	while (array[i] != NULL)
-		ft_free2parray(array[i++]);
-	free(array);
-	array = NULL;
-	return ;
-}
-
-void destroy_elements(t_raw_data *rd)
-{
-	size_t i;
-	t_elements **array;
-
-	array = rd->els;
-	i = 0;
-	while (i < rd->nels)
-	{
-		free(array[i]);
-		array[i] = NULL;
-		i++;
-	}
-	free(array);
-	array = NULL;
 	return ;
 }

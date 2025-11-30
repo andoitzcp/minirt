@@ -6,7 +6,7 @@
 /*   By: iubieta- <iubieta-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 09:39:02 by iubieta-          #+#    #+#             */
-/*   Updated: 2025/11/29 19:41:58 by iubieta-         ###   ########.fr       */
+/*   Updated: 2025/11/30 21:45:04 by iubieta-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,37 +75,4 @@ void	free_gui(t_gui *gui)
 	}
 	ft_exit(gui->data, "EXITED SUCCESSFULLY", 0);
 	exit(0);
-}
-
-int	close_window(void *param)
-{
-	t_gui	*gui;
-
-	gui = (t_gui *)param;
-	free_gui(gui);
-	return (0);
-}
-
-void	window_ctrl(int keycode, t_gui *gui)
-{
-	if (keycode == 65307)
-	{
-		free_gui(gui);
-	}
-}
-
-int	handle_key(int keycode, void *param)
-{
-	t_gui	*gui;
-
-	gui = (t_gui *)param;
-	window_ctrl(keycode, gui);
-	return (0);
-}
-
-void	gui_loop(t_gui *gui)
-{
-	mlx_hook(gui->window, 17, 0, close_window, gui);
-	mlx_hook(gui->window, 2, 1L << 0, handle_key, gui);
-	mlx_loop(gui->mlx);
 }

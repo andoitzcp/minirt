@@ -25,10 +25,26 @@ t_intersects	*new_intersect(t_object *obj, float i)
 	return (node);
 }
 
+void	intersect_insertion_loop(t_intersects *current, t_intersects *node)
+{
+	t_intersects	*prev;
+
+	while (current != NULL)
+	{
+		if (current->i > node->i)
+			break ;
+		prev = current;
+		current = current->next;
+	}
+	if (current != NULL)
+		node->next = current;
+	prev->next = node;
+	return ;
+}
+
 void	insert_ray_intersect(t_intersects **head, t_intersects *node)
 {
 	t_intersects	*current;
-	t_intersects	*prev;
 
 	current = *head;
 	if (current == NULL)
@@ -42,16 +58,7 @@ void	insert_ray_intersect(t_intersects **head, t_intersects *node)
 		*head = node;
 		return ;
 	}
-	while (current != NULL)
-	{
-		if (current->i > node->i)
-			break ;
-		prev = current;
-		current = current->next;
-	}
-	if (current != NULL)
-		node->next = current;
-	prev->next = node;
+	intersect_insertion_loop(current, node);
 	return ;
 }
 

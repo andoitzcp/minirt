@@ -95,8 +95,8 @@
 # define RE_EL_CY "^ *cy {1}[^, ]{1},[^, ]{1},[^, ]{1} {1}[^, ]{1},[^, ]{1},[^, ]{1} {1}[^, ]{1} {1}[^, ]{1} {1}[^, ]{1},[^, ]{1},[^, ]{1} *$"
 # define RE_EL_BLANK "^\n$"
 
-# define DEF_RESOLUTION_X 10
-# define DEF_RESOLUTION_Y 10
+# define DEF_RESOLUTION_X 100
+# define DEF_RESOLUTION_Y 100
 
 # define DEF_DIFFUSE	0.1
 # define DEF_SPECULAR	0.9
@@ -208,8 +208,8 @@ typedef struct s_canvas
 {
 	int		width;
 	int		height;
-	t_color *pixel_block;
-	t_color **image;
+	t_color	*pixel_block;
+	t_color	**image;
 	//t_color	image[DEF_RESOLUTION_Y][DEF_RESOLUTION_X];
 }	t_canvas;
 
@@ -315,7 +315,7 @@ typedef struct s_raw_data
 	struct s_re				**re_el_types[RE_TYPE_QTY + 1];
 	struct s_re				**re_float;
 	struct s_re				**re_int;
-	size_t nels;
+	size_t					nels;
 }	t_raw_data;
 
 typedef union u_objdata
@@ -362,7 +362,7 @@ typedef struct s_data
 {
 	struct s_raw_data	raw;
 	struct s_world		world;
-	struct s_canvas     *canvas;
+	struct s_canvas		*canvas;
 	uint				emf;
 }	t_data;
 
@@ -377,13 +377,13 @@ typedef struct s_img
 
 typedef struct s_gui
 {
-	void	*mlx;
-	int		width;
-	int		height;
-	void	*window;
-	t_img	img;
-	struct s_data *data;
-}			t_gui;
+	void			*mlx;
+	int				width;
+	int				height;
+	void			*window;
+	t_img			img;
+	struct s_data	*data;
+}					t_gui;
 
 /***************************************************************************/
 /* Function definitions													   */
@@ -431,7 +431,7 @@ int8_t			is_valid_data(t_data *data);
 void			init(t_data *data);
 
 /* exit */
-int	ft_exit(t_data *data, char *s, int type);
+int				ft_exit(t_data *data, char *s, int type);
 void			free_lines(t_line **head);
 void			free_els(t_elements **array);
 
@@ -457,7 +457,7 @@ t_color			color_convert_from_raw(t_color color);
 int				color_to_int(t_color rgb);
 
 /* canvas */
-t_canvas	*canvas_init(int width, int height);
+t_canvas		*canvas_init(int width, int height);
 void			canvas_set_color(t_canvas *can, t_color c);
 int				canvas_set_pixel(t_canvas *can, int x, int y, t_color c);
 t_color			canvas_get_pixel(t_canvas can, int x, int y);
@@ -514,7 +514,7 @@ t_camera		new_camera(int hsize, int vsize, float fov);
 t_camera		def_camera(void);
 void			camera_comps(t_camera *camera);
 t_ray			ray_for_pixel(t_camera c, int px, int py);
-t_canvas	*render(t_camera c, t_world w);
+t_canvas		*render(t_camera c, t_world w);
 t_camera		get_camera_from_raw_data(t_raw_data *rd);
 
 /* material */
@@ -545,6 +545,13 @@ void			calc_ray_sp_intersects(float *array, t_ray *ray);
 void			calc_ray_pl_intersects(float *array, t_ray *ray);
 void			calc_ray_cy_intersects(float *array, t_ray *ray);
 
+/* intersect_sp_2 */
+void			swap(float *a, float *b);
+void			bzero_array(float *array, size_t sz);
+void			add_intersect(float *array, float t);
+float			check_cap(t_ray *ray, float t);
+void			check_cap_2(t_ray *ray, float *t, float *array);
+
 /* lighting */
 int				is_shadowed(t_world *w, t_tuple p);
 t_color			lighting(t_comps comps);
@@ -555,10 +562,10 @@ t_world			sig_mundus_creatus_est(t_raw_data *rd);
 /* destroy */
 void			destroy_intersects(t_intersects *i);
 void			destroy_canvas(t_canvas *can);
-void	destroy_objs(t_object *objs);
-void destroy_regex(t_data *data);
-void destroy_rawlines(t_line *rls);
-void destroy_elements(t_raw_data *rd);
-void free_3parray(char ***array);
+void			destroy_objs(t_object *objs);
+void			destroy_regex(t_data *data);
+void			destroy_rawlines(t_line *rls);
+void			destroy_elements(t_raw_data *rd);
+void			free_3parray(char ***array);
 
 #endif // MINIRT_H_

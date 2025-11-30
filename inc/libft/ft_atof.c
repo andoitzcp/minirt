@@ -1,21 +1,21 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_atof.c                                       :+:    :+: :+:    :+:    */
-/*                                                    +:+ +:+         +:+     */
-/*   By: acampo-p <acampo-p@student.42urduliz.com>  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/01 09:44:25 by acampo-p          #+#    #+#             */
-/*   Updated: 2025/10/04 04:24:20 by andoitzcp   ########  ###                */
-/*                                                                            */
+/*																			  */
+/*														  :::	   ::::::::   */
+/*	 ft_atof.c										 :+:	:+: :+:    :+:	  */
+/*													  +:+ +:+		  +:+	  */
+/*	 By: acampo-p <acampo-p@student.42urduliz.com>	+#+  +:+	   +#+		  */
+/*												  +#+#+#+#+#+	+#+			  */
+/*	 Created: 2022/12/01 09:44:25 by acampo-p		   #+#	  #+#			  */
+/*	 Updated: 2025/10/04 04:24:20 by andoitzcp	 ########  ###				  */
+/*																			  */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static float helper(char *s)
+static float	helper(char *s)
 {
-	size_t len;
-	float f;
+	size_t	len;
+	float	f;
 
 	len = ft_strlen(s);
 	f = 0;
@@ -26,15 +26,13 @@ static float helper(char *s)
 		len--;
 	}
 	return (f);
-
-
 }
 
-float ft_atof(const char *nptr)
+float	ft_atof(const char *nptr)
 {
-	char *aux;
-	char **s;
-	float ret;
+	char	*aux;
+	char	**s;
+	float	ret;
 
 	aux = (char *)nptr;
 	if (*nptr == '.')

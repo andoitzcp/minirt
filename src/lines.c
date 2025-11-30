@@ -17,7 +17,7 @@ char	***split_line(char *s)
 	size_t	len;
 	size_t	i;
 	void	***line;
-	char *aux;
+	char	*aux;
 
 	len = ft_strlen(s);
 	if (s[len - 1] == '\n')

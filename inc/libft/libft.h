@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                         :+:    :+: :+:    :+:    */
+/*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acampo-p <acampo-p@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 13:33:35 by acampo-p          #+#    #+#             */
-/*   Updated: 2025/10/04 04:22:25 by andoitzcp   ########  ###                */
+/*   Updated: 2025/11/30 22:52:04 by iubieta-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*ft_gnl(int fd);
 
 // Conversions
 int		ft_atoi(const char *str);
-float ft_atof(const char *nptr);
+float	ft_atof(const char *nptr);
 int		ft_xtoi(char *str);
 char	*ft_itoa(int n);
 char	*ft_itoh(unsigned long n);

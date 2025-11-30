@@ -38,9 +38,6 @@ int	populate_world(t_world *w, t_raw_data *rd)
 
 int	main(int argc, char **argv)
 {
-	//(void)argc;
-	//(void)argc;
-	//printf("Hola\n");
 	t_data		data;
 	t_gui		gui;
 
@@ -53,15 +50,12 @@ int	main(int argc, char **argv)
 	init(&data);
 	parse(&data, argv[1]);
 	destroy_regex(&data);
-	//destroy_rawlines(data.raw.lines);
 	data.world = sig_mundus_creatus_est(&data.raw);
 	data.emf = data.emf | EMF_OBJECTS;
 	if (populate_world(&data.world, &data.raw) != 0)
 		ft_exit(&data, "TMP", 0);
-	//destroy_elements(&data.raw);
 	data.emf = data.emf | EMF_CANVAS;
 	data.canvas = render(data.world.c, data.world);
-	//destroy_objs(data.world.objs);
 	gui.data = &data;
 	gui_init(&gui, *data.canvas);
 	draw_canvas(&gui, *data.canvas);
