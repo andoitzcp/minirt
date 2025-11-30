@@ -21,7 +21,7 @@
 
 // Macro for ft_gnl
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 1
 # endif
 
 // Assertion functions (ft_issomething())

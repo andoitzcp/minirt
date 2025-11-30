@@ -87,6 +87,9 @@ void	process_line(t_data *data, char *s)
 		}
 		return ;
 	}
-	ft_exit(data, ERRORS007, 0);
+	free(s);
+	s = NULL;
+	destroy_regex(data);
+	ft_exit(data, ERRORS007, 1);
 	return ;
 }
