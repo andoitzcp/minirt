@@ -13,5 +13,7 @@ void re_destroy(t_re **re)
         free(p);
         p = NULL;
     }
+    free(re);
+    re = NULL;
     return ;
 }

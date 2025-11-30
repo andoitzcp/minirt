@@ -17,6 +17,7 @@ char	***split_line(char *s)
 	size_t	len;
 	size_t	i;
 	void	***line;
+	char *aux;
 
 	len = ft_strlen(s);
 	if (s[len - 1] == '\n')
@@ -25,7 +26,10 @@ char	***split_line(char *s)
 	i = 0;
 	while ((char *)line[i] != NULL)
 	{
+		aux = (char *)line[i];
 		line[i] = (void **)ft_split((char *)line[i], ',');
+		free(aux);
+		aux = NULL;
 		i++;
 	}
 	return ((char ***)line);
@@ -71,10 +75,12 @@ void	process_line(t_data *data, char *s)
 	{
 		if (match(data->raw.re_el_types[i++], s) == 0)
 			continue ;
-		line = split_line(s);
-		node = build_line_node(data, line, i - 1);
 		if (i - 1 != ELID_BLANK_LINE)
+		{
+			line = split_line(s);
+			node = build_line_node(data, line, i - 1);
 			append_line_node(&(data->raw.lines), node);
+		}
 		return ;
 	}
 	ft_exit(data, ERRORS007);

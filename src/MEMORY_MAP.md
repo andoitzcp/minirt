@@ -8,11 +8,12 @@
 | new_intersect()   | t_intersects  | ray           | ray->i                | destroy_intersects()  |
 
 
-[new_intersect](src/intersect.c) line 19
-[build_element_node](src/parse.c) line 33
-[alloc_els](src/lines.c) line 15
+[new_intersect](src/intersect.c) line 19 ?
+[build_element_node](src/parse.c) line 33 OK
+[alloc_els](src/lines.c) line 15 OK
 [canvas_init](src/canvas.c) line 15
 [new_object](src/object.c) line 15
+[regex ](???) OK
 
 inc/libregex/test/src/parse.c:7
 inc/libregex/src/re_node_utils.c:1

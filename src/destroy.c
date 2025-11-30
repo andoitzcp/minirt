@@ -38,12 +38,12 @@ void	destroy_objs(t_object *objs)
 	objs = NULL;
 }
 
-void	destroy_intersects(t_intersects *i)
+void	destroy_intersects(t_intersects *intersects)
 {
 	t_intersects	*cur;
 	t_intersects	*next;
 
-	cur = i;
+	cur = intersects;
 	while (cur)
 	{
 		next = cur->next;
@@ -51,7 +51,25 @@ void	destroy_intersects(t_intersects *i)
 		cur = NULL;
 		cur = next;
 	}
-	i = NULL;
+	intersects = NULL;
+}
+
+void destroy_rawlines(t_line *rls)
+{
+	t_line *node;
+	t_line *p;
+
+	node = rls;
+	while (node != NULL)
+	{
+		p = node;
+		node = node->next;
+		free_3parray(p->content);
+		free(p);
+		p = NULL;
+	}
+
+	return ;
 }
 
 void destroy_regex(t_data *data)
@@ -80,35 +98,32 @@ void destroy_regex(t_data *data)
 	return ;
 }
 
-static void free_3parray(char ***array)
+void free_3parray(char ***array)
 {
 	size_t i;
-	size_t j;
 
 	i = 0;
 	while (array[i] != NULL)
-	{
-		j = 0;
-		while (array[i][j] != NULL)
-			free(array[i][j++]);
-		i++;
-	}
+		ft_free2parray(array[i++]);
+	free(array);
+	array = NULL;
 	return ;
 }
 
-void destroy_rawlines(t_line *rls)
+void destroy_elements(t_raw_data *rd)
 {
-	t_line *node;
-	t_line *p;
+	size_t i;
+	t_elements **array;
 
-	node = rls;
-	while (node != NULL)
+	array = rd->els;
+	i = 0;
+	while (i < rd->nels)
 	{
-		p = node;
-		node = node->next;
-		free_3parray(p->content);
-		free(p);
+		free(array[i]);
+		array[i] = NULL;
+		i++;
 	}
-
+	free(array);
+	array = NULL;
 	return ;
 }

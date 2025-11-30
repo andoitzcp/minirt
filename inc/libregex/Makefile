@@ -4,7 +4,7 @@
 # @file
 # @version 0.1
 
-NAME = libregex.a
+NAME = libregex
 CC = gcc
 CFLAGS	= -Wall -Werror -Wextra -g
 TESTS_LDFLAGS=-lcriterion
@@ -40,7 +40,7 @@ all: $(NAME)
 	@echo "libregex compiled"
 
 $(NAME): $(RELEASE_OBJ)
-	@ar rcs $(NAME) $(RELEASE_OBJ)
+	@ar rcs $(NAME).a $(RELEASE_OBJ)
 
 obj/%.o: src/%.c | $(RELEASE_OBJ_DIR)
 	@$(CC) $(CFLAGS) -c $^ -o $@
@@ -50,7 +50,7 @@ test/obj/%.o: test/src/%.c | $(TEST_OBJ_DIR)
 	@$(CC) $(CFLAGS) -c $^ -o $@
 	@echo "test objects created"
 
-test/bin/%: test/obj/%.o $(NAME) $(HEADERS) | $(TEST_BIN_DIR)
+test/bin/%: test/obj/%.o $(NAME).a $(HEADERS) | $(TEST_BIN_DIR)
 	@$(CC) $(TESTS_LDFLAGS) -L. -lregex $^ -o $@
 
 $(RELEASE_OBJ_DIR):
@@ -70,14 +70,16 @@ run-tests: $(TESTS_BIN)
 
 clean:
 	@$(RM) -rf $(RELEASE_OBJ)
+	@echo "$(BLUE)$(NAME) library object files succesfully cleaned!$(DEF_COLOR)"
 	@$(RM) -rf $(TESTS_OBJ)
 	@$(RM) -f src/$(NAME).h.gch
 	@echo "$(BLUE)$(NAME) test object files succesfully cleaned!$(DEF_COLOR)"
 
 fclean: clean
-	@$(RM) $(NAME_BIN)
 	@$(RM) $(TESTS_BIN)
 	@echo "$(CYAN)$(NAME) test executable files succesfully cleaned!$(DEF_COLOR)"
+	@$(RM) $(NAME).a
+	@echo "$(CYAN)$(NAME) library file succesfully cleaned!$(DEF_COLOR)"
 
 re: fclean all
 

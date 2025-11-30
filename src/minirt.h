@@ -127,13 +127,13 @@ typedef struct s_intarray
 	size_t	len;
 }	t_intarray;
 
-typedef struct s_rawlines
-{
-	enum e_elid			elid;
-	char				***line;
-	int					element_qty;
-	struct s_rawlines	*next;
-}	t_rawlines;
+//typedef struct s_rawlines
+//{
+//	enum e_elid			elid;
+//	char				***line;
+//	int					element_qty;
+//	struct s_rawlines	*next;
+//}	t_rawlines;
 
 /*
 ** The idea of this enums is to set flags in the data structure when some
@@ -318,7 +318,7 @@ typedef struct s_raw_data
 	struct s_re				**re_el_types[RE_TYPE_QTY + 1];
 	struct s_re				**re_float;
 	struct s_re				**re_int;
-	uint					nels;
+	size_t nels;
 }	t_raw_data;
 
 typedef union u_objdata
@@ -437,7 +437,7 @@ void			free_lines(t_line **head);
 void			free_els(t_elements **array);
 
 /* debugging */
-void			print_ds_rawl(t_rawlines **head);
+//void			print_ds_rawl(t_rawlines **head);
 void			print_line_els(char ***line);
 void			print_raw_element_list(t_elements **el);
 void			print_intersections(t_intersects **head);
@@ -567,7 +567,10 @@ t_world			sig_mundus_creatus_est(t_raw_data *rd);
 /* destroy */
 void			destroy_intersects(t_intersects *i);
 void			destroy_canvas(t_canvas *can);
+void	destroy_objs(t_object *objs);
 void destroy_regex(t_data *data);
 void destroy_rawlines(t_line *rls);
+void destroy_elements(t_raw_data *rd);
+void free_3parray(char ***array);
 
 #endif // MINIRT_H_

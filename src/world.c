@@ -201,6 +201,7 @@ t_canvas	*render(t_camera c, t_world w)
 		{
 			r = ray_for_pixel(c, j, i);
 			col = color_at(&w, &r);
+			destroy_intersects(r.i);
 			canvas_set_pixel(image, j, i, col);
 			j++;
 		}

@@ -71,6 +71,7 @@ static void	store_file_data(t_data *data)
 		}
 		node = node->next;
 	}
+	data->raw.nels = i;
 	return ;
 }
 
@@ -116,6 +117,8 @@ void	parse(t_data *data, char *filepath)
 		if (s == NULL)
 			break ;
 		process_line(data, s);
+		free(s);
+		s = NULL;
 	}
 	check_unique_elements(data, &(data->raw.lines));
 	alloc_els(data);

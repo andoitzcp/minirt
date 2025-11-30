@@ -35,7 +35,6 @@ float ft_atof(const char *nptr)
 	char *aux;
 	char **s;
 	float ret;
-	size_t i;
 
 	aux = (char *)nptr;
 	if (*nptr == '.')
@@ -46,9 +45,7 @@ float ft_atof(const char *nptr)
 		ret -= helper(s[1]);
 	else
 		ret += helper(s[1]);
-	i = 0;
-	while (s[i])
-		free(s[i++]);
+	ft_free2parray(s);
 	if (*nptr == '.')
 		free(aux);
 	return (ret);
