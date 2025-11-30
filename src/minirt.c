@@ -36,42 +36,34 @@ int	populate_world(t_world *w, t_raw_data *rd)
 	return (0);
 }
 
-//int main(void)
-//{
-//	t_data		data;
-//	char *s= "cy  -12,0,0           1,0,0   1.0  6  255,140,0";
-//	char ***line;
-//	t_line *node;
-//
-//	line = split_line(s);
-//	node = build_line_node(&data, line, 1);
-//	destroy_rawlines(node);
-//}
-
 int	main(int argc, char **argv)
 {
+	//(void)argc;
+	//(void)argc;
+	//printf("Hola\n");
 	t_data		data;
-	t_canvas	*canvas;
 	t_gui		gui;
 
-	data.raw.res.x_sz = DEF_RESOLUTION_X;
-	data.raw.res.y_sz = DEF_RESOLUTION_Y;
 	if (argc != 2)
 		exit(1);
 	if (is_valid_input_file(argv[1]) == 0)
 		exit(1);
+	data.raw.res.x_sz = DEF_RESOLUTION_X;
+	data.raw.res.y_sz = DEF_RESOLUTION_Y;
 	init(&data);
 	parse(&data, argv[1]);
 	destroy_regex(&data);
-	destroy_rawlines(data.raw.lines);
+	//destroy_rawlines(data.raw.lines);
 	data.world = sig_mundus_creatus_est(&data.raw);
+	data.emf = data.emf | EMF_OBJECTS;
 	if (populate_world(&data.world, &data.raw) != 0)
-		ft_exit(&data, "TMP");
-	destroy_elements(&data.raw);
-	canvas = render(data.world.c, data.world);
-	destroy_objs(data.world.objs);
-	gui_init(&gui, *canvas);
-	draw_canvas(&gui, *canvas);
-	destroy_canvas(canvas);
+		ft_exit(&data, "TMP", 0);
+	//destroy_elements(&data.raw);
+	data.emf = data.emf | EMF_CANVAS;
+	data.canvas = render(data.world.c, data.world);
+	//destroy_objs(data.world.objs);
+	gui.data = &data;
+	gui_init(&gui, *data.canvas);
+	draw_canvas(&gui, *data.canvas);
 	gui_loop(&gui);
 }

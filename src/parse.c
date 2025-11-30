@@ -17,6 +17,7 @@ static void	alloc_els(t_data *data)
 	t_line	*node;
 	size_t	i;
 
+	data->emf = data->emf | EMF_ELEMENTS;
 	node = data->raw.lines;
 	i = 0;
 	while (node != NULL)
@@ -36,7 +37,7 @@ static t_elements	*build_element_node(t_data *data, char ***line, int type)
 
 	node = ft_calloc(1, sizeof(t_elements));
 	if (node == NULL)
-		ft_exit(data, ERRORS011);
+		ft_exit(data, MALLOC_ERROR, 1);
 	if (type == ELID_SP)
 		get_sphere_data(data, (t_raw_sphere *)&(node->relda.sp), line);
 	if (type == ELID_PL)
@@ -97,7 +98,7 @@ static void	check_unique_elements(t_data *data, t_line **head)
 		current = current->next;
 	}
 	if (count_ali != 1 || count_c != 1 || count_l != 1)
-		ft_exit(data, ERRORS010);
+		ft_exit(data, ERRORS010, 0);
 }
 
 void	parse(t_data *data, char *filepath)
@@ -107,10 +108,7 @@ void	parse(t_data *data, char *filepath)
 
 	fd = open(filepath, O_RDONLY);
 	if (fd == -1)
-	{
-		data->emf = data->emf | EMF_PERROR;
-		ft_exit(data, ERRORS006);
-	}
+		ft_exit(data, ERRORS006, 0);
 	while (1)
 	{
 		s = ft_gnl(fd);
@@ -123,8 +121,6 @@ void	parse(t_data *data, char *filepath)
 	check_unique_elements(data, &(data->raw.lines));
 	alloc_els(data);
 	store_file_data(data);
-	//print_parsed_content(data);
-	//print_raw_element_list(data->raw.els);
 	close(fd);
 	return ;
 }

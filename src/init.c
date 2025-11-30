@@ -18,7 +18,7 @@ static void	init_re_element_types(t_data *data)
 	t_re	***re_array;
 
 	re_array = data->raw.re_el_types;
-	data->emf = data->emf | EMF_REET;
+	//data->emf = data->emf | EMF_REGEX;
 	re_array[ELID_A] = re_new(RE_EL_A);
 	re_array[ELID_C] = re_new(RE_EL_C);
 	re_array[ELID_L] = re_new(RE_EL_L);
@@ -31,13 +31,14 @@ static void	init_re_element_types(t_data *data)
 	while (i < RE_TYPE_QTY)
 	{
 		if (re_array[i++] == NULL)
-			ft_exit(data, ERRORS008);
+			ft_exit(data, ERRORS008, 1);
 	}
 }
 
 void	init(t_data *data)
 {
 	init_re_element_types(data);
+	data->emf = 0;
 	data->raw.lines = NULL;
 	data->raw.re_float = re_new(RE_FLOAT);
 	data->raw.re_int = re_new(RE_INT);

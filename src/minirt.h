@@ -59,6 +59,9 @@
 
 /* Exit mode definitions */
 
+# define MALLOC_ERROR "minirt: exit with malloc error"
+# define CANVAS_ERROR "minirt: not a valid canvas size"
+
 # define ERRORS000 "Error\n"
 # define ERRORS001 "minirt:init:init_re_element_types:Invalid regex input"
 # define ERRORS002 "minirt:init:provided .rt file has invalid lines\n"
@@ -92,8 +95,8 @@
 # define RE_EL_CY "^ *cy {1}[^, ]{1},[^, ]{1},[^, ]{1} {1}[^, ]{1},[^, ]{1},[^, ]{1} {1}[^, ]{1} {1}[^, ]{1} {1}[^, ]{1},[^, ]{1},[^, ]{1} *$"
 # define RE_EL_BLANK "^\n$"
 
-# define DEF_RESOLUTION_X 1000
-# define DEF_RESOLUTION_Y 1000
+# define DEF_RESOLUTION_X 10
+# define DEF_RESOLUTION_Y 10
 
 # define DEF_DIFFUSE	0.1
 # define DEF_SPECULAR	0.9
@@ -134,11 +137,13 @@ typedef struct s_intarray
  */
 typedef enum e_exitmodeflags
 {
-	EMF_NOFREE = 1 << 0,
-	EMF_RAWL = 1 << 1,
-	EMF_ELS = 1 << 2,
-	EMF_REET = 1 << 3, // RegEx Element types
-	EMF_PERROR = 1 << 4,
+	EMF_VACIO = 1 << 0,
+	EMF_REGEX = 1 << 1,
+	EMF_RAWLINES = 1 << 2,
+	EMF_ELEMENTS = 1 << 3,
+	EMF_OBJECTS = 1 << 4,
+	EMF_INTERSECTS = 1 << 5,
+	EMF_CANVAS = 1 << 6,
 }	t_exitmodeflags;
 
 typedef struct s_resolution
@@ -203,8 +208,9 @@ typedef struct s_canvas
 {
 	int		width;
 	int		height;
-	t_color	*pixel_block;
-	t_color	**image;
+	t_color *pixel_block;
+	t_color **image;
+	//t_color	image[DEF_RESOLUTION_Y][DEF_RESOLUTION_X];
 }	t_canvas;
 
 typedef struct s_intersect_old
@@ -356,7 +362,8 @@ typedef struct s_data
 {
 	struct s_raw_data	raw;
 	struct s_world		world;
-	uint8_t				emf;
+	struct s_canvas     *canvas;
+	uint				emf;
 }	t_data;
 
 typedef struct s_img
@@ -375,6 +382,7 @@ typedef struct s_gui
 	int		height;
 	void	*window;
 	t_img	img;
+	struct s_data *data;
 }			t_gui;
 
 /***************************************************************************/
@@ -423,7 +431,7 @@ int8_t			is_valid_data(t_data *data);
 void			init(t_data *data);
 
 /* exit */
-int				ft_exit(t_data *data, char *s);
+int	ft_exit(t_data *data, char *s, int type);
 void			free_lines(t_line **head);
 void			free_els(t_elements **array);
 
@@ -449,7 +457,7 @@ t_color			color_convert_from_raw(t_color color);
 int				color_to_int(t_color rgb);
 
 /* canvas */
-t_canvas		*canvas_init(int width, int height);
+t_canvas	*canvas_init(int width, int height);
 void			canvas_set_color(t_canvas *can, t_color c);
 int				canvas_set_pixel(t_canvas *can, int x, int y, t_color c);
 t_color			canvas_get_pixel(t_canvas can, int x, int y);
@@ -506,7 +514,7 @@ t_camera		new_camera(int hsize, int vsize, float fov);
 t_camera		def_camera(void);
 void			camera_comps(t_camera *camera);
 t_ray			ray_for_pixel(t_camera c, int px, int py);
-t_canvas		*render(t_camera c, t_world w);
+t_canvas	*render(t_camera c, t_world w);
 t_camera		get_camera_from_raw_data(t_raw_data *rd);
 
 /* material */

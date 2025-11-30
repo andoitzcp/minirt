@@ -35,19 +35,24 @@ void	free_els(t_elements **array)
 }
 
 // Function used to handle errors and free memory
-int	ft_exit(t_data *data, char *s)
+int	ft_exit(t_data *data, char *s, int type)
 {
 	uint8_t	emf;
 
 	emf = data->emf;
-	if ((emf & EMF_RAWL) == EMF_RAWL)
-		free_lines(&(data->raw.lines));
-	if ((emf & EMF_ELS) == EMF_ELS)
-		free_els(data->raw.els);
-	ft_putstr_fd(ERRORS000, STDERR_FILENO);
-	if ((emf & EMF_PERROR) == EMF_PERROR)
-		perror(s);
-	else
+	if ((emf & EMF_REGEX) == EMF_REGEX)
+		destroy_regex(data);
+	if ((emf & EMF_RAWLINES) == EMF_RAWLINES)
+		destroy_rawlines(data->raw.lines);
+	if ((emf & EMF_ELEMENTS) == EMF_ELEMENTS)
+		destroy_elements(&data->raw);
+	if ((emf & EMF_OBJECTS) == EMF_OBJECTS)
+		destroy_objs(data->world.objs);
+	if ((emf & EMF_CANVAS) == EMF_CANVAS)
+		destroy_canvas(data->canvas);
+	if (type == 0)
 		ft_putstr_fd(s, STDERR_FILENO);
-	exit(errno);
+	else
+		perror(s);
+	exit(type);
 }

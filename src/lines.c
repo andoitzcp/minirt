@@ -24,7 +24,7 @@ char	***split_line(char *s)
 		s[len - 1] = '\0';
 	line = (void ***)ft_split(s, ' ');
 	i = 0;
-	while ((char *)line[i] != NULL)
+	while (line && (char *)line[i] != NULL)
 	{
 		aux = (char *)line[i];
 		line[i] = (void **)ft_split((char *)line[i], ',');
@@ -40,8 +40,11 @@ t_line	*build_line_node(t_data *data, char ***line, int type)
 	t_line	*node;
 
 	node = ft_calloc(1, sizeof(t_line));
-	if (node == NULL)
-		ft_exit(data, ERRORS009);
+	if (node == NULL || line == NULL)
+	{
+		free_3parray(line);
+		ft_exit(data, MALLOC_ERROR, 1);
+	}
 	node->type = type;
 	node->content = line;
 	node->next = NULL;
@@ -70,6 +73,7 @@ void	process_line(t_data *data, char *s)
 	char	***line;
 	t_line	*node;
 
+	data->emf = data->emf | EMF_RAWLINES;
 	i = 0;
 	while (data->raw.re_el_types[i] != NULL)
 	{
@@ -83,6 +87,6 @@ void	process_line(t_data *data, char *s)
 		}
 		return ;
 	}
-	ft_exit(data, ERRORS007);
+	ft_exit(data, ERRORS007, 0);
 	return ;
 }

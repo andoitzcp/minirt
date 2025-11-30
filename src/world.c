@@ -196,7 +196,7 @@ t_canvas	*render(t_camera c, t_world w)
 	while (i < c.vsize)
 	{
 		j = 0;
-		printf("Progress: %f\n", (float) 100 * i / c.vsize);
+		//printf("Progress: %f\n", (float) 100 * i / c.vsize);
 		while (j < c.hsize)
 		{
 			r = ray_for_pixel(c, j, i);
