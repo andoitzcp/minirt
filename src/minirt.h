@@ -59,23 +59,23 @@
 
 /* Exit mode definitions */
 
-# define MALLOC_ERROR "minirt: exit with malloc error"
-# define CANVAS_ERROR "minirt: not a valid canvas size"
+# define MALLOC_ERROR "minirt: exit with malloc error\n"
+# define CANVAS_ERROR "minirt: not a valid canvas size\n"
 
 # define ERRORS000 "Error\n"
-# define ERRORS001 "minirt:init:init_re_element_types:Invalid regex input"
+# define ERRORS001 "minirt:init:init_re_element_types:Invalid regex input\n"
 # define ERRORS002 "minirt:init:provided .rt file has invalid lines\n"
-# define ERRORS003 "minirt:init:init_elements"
+# define ERRORS003 "minirt:init:init_elements\n"
 # define ERRORS004 "minirt:init:init_element_array:rawline linked list \
 	size and stored element quantity differ\n"
-# define ERRORS005 "minirt:parse:is_valid_input_file:not a valid path"
-# define ERRORS006 "minirt:parse:get_raw_content:unable to open the file"
-# define ERRORS007 "minirt:parse:process_line:Invalid lines detected"
-# define ERRORS008 "minirt:init:init_re_element_types:Malloc error"
-# define ERRORS009 "minirt:parse:build_line_node:Malloc error"
+# define ERRORS005 "minirt:parse:is_valid_input_file:not a valid path\n"
+# define ERRORS006 "minirt:parse:get_raw_content:unable to open the file\n"
+# define ERRORS007 "minirt:parse:process_line:Invalid lines detected\n"
+# define ERRORS008 "minirt:init:init_re_element_types:Malloc error\n"
+# define ERRORS009 "minirt:parse:build_line_node:Malloc error\n"
 # define ERRORS010 "minirt:parse:check_unique_elements:More than 1 unique \
-	element detected"
-# define ERRORS011 "minirt:parse:build_element_node:Malloc error"
+	element detected\n"
+# define ERRORS011 "minirt:parse:build_element_node:Malloc error\n"
 
 /* Othe definitions */
 # define MAX_PATH_LENGTH 4096
@@ -97,7 +97,8 @@
 # define RE_EL_PL "^ *pl {1}[^, ]{1},[^, ]{1},[^, ]{1} \
 {1}[^, ]{1},[^, ]{1},[^, ]{1} {1}[^, ]{1},[^, ]{1},[^, ]{1} *$"
 # define RE_EL_CY "^ *cy {1}[^, ]{1},[^, ]{1},[^, ]{1} \
-{1}[^, ]{1},[^, ]{1},[^, ]{1} {1}[^, ]{1} {1}[^, ]{1} {1}[^, ]{1},[^, ]{1},[^, ]{1} *$"
+{1}[^, ]{1},[^, ]{1},[^, ]{1} {1}[^, ]{1} {1}[^, ]{1} \
+{1}[^, ]{1},[^, ]{1},[^, ]{1} *$"
 # define RE_EL_BLANK "^\n$"
 
 # define DEF_RESOLUTION_X 1000

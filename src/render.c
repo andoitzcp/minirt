@@ -87,6 +87,7 @@ t_canvas	*render(t_camera c, t_world w)
 	while (i < c.vsize)
 	{
 		j = 0;
+		printf("\e[1;1H\e[2J");
 		printf("Progress: %f\n", (float) 100 * i / c.vsize);
 		while (j < c.hsize)
 		{
