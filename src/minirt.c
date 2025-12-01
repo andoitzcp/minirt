@@ -50,7 +50,6 @@ int	main(int argc, char **argv)
 	data.raw.res.y_sz = DEF_RESOLUTION_Y;
 	init(&data);
 	parse(&data, argv[1]);
-	destroy_regex(&data);
 	data.world = sig_mundus_creatus_est(&data.raw);
 	data.emf = data.emf | EMF_OBJECTS;
 	if (populate_world(&data.world, &data.raw) != 0)

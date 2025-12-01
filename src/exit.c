@@ -39,7 +39,9 @@ int	ft_exit(t_data *data, char *s, int type)
 {
 	uint8_t	emf;
 
-	if (type != -1)
+	if (type == -1)
+		ft_putstr_fd(s, STDOUT_FILENO);
+	else
 		printf("Error!\n");
 	emf = data->emf;
 	if ((emf & EMF_REGEX) == EMF_REGEX)
@@ -52,9 +54,11 @@ int	ft_exit(t_data *data, char *s, int type)
 		destroy_objs(data->world.objs);
 	if ((emf & EMF_CANVAS) == EMF_CANVAS)
 		destroy_canvas(data->canvas);
-	if (type == 0)
+	if (type == -1)
+		exit(0);
+	else if (type == 0)
 		ft_putstr_fd(s, STDERR_FILENO);
 	else
-		perror(s);
+		ft_putstr_fd(s, STDERR_FILENO);
 	exit(type);
 }

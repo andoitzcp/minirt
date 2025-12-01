@@ -36,6 +36,7 @@ static void	init_re_element_types(t_data *data)
 
 void	init(t_data *data)
 {
+	data->emf = data->emf | EMF_REGEX;
 	init_re_element_types(data);
 	data->raw.lines = NULL;
 	data->raw.re_float = re_new(RE_FLOAT);

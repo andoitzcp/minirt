@@ -18,17 +18,11 @@ t_img	gui_img_init(t_gui *gui, int width, int height)
 
 	img.ptr = mlx_new_image(gui->mlx, width, height);
 	if (!img.ptr)
-	{
-		perror("Failed to init image");
-		exit(EXIT_FAILURE);
-	}
+		ft_exit(gui->data, "Failed to init image", 0);
 	img.addr = mlx_get_data_addr(img.ptr, &img.bpp, &img.line_len,
 			&img.endian);
 	if (!img.addr)
-	{
-		perror("Failed to init img address");
-		exit(EXIT_FAILURE);
-	}
+		ft_exit(gui->data, "Failed to init img address", 0);
 	return (img);
 }
 
@@ -36,18 +30,12 @@ void	gui_init(t_gui *gui, t_canvas canv)
 {
 	gui->mlx = mlx_init();
 	if (!gui->mlx)
-	{
-		perror("Failed to init mlx");
-		exit(EXIT_FAILURE);
-	}
+		ft_exit(gui->data, "Failed to init mlx", 0);
 	gui->width = canv.width;
 	gui->height = canv.height;
-	gui->window = mlx_new_window(gui->mlx, gui->width, gui->height, "FdF");
+	gui->window = mlx_new_window(gui->mlx, gui->width, gui->height, "MiniRT");
 	if (!gui->window)
-	{
-		perror("Failed to init window");
-		exit(EXIT_FAILURE);
-	}
+		ft_exit(gui->data, "Failed to init window", 0);
 	gui->img = gui_img_init(gui, gui->width, gui->height);
 }
 
@@ -74,5 +62,4 @@ void	free_gui(t_gui *gui)
 		gui->mlx = NULL;
 	}
 	ft_exit(gui->data, "EXITED SUCCESSFULLY\n", -1);
-	exit(0);
 }

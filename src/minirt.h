@@ -101,8 +101,8 @@
 {1}[^, ]{1},[^, ]{1},[^, ]{1} *$"
 # define RE_EL_BLANK "^\n$"
 
-# define DEF_RESOLUTION_X 1000
-# define DEF_RESOLUTION_Y 1000
+# define DEF_RESOLUTION_X 500
+# define DEF_RESOLUTION_Y 500
 
 # define DEF_DIFFUSE	0.1
 # define DEF_SPECULAR	0.9
