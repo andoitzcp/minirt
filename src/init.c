@@ -37,7 +37,6 @@ static void	init_re_element_types(t_data *data)
 void	init(t_data *data)
 {
 	init_re_element_types(data);
-	data->emf = 0;
 	data->raw.lines = NULL;
 	data->raw.re_float = re_new(RE_FLOAT);
 	data->raw.re_int = re_new(RE_INT);

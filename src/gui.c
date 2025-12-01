@@ -73,6 +73,6 @@ void	free_gui(t_gui *gui)
 		free(gui->mlx);
 		gui->mlx = NULL;
 	}
-	ft_exit(gui->data, "EXITED SUCCESSFULLY", 0);
+	ft_exit(gui->data, "EXITED SUCCESSFULLY\n", -1);
 	exit(0);
 }

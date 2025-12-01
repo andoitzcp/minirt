@@ -41,10 +41,11 @@ int	main(int argc, char **argv)
 	t_data		data;
 	t_gui		gui;
 
+	data.emf = 0;
 	if (argc != 2)
-		exit(1);
+		ft_exit(&data, "Incorrect input parameters\n", 0);
 	if (is_valid_input_file(argv[1]) == 0)
-		exit(1);
+		ft_exit(&data, "Not valid input file\n", 0);
 	data.raw.res.x_sz = DEF_RESOLUTION_X;
 	data.raw.res.y_sz = DEF_RESOLUTION_Y;
 	init(&data);
@@ -53,7 +54,7 @@ int	main(int argc, char **argv)
 	data.world = sig_mundus_creatus_est(&data.raw);
 	data.emf = data.emf | EMF_OBJECTS;
 	if (populate_world(&data.world, &data.raw) != 0)
-		ft_exit(&data, "TMP", 0);
+		ft_exit(&data, "Failure populating world\n", 0);
 	data.emf = data.emf | EMF_CANVAS;
 	data.canvas = render(data.world.c, data.world);
 	gui.data = &data;

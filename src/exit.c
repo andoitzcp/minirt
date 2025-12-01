@@ -39,7 +39,7 @@ int	ft_exit(t_data *data, char *s, int type)
 {
 	uint8_t	emf;
 
-	if (errno != 0)
+	if (type != -1)
 		printf("Error!\n");
 	emf = data->emf;
 	if ((emf & EMF_REGEX) == EMF_REGEX)
